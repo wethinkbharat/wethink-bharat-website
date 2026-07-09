@@ -1,5 +1,23 @@
 'use client'
 import { useState, useEffect } from 'react'
+import type {
+  AdvisoryMemberData,
+  CurrentPartnerData,
+  HeroData,
+  VisionSectionData,
+  BeliefsIntroData,
+  BeliefData,
+  GapSectionData,
+  PathwaysIntroData,
+  PathwayData,
+  DomainsIntroData,
+  DomainData,
+  SummitData,
+  JourneyStageData,
+  ApplyCtaData,
+  SiteConfigData,
+  HeaderImagesData,
+} from '@/components/desktop/DesktopPageClient'
 
 /* ── design tokens ───────────────────────────────────────────── */
 const FF = "'League Spartan', system-ui, sans-serif"
@@ -24,11 +42,11 @@ const KEYFRAMES = `
 
 /* ── journey cards ───────────────────────────────────────────── */
 const JOURNEY_CARDS = [
-  { icon: 'ti-compass', stage: '01 OPEN', title: 'Open — The Exposure Experience', pill: '2 days', body: 'A 2-day immersive experience where students step into a live industry world for the first time. Real practitioners, real environments, real challenges.' },
-  { icon: 'ti-briefcase', stage: '02 LIVE', title: 'Live — The Real Brief', pill: '2 weeks', body: 'Students work on a genuine industry brief over two weeks. No textbook answers — just real problems that real organisations need solved.' },
-  { icon: 'ti-users', stage: '03 CIRCLE', title: 'Circle — Ongoing Mentorship', pill: 'Continuous', body: 'Ongoing sessions with industry practitioners who guide, challenge and push student thinking — every week, throughout the semester.' },
-  { icon: 'ti-microphone', stage: '04 SUMMIT', title: 'Summit — The National Stage', pill: '4× / year', body: 'The best student work is pitched at the WeThink Summit — a live, nationally recognised event in front of industry leaders and an audience that matters.' },
-  { icon: 'ti-certificate', stage: '05 IMPRINT', title: 'Imprint — Proof for Life', pill: 'Permanent', body: 'Every student receives a permanent, verifiable digital footprint of their work — a WeThink Imprint that belongs to them forever, globally accessible.' },
+  { icon: 'ti-compass', stage: '01 OPEN', title: 'Open — The Exposure Experience', pill: '2 days', body: 'A 2-day immersive experience where students step into a live industry world for the first time. Real practitioners, real environments, real challenges.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-briefcase', stage: '02 LIVE', title: 'Live — The Real Brief', pill: '2 weeks', body: 'Students work on a genuine industry brief over two weeks. No textbook answers — just real problems that real organisations need solved.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-users', stage: '03 CIRCLE', title: 'Circle — Ongoing Mentorship', pill: 'Continuous', body: 'Ongoing sessions with industry practitioners who guide, challenge and push student thinking — every week, throughout the semester.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-microphone', stage: '04 SUMMIT', title: 'Summit — The National Stage', pill: '4× / year', body: 'The best student work is pitched at the WeThink Summit — a live, nationally recognised event in front of industry leaders and an audience that matters.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-certificate', stage: '05 IMPRINT', title: 'Imprint — Proof for Life', pill: 'Permanent', body: 'Every student receives a permanent, verifiable digital footprint of their work — a WeThink Imprint that belongs to them forever, globally accessible.', iconUrl: undefined as string | undefined },
 ]
 
 const CARD_BG = [
@@ -111,10 +129,14 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-function HeroPageBg() {
+function HeroPageBg({ imageUrl }: { imageUrl?: string }) {
   return (
     <>
-      <div style={{ position: 'absolute', inset: '-12% 0', zIndex: 0, background: S1 }} />
+      <div style={{ position: 'absolute', inset: '-12% 0', zIndex: 0, background: S1, overflow: 'hidden' }}>
+        {imageUrl && (
+          <img src={imageUrl} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center', pointerEvents: 'none' }} />
+        )}
+      </div>
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(105deg,rgba(36,10,3,.9) 0%,rgba(36,10,3,.6) 40%,rgba(36,10,3,.18) 74%,rgba(36,10,3,0) 100%)' }} />
       <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to top,rgba(36,10,3,.9) 2%,rgba(36,10,3,0) 46%)' }} />
     </>
@@ -153,12 +175,47 @@ function getCardTransform(idx: number, active: number) {
 interface Props {
   onSchoolFormOpen: () => void
   onPartnerFormOpen: () => void
+  logoUrl?: string
+  hero?: HeroData | null
+  advisoryMembers?: AdvisoryMemberData[]
+  currentPartners?: CurrentPartnerData[]
+  visionSection?: VisionSectionData | null
+  beliefsIntro?: BeliefsIntroData | null
+  beliefs?: BeliefData[]
+  gapSection?: GapSectionData | null
+  pathwaysIntro?: PathwaysIntroData | null
+  pathways?: PathwayData[]
+  domainsIntro?: DomainsIntroData | null
+  domains?: DomainData[]
+  summit?: SummitData | null
+  journeyStages?: JourneyStageData[]
+  applyCta?: ApplyCtaData | null
+  siteConfig?: SiteConfigData | null
+  headerImages?: HeaderImagesData
 }
 
 /* ═══════════════════════════════════════════════════════════════
    MobileSite
 ═══════════════════════════════════════════════════════════════ */
-export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
+export function MobileSite({
+  onSchoolFormOpen,
+  onPartnerFormOpen,
+  logoUrl,
+  hero,
+  advisoryMembers: advisoryMembersProp,
+  currentPartners: currentPartnersProp,
+  visionSection,
+  beliefs: beliefsProp,
+  gapSection,
+  pathways: pathwaysProp,
+  domainsIntro,
+  domains: domainsProp,
+  summit,
+  journeyStages: journeyStagesProp,
+  applyCta,
+  siteConfig,
+  headerImages,
+}: Props) {
   const [activeTab, setActiveTab] = useState<'home' | 'domains' | 'journey' | 'summit' | 'menu'>('home')
   const [sheetOpen, setSheetOpen] = useState(false)
   const [navStack, setNavStack] = useState<string[]>([])
@@ -166,6 +223,69 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
   const [activeCard, setActiveCard] = useState(2)
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set())
   const [backToTopVisible, setBackToTopVisible] = useState(false)
+
+  /* ── derived Sanity data ─────────────────────── */
+  const DEFAULT_JOURNEY_ICONS = ['ti-compass', 'ti-briefcase', 'ti-users', 'ti-microphone', 'ti-certificate']
+  const activeJourneyCards = (journeyStagesProp && journeyStagesProp.length > 0)
+    ? journeyStagesProp.map((s, i) => ({
+        icon: DEFAULT_JOURNEY_ICONS[i] ?? 'ti-star',
+        stage: `${String(s.number).padStart(2, '0')} ${(s.name.split('—')[0].trim().split(' ')[0] ?? '').toUpperCase()}`,
+        title: s.name,
+        pill: s.durationLabel,
+        body: s.description,
+        iconUrl: s.iconUrl,
+      }))
+    : JOURNEY_CARDS
+
+  const activeDomains = (domainsProp && domainsProp.length > 0)
+    ? domainsProp.map((d) => ({
+        num: String(d.number).padStart(2, '0'),
+        title: d.name,
+        partner: [d.simulatorName, d.partnerName].filter(Boolean).join(' · '),
+        levels: d.levels.map((l) => ({ level: l.levelLabel, title: l.title, body: l.description })),
+        outcomes: d.outcomes,
+        teaserImageUrl: d.teaserImageUrl,
+        detailImageUrl: d.detailImageUrl,
+      }))
+    : DOMAINS.map((d) => ({ ...d, teaserImageUrl: undefined, detailImageUrl: undefined }))
+
+  const activeBeliefs = (beliefsProp && beliefsProp.length > 0)
+    ? beliefsProp.map((b) => ({ n: String(b.number).padStart(2, '0'), title: b.title, body: b.body }))
+    : [
+        { n: '01', title: 'Experience is the only real teacher', body: 'Reading about entrepreneurship and running a startup simulation are not the same thing. We build experiences — not content.' },
+        { n: '02', title: 'Every student has undiscovered capability', body: "Potential is universally present. The system just hasn't created the conditions to find it yet." },
+        { n: '03', title: 'Industry must come to the student', body: 'We cannot wait for students to graduate before industry engages them. The relationship must begin at school — and it must be real.' },
+        { n: '04', title: 'Failure in a safe space is a gift', body: 'A student who has failed at a simulated pitch is infinitely better prepared than one who has never tried.' },
+        { n: '05', title: "A digital footprint is a student's first asset", body: 'Before a degree, before a job — a student deserves something permanently, globally, verifiably theirs.' },
+        { n: '06', title: 'Scale is the only measure that matters', body: 'A program that changes 100 students is a project. A movement that changes a generation is what WeThink Bharat is built to be.' },
+      ]
+
+  const activePathways = (pathwaysProp && pathwaysProp.length > 0)
+    ? pathwaysProp.map((p) => {
+        const label = (p.audienceLabel ?? '').toLowerCase()
+        const icon = label.includes('student') ? 'ti-books' : label.includes('educator') ? 'ti-chalkboard' : 'ti-building-community'
+        return { icon, label: p.audienceLabel, title: p.title, body: p.description, imageUrl: p.imageUrl }
+      })
+    : [
+        { icon: 'ti-books', label: 'For students', title: 'Discover before you decide', body: 'Simulated worlds, real briefs, live mentors, and a permanent footprint. Before choosing a path, students experience it.', imageUrl: undefined },
+        { icon: 'ti-chalkboard', label: 'For educators', title: 'Teach what industry needs', body: 'Structured programs, industry-designed content, and an educator community — built to make experiential learning easy to run.', imageUrl: undefined },
+        { icon: 'ti-building-community', label: 'For schools', title: 'Run it at scale, for years', body: 'A full institutional program — not a one-day workshop. WeThink Bharat integrates into the school calendar and grows every year.', imageUrl: undefined },
+      ]
+
+  const activeGapStats = (gapSection?.stats && gapSection.stats.length > 0)
+    ? gapSection.stats.map((s, i) => ({ count: s.value, suffix: s.suffix, label: s.label, body: s.description, borderBottom: i === gapSection.stats.length - 1 }))
+    : [
+        { count: '80', suffix: '%', label: 'Graduates are industry-unready', body: "Most Indian graduates lack the applied, real-world skills industry needs on Day 1.", borderBottom: false },
+        { count: '93', suffix: '%', label: 'Students choose without experiencing', body: 'Students pick a stream on secondhand advice — never having lived the domain.', borderBottom: false },
+        { count: '14–18', suffix: '', label: 'The window that changes everything', body: 'The last moment before the fork — real experience here changes everything.', borderBottom: true },
+      ]
+
+  const namedAdvisory = (advisoryMembersProp ?? []).filter(m => m.status === 'member')
+  const tbaAdvisory = (advisoryMembersProp ?? []).filter(m => m.status === 'announcing')
+  const useAdvisoryFromSanity = namedAdvisory.length > 0
+
+  const homeMarqueePartners = (currentPartnersProp ?? []).filter(p => p.showInHomeMarquee)
+  const ecosystemGridPartners = (currentPartnersProp ?? []).filter(p => p.showInEcosystemGrid)
 
   /* ── keyframe injection ──────────────────────── */
   useEffect(() => {
@@ -323,29 +443,34 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           padding: '0 clamp(24px,6vw,64px) 80px',
           borderBottom: BORDER,
         }}>
-          <HeroPageBg />
+          <HeroPageBg imageUrl={hero?.heroImageUrl} />
 
           {/* Content */}
           <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
             {/* Status chip */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '6px 14px', marginBottom: '24px' }}>
-              <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
-              <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD, letterSpacing: '.06em' }}>Season 1 · school nominations open</span>
-            </div>
+            {(hero?.seasonBanner) && (
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '6px 14px', marginBottom: '24px' }}>
+                <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
+                <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD, letterSpacing: '.06em' }}>{hero.seasonBanner}</span>
+              </div>
+            )}
 
             {/* H1 */}
             <h1 style={{
               fontSize: '44px', fontWeight: 800, letterSpacing: '-0.03em',
               lineHeight: 0.98, color: TP, margin: '0 0 22px', fontFamily: FF,
             }}>
-              India's students deserve to{' '}
-              <span style={{ color: GOLD }}>discover</span>{' '}
-              before they decide.
+              {hero?.headlineSpans && hero.headlineSpans.length > 0
+                ? hero.headlineSpans.map((s, i) => (
+                    <span key={i} style={s.gold ? { color: GOLD } : {}}>{s.text}</span>
+                  ))
+                : <>India's students deserve to{' '}<span style={{ color: GOLD }}>discover</span>{' '}before they decide.</>
+              }
             </h1>
 
             {/* Body */}
             <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
-              WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.
+              {hero?.subcopy ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.'}
             </p>
 
             {/* CTAs — stacked column */}
@@ -358,7 +483,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                   border: 'none', cursor: 'pointer', fontFamily: FF, width: '100%',
                 }}
               >
-                Bring WeThink to my school ↗
+                {hero?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
               </button>
               <a
                 href="#domains-section"
@@ -370,16 +495,17 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                   display: 'block', textAlign: 'center', boxSizing: 'border-box',
                 }}
               >
-                Explore the domains
+                {hero?.secondaryCtaLabel ?? 'Explore the domains'}
               </a>
             </div>
 
-            {/* Status chip 2 */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.18)', borderRadius: '999px', padding: '6px 16px' }}>
-              <span style={{ fontSize: '13px', color: TS }}>
-                <strong style={{ color: TP }}>3 industry domains</strong> live now — Entrepreneurship, Media &amp; Design
-              </span>
-            </div>
+            {/* Domains strip */}
+            {hero?.domainsStrip && (
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.18)', borderRadius: '999px', padding: '6px 16px' }}>
+                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
+                <span style={{ fontSize: '13px', color: TS }}>{hero.domainsStrip}</span>
+              </div>
+            )}
           </div>
 
           {/* Scroll cue */}
@@ -401,7 +527,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           alignItems: 'center', overflow: 'hidden',
           padding: '100px clamp(24px,6vw,64px) 48px', borderBottom: BORDER,
         }}>
-          <HeroPageBg />
+          <HeroPageBg imageUrl={headerImages?.vision} />
           <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
             <h1 style={{ fontSize: 'clamp(32px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: TP, margin: '0 0 20px', fontFamily: FF }}>
               We are building India's first{' '}
@@ -492,14 +618,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           </p>
 
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {[
-              { n: '01', title: 'Experience is the only real teacher', body: 'Reading about entrepreneurship and running a startup simulation are not the same thing. We build experiences — not content.' },
-              { n: '02', title: 'Every student has undiscovered capability', body: 'Potential is universally present. The system just hasn\'t created the conditions to find it yet.' },
-              { n: '03', title: 'Industry must come to the student', body: 'We cannot wait for students to graduate before industry engages them. The relationship must begin at school — and it must be real.' },
-              { n: '04', title: 'Failure in a safe space is a gift', body: 'A student who has failed at a simulated pitch is infinitely better prepared than one who has never tried.' },
-              { n: '05', title: 'A digital footprint is a student\'s first asset', body: 'Before a degree, before a job — a student deserves something permanently, globally, verifiably theirs.' },
-              { n: '06', title: 'Scale is the only measure that matters', body: 'A program that changes 100 students is a project. A movement that changes a generation is what WeThink Bharat is built to be.' },
-            ].map(b => (
+            {activeBeliefs.map(b => (
               <div key={b.n} style={{ display: 'flex', gap: '14px', padding: '20px 0', borderTop: '1px solid rgba(222,192,120,.14)' }}>
                 <span style={{ fontSize: '13px', fontWeight: 700, color: GOLD, minWidth: '28px', letterSpacing: '.02em', paddingTop: '2px' }}>{b.n}</span>
                 <div>
@@ -523,14 +642,13 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '18px' }}>
-            {[
-              { icon: 'ti-books', label: 'For students', title: 'Discover before you decide', body: 'Simulated worlds, real briefs, live mentors, and a permanent footprint. Before choosing a path, students experience it.' },
-              { icon: 'ti-chalkboard', label: 'For educators', title: 'Teach what industry needs', body: 'Structured programs, industry-designed content, and an educator community — built to make experiential learning easy to run.' },
-              { icon: 'ti-building-community', label: 'For schools', title: 'Run it at scale, for years', body: 'A full institutional program — not a one-day workshop. WeThink Bharat integrates into the school calendar and grows every year.' },
-            ].map(c => (
+            {activePathways.map(c => (
               <div key={c.label} style={{ borderRadius: '18px', overflow: 'hidden', border: '1px solid rgba(222,192,120,.16)', background: S1 }}>
                 <div style={{ height: '300px', background: S2, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ImgPlaceholder />
+                  {c.imageUrl
+                    ? <img src={c.imageUrl} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+                    : <ImgPlaceholder />
+                  }
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(20,7,2,.94) 8%,rgba(20,7,2,.1) 62%)' }} />
                 </div>
                 <div style={{ padding: '24px 24px 26px', marginTop: '-66px', position: 'relative', zIndex: 1 }}>
@@ -551,9 +669,17 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           <div style={{ display: 'flex', width: 'max-content', animation: 'wtbMarquee 30s linear infinite' }}>
             {[...Array(2)].map((_, t) => (
               <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(36px,5vw,64px)', paddingRight: 'clamp(36px,5vw,64px)' }}>
-                {['NASSCOM', 'Brut', 'Canva', 'iNEXT', 'Partner'].map(name => (
-                  <div key={name} style={{ width: 'clamp(112px,12vw,152px)', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.72 }}>
-                    <span style={{ fontSize: '14px', fontWeight: 700, color: TP, letterSpacing: '.08em', fontFamily: FF }}>{name}</span>
+                {(homeMarqueePartners.length > 0 ? homeMarqueePartners : [
+                  { _id: 'nasscom', name: 'NASSCOM', logoUrl: undefined },
+                  { _id: 'brut', name: 'Brut', logoUrl: undefined },
+                  { _id: 'canva', name: 'Canva', logoUrl: undefined },
+                  { _id: 'inext', name: 'iNEXT', logoUrl: undefined },
+                ]).map(p => (
+                  <div key={p._id} style={{ width: 'clamp(112px,12vw,152px)', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.72 }}>
+                    {p.logoUrl
+                      ? <img src={p.logoUrl} alt={p.name} style={{ maxHeight: '40px', maxWidth: '100%', objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
+                      : <span style={{ fontSize: '14px', fontWeight: 700, color: TP, letterSpacing: '.08em', fontFamily: FF }}>{p.name}</span>
+                    }
                   </div>
                 ))}
               </div>
@@ -575,11 +701,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           </p>
 
           <div>
-            {[
-              { count: '80', suffix: '%', label: 'Graduates are industry-unready', body: 'Most Indian graduates lack the applied, real-world skills industry needs on Day 1.' },
-              { count: '93', suffix: '%', label: 'Students choose without experiencing', body: 'Students pick a stream on secondhand advice — never having lived the domain.' },
-              { count: '14–18', suffix: '', label: 'The window that changes everything', body: 'The last moment before the fork — real experience here changes everything.', borderBottom: true },
-            ].map(s => (
+            {activeGapStats.map(s => (
               <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '22px', padding: '24px 0', borderTop: '1px solid rgba(222,192,120,.2)', borderBottom: s.borderBottom ? '1px solid rgba(222,192,120,.2)' : 'none' }}>
                 <div
                   data-count={s.count + s.suffix}
@@ -612,20 +734,19 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {[
-              { num: '01', label: 'Entrepreneurship', partner: 'NASSCOM 10,000 Startups' },
-              { num: '02', label: 'Media & Communication', partner: 'Brut' },
-              { num: '03', label: 'Design & Innovation', partner: 'Canva' },
-            ].map(d => (
+            {activeDomains.map(d => (
               <a key={d.num} href="#domains-section" style={{ textDecoration: 'none', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(222,192,120,.16)', background: S2, display: 'block' }}>
                 <div style={{ aspectRatio: '3/2', background: BG, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <ImgPlaceholder />
+                  {d.teaserImageUrl
+                    ? <img src={d.teaserImageUrl} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+                    : <ImgPlaceholder />
+                  }
                   <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(36,10,3,.85) 0%,rgba(36,10,3,0) 60%)' }} />
                   <div style={{ position: 'absolute', top: '14px', left: '14px', background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em' }}>{d.num}</div>
                 </div>
                 <div style={{ padding: '16px 18px 18px' }}>
                   <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{d.partner}</p>
-                  <h3 style={{ fontSize: '17px', fontWeight: 800, color: TP, margin: 0, fontFamily: FF }}>{d.label}</h3>
+                  <h3 style={{ fontSize: '17px', fontWeight: 800, color: TP, margin: 0, fontFamily: FF }}>{d.title}</h3>
                 </div>
               </a>
             ))}
@@ -674,14 +795,19 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           <div style={{ fontSize: '72px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '16px' }}>"</div>
           <blockquote style={{ margin: '0 auto', maxWidth: '680px' }}>
             <p style={{ fontSize: 'clamp(18px,4.5vw,30px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 30px', fontFamily: FF }}>
-              Why do we wait until <strong style={{ color: GOLD }}>after graduation</strong> to give students real experience? By then, the choice is already made.
+              {visionSection?.directorQuote ?? <>Why do we wait until <strong style={{ color: GOLD }}>after graduation</strong> to give students real experience? By then, the choice is already made.</>}
             </p>
           </blockquote>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px' }}>
-            <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: S1, border: '1px solid rgba(222,192,120,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', color: GOLD }}>N</div>
+            <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: S1, border: '1px solid rgba(222,192,120,.3)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', color: GOLD }}>
+              {visionSection?.directorImageUrl
+                ? <img src={visionSection.directorImageUrl} alt={visionSection.directorName ?? 'Director'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                : (visionSection?.directorName?.[0] ?? 'N')
+              }
+            </div>
             <div style={{ textAlign: 'left' }}>
-              <p style={{ fontSize: '14px', fontWeight: 700, color: TP, margin: '0 0 2px' }}>Dr. Neha Raghav</p>
-              <p style={{ fontSize: '12px', color: GOLD, margin: 0 }}>Director, WeThink Bharat</p>
+              <p style={{ fontSize: '14px', fontWeight: 700, color: TP, margin: '0 0 2px' }}>{visionSection?.directorName ?? 'Dr. Neha Raghav'}</p>
+              <p style={{ fontSize: '12px', color: GOLD, margin: 0 }}>{visionSection?.directorTitle ?? 'Director, WeThink Bharat'}</p>
             </div>
           </div>
         </section>
@@ -694,7 +820,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           alignItems: 'center', overflow: 'hidden',
           padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
         }}>
-          <HeroPageBg />
+          <HeroPageBg imageUrl={headerImages?.domains} />
           <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
             <h1 style={{ fontSize: 'clamp(32px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
               Step into the <span style={{ color: GOLD }}>real work.</span>
@@ -709,8 +835,11 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
             14. FEATURE: DOMAINS
         ════════════════════════════════════ */}
         <section id="domains-section" data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <div style={{ borderRadius: '16px', minHeight: '220px', background: S2, border: '1px solid rgba(222,192,120,.14)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '36px' }}>
-            <ImgPlaceholder height="220px" />
+          <div style={{ borderRadius: '16px', minHeight: '220px', background: S2, border: '1px solid rgba(222,192,120,.14)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '36px' }}>
+            {domainsIntro?.featureImageUrl
+              ? <img src={domainsIntro.featureImageUrl} alt="" aria-hidden="true" style={{ width: '100%', minHeight: '220px', objectFit: 'cover' }} />
+              : <ImgPlaceholder height="220px" />
+            }
           </div>
           <SectionLabel>Industry domains</SectionLabel>
           <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
@@ -732,7 +861,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
         ════════════════════════════════════ */}
         <section data-reveal="" style={{ padding: 'clamp(40px,6vw,80px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {DOMAINS.map((domain, i) => {
+            {activeDomains.map((domain, i) => {
               const isOpen = openAccordion === i
               return (
                 <div
@@ -778,9 +907,12 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                     transition: 'max-height .4s cubic-bezier(0.4,0,0.2,1)',
                   }}>
                     <div style={{ padding: '0 18px 24px' }}>
-                      {/* Image placeholder */}
-                      <div style={{ borderRadius: '12px', height: '180px', background: BG, border: '1px solid rgba(222,192,120,.12)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                        <ImgPlaceholder height="180px" />
+                      {/* Detail image */}
+                      <div style={{ borderRadius: '12px', height: '180px', background: BG, border: '1px solid rgba(222,192,120,.12)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                        {domain.detailImageUrl
+                          ? <img src={domain.detailImageUrl} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                          : <ImgPlaceholder height="180px" />
+                        }
                       </div>
 
                       {/* Level grid */}
@@ -821,7 +953,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           alignItems: 'center', overflow: 'hidden',
           padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
         }}>
-          <HeroPageBg />
+          <HeroPageBg imageUrl={headerImages?.summit} />
           <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
             <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
               The national stage where student work meets{' '}
@@ -964,7 +1096,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           alignItems: 'center', overflow: 'hidden',
           padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
         }}>
-          <HeroPageBg />
+          <HeroPageBg imageUrl={headerImages?.ecosystem} />
           <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
             <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
               More than a partnership,{' '}
@@ -1021,16 +1153,19 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {[
-              { type: 'Industry Partner', name: 'NASSCOM 10,000 Startups', tagline: 'Entrepreneurship Domain Partner', desc: 'India\'s largest startup ecosystem brings its expertise into WeThink schools — designing the Startup Studio domain and serving as the lead industry partner for the Entrepreneurship track.' },
-              { type: 'Media Partner', name: 'Brut', tagline: 'Media & Communication Domain Partner', desc: 'The digital-native media organisation behind some of India\'s most impactful journalism brings its newsroom to WeThink — designing the Media & Communication domain and editorial mentorship program.' },
-              { type: 'Design Partner', name: 'Canva', tagline: 'Design & Innovation Domain Partner', desc: 'The global design platform joins WeThink as the Design & Innovation domain partner — bringing professional design tools, briefs, and mentors directly into the school environment.' },
-            ].map(p => (
-              <div key={p.name} style={{ background: S2, border: '1px solid rgba(222,192,120,.16)', borderRadius: '14px', padding: '22px 20px' }}>
-                <span style={{ display: 'inline-block', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em', marginBottom: '12px' }}>{p.type}</span>
+            {(ecosystemGridPartners.length > 0 ? ecosystemGridPartners : [
+              { _id: '1', type: 'Industry Partner', name: 'NASSCOM 10,000 Startups', categoryName: 'Entrepreneurship Domain Partner', description: 'India\'s largest startup ecosystem brings its expertise into WeThink schools — designing the Startup Studio domain and serving as the lead industry partner for the Entrepreneurship track.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
+              { _id: '2', type: 'Media Partner', name: 'Brut', categoryName: 'Media & Communication Domain Partner', description: 'The digital-native media organisation behind some of India\'s most impactful journalism brings its newsroom to WeThink — designing the Media & Communication domain and editorial mentorship program.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
+              { _id: '3', type: 'Design Partner', name: 'Canva', categoryName: 'Design & Innovation Domain Partner', description: 'The global design platform joins WeThink as the Design & Innovation domain partner — bringing professional design tools, briefs, and mentors directly into the school environment.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
+            ] as CurrentPartnerData[]).map(p => (
+              <div key={p._id} style={{ background: S2, border: '1px solid rgba(222,192,120,.16)', borderRadius: '14px', padding: '22px 20px' }}>
+                {p.logoUrl && (
+                  <img src={p.logoUrl} alt={p.name} style={{ height: '32px', objectFit: 'contain', objectPosition: 'left', marginBottom: '14px', display: 'block' }} />
+                )}
+                <span style={{ display: 'inline-block', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em', marginBottom: '12px' }}>{p.type ?? p.categoryName}</span>
                 <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 4px', fontFamily: FF }}>{p.name}</h3>
-                <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 10px', fontWeight: 600 }}>{p.tagline}</p>
-                <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0 }}>{p.desc}</p>
+                <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 10px', fontWeight: 600 }}>{p.categoryName}</p>
+                <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0 }}>{p.description}</p>
               </div>
             ))}
           </div>
@@ -1044,7 +1179,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           alignItems: 'center', overflow: 'hidden',
           padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
         }}>
-          <HeroPageBg />
+          <HeroPageBg imageUrl={headerImages?.journey} />
           <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
             <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
               Five stages. One <span style={{ color: GOLD }}>transformation.</span>
@@ -1069,7 +1204,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           {/* Carousel */}
           <div style={{ position: 'relative', width: '100%', height: 'clamp(380px,48vw,520px)', overflow: 'hidden' }}>
             <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', width: 0, height: 0 }}>
-              {JOURNEY_CARDS.map((card, idx) => {
+              {activeJourneyCards.map((card, idx) => {
                 const t = getCardTransform(idx, activeCard)
                 const cardW = 'clamp(190px,48vw,260px)'
                 const cardH = 'clamp(280px,68vw,360px)'
@@ -1100,7 +1235,10 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                       zIndex: t.zIndex,
                     }}
                   >
-                    <i className={`ti ${card.icon}`} style={{ fontSize: '26px', color: GOLD, marginBottom: '10px' }} />
+                    {card.iconUrl
+                      ? <img src={card.iconUrl} alt="" aria-hidden="true" style={{ width: '26px', height: '26px', objectFit: 'contain', marginBottom: '10px', filter: 'brightness(0) saturate(100%) invert(79%) sepia(31%) saturate(468%) hue-rotate(1deg) brightness(97%) contrast(93%)' }} />
+                      : <i className={`ti ${card.icon}`} style={{ fontSize: '26px', color: GOLD, marginBottom: '10px' }} />
+                    }
                     <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{card.stage}</p>
                     <h3 style={{ fontSize: '15px', fontWeight: 800, color: TP, margin: '0 0 10px', lineHeight: 1.3, fontFamily: FF }}>{card.title}</h3>
                     <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0, flex: 1 }}>{card.body}</p>
@@ -1114,7 +1252,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
 
             {/* Prev button */}
             <button
-              onClick={() => setActiveCard(c => (c - 1 + JOURNEY_CARDS.length) % JOURNEY_CARDS.length)}
+              onClick={() => setActiveCard(c => (c - 1 + activeJourneyCards.length) % activeJourneyCards.length)}
               aria-label="Previous stage"
               style={{
                 position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)',
@@ -1124,12 +1262,12 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                 alignItems: 'center', justifyContent: 'center',
               }}
             >
-              <i className="ti ti-chevron-left" />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
             </button>
 
             {/* Next button */}
             <button
-              onClick={() => setActiveCard(c => (c + 1) % JOURNEY_CARDS.length)}
+              onClick={() => setActiveCard(c => (c + 1) % activeJourneyCards.length)}
               aria-label="Next stage"
               style={{
                 position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)',
@@ -1139,7 +1277,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                 alignItems: 'center', justifyContent: 'center',
               }}
             >
-              <i className="ti ti-chevron-right" />
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
             </button>
 
             {/* Hint */}
@@ -1153,7 +1291,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
 
           {/* Dots */}
           <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '20px' }}>
-            {JOURNEY_CARDS.map((_, idx) => (
+            {activeJourneyCards.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setActiveCard(idx)}
@@ -1177,7 +1315,7 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           alignItems: 'center', overflow: 'hidden',
           padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
         }}>
-          <HeroPageBg />
+          <HeroPageBg imageUrl={headerImages?.advisory} />
           <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
             <h1 style={{ fontSize: 'clamp(28px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
               Leaders who believe the system can — and{' '}
@@ -1201,12 +1339,23 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>
-            {/* Named members */}
-            {NAMED_MEMBERS.map((member, idx) => {
+            {/* Named members — Sanity or hardcoded fallback */}
+            {(useAdvisoryFromSanity ? namedAdvisory : NAMED_MEMBERS.map((m) => ({
+              _id: m.name,
+              name: m.name,
+              roleOrg: m.role,
+              bio: m.bio,
+              headshotUrl: undefined,
+              initial: m.name[0],
+              status: 'member' as const,
+              categoryLabel: m.sub,
+              number: parseInt(m.num),
+            }))).map((member, idx) => {
               const isFlipped = flippedCards.has(idx)
+              const numLabel = String(member.number ?? idx + 1).padStart(2, '0')
               return (
                 <div
-                  key={idx}
+                  key={member._id ?? idx}
                   onClick={() => toggleFlip(idx)}
                   style={{ perspective: '1600px', height: '380px', cursor: 'pointer', position: 'relative' }}
                 >
@@ -1224,11 +1373,14 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                       border: '1px solid rgba(222,192,120,.18)', overflow: 'hidden',
                       display: 'flex', flexDirection: 'column',
                     }}>
-                      <div style={{ flex: 1, background: S1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        <span style={{ fontSize: '32px', color: 'rgba(222,192,120,.15)' }}>{member.name[0]}</span>
+                      <div style={{ flex: 1, background: S1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                        {member.headshotUrl
+                          ? <img src={member.headshotUrl} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', position: 'absolute', inset: 0 }} />
+                          : <span style={{ fontSize: '32px', color: 'rgba(222,192,120,.15)' }}>{member.name[0]}</span>
+                        }
                         <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(36,10,3,.5) 0%,rgba(36,10,3,0) 60%)' }} />
                         <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 700, color: GOLD }}>
-                          {member.num}
+                          {numLabel}
                         </div>
                         <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(222,192,120,.15)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 600, color: GOLD }}>
                           Tap ↻
@@ -1236,8 +1388,8 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                       </div>
                       <div style={{ padding: '13px 14px 15px', background: S2, borderTop: '1px solid rgba(222,192,120,.14)' }}>
                         <p style={{ fontSize: '13px', fontWeight: 800, color: TP, margin: '0 0 2px', fontFamily: FF }}>{member.name}</p>
-                        <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 2px' }}>{member.role}</p>
-                        <p style={{ fontSize: '10px', color: TS, margin: 0 }}>{member.sub}</p>
+                        <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 2px' }}>{member.roleOrg}</p>
+                        <p style={{ fontSize: '10px', color: TS, margin: 0 }}>{member.categoryLabel}</p>
                       </div>
                     </div>
 
@@ -1259,10 +1411,15 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
               )
             })}
 
-            {/* TBA seats */}
-            {TBA_SEATS.map((seat, idx) => (
+            {/* TBA seats — Sanity announcing members or hardcoded fallback */}
+            {(useAdvisoryFromSanity ? tbaAdvisory : TBA_SEATS.map((s, i) => ({
+              _id: `tba-${i}`,
+              initial: s.initial,
+              categoryLabel: s.category,
+              number: parseInt(s.num),
+            } as AdvisoryMemberData & { initial?: string }))).map((seat, idx) => (
               <div
-                key={`tba-${idx}`}
+                key={seat._id ?? `tba-${idx}`}
                 style={{
                   height: '380px', borderRadius: '14px',
                   border: '1px dashed rgba(222,192,120,.2)',
@@ -1273,10 +1430,10 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
                 }}
               >
                 <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(222,192,120,.07)', border: '1px dashed rgba(222,192,120,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 800, color: 'rgba(222,192,120,.3)' }}>
-                  {seat.initial}
+                  {seat.initial ?? (seat.name?.[0] ?? '?')}
                 </div>
                 <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(245,238,226,.35)', margin: 0, textAlign: 'center' }}>Advisory seat</p>
-                <p style={{ fontSize: '11px', color: 'rgba(222,192,120,.35)', margin: 0, textAlign: 'center' }}>{seat.category}</p>
+                <p style={{ fontSize: '11px', color: 'rgba(222,192,120,.35)', margin: 0, textAlign: 'center' }}>{seat.categoryLabel}</p>
                 <p style={{ fontSize: '10px', color: 'rgba(224,206,189,.3)', margin: 0, textAlign: 'center' }}>Announcing · Season 1</p>
               </div>
             ))}
@@ -1302,23 +1459,26 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
 
           <div style={{ position: 'relative', zIndex: 1 }}>
             <h2 style={{ fontSize: 'clamp(24px,6vw,44px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-              Your students are ready for a <span style={{ color: GOLD }}>national stage.</span>
+              {applyCta?.heading
+                ? applyCta.heading
+                : <>Your students are ready for a <span style={{ color: GOLD }}>national stage.</span></>
+              }
             </h2>
             <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 auto 32px', maxWidth: '480px' }}>
-              Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.
+              {applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.'}
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <button
                 onClick={onSchoolFormOpen}
                 style={{ background: GOLD, color: BG, padding: '16px 32px', borderRadius: '999px', fontSize: '15px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
               >
-                Bring WeThink to my school ↗
+                {applyCta?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
               </button>
               <button
                 onClick={onPartnerFormOpen}
                 style={{ background: 'rgba(52,15,5,.4)', color: TP, border: '1px solid rgba(224,206,189,.3)', padding: '16px 32px', borderRadius: '999px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', fontFamily: FF }}
               >
-                Partner with us
+                {applyCta?.secondaryCtaLabel ?? 'Partner with us'}
               </button>
             </div>
           </div>
@@ -1364,18 +1524,27 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
               <div>
                 <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 14px' }}>Explore</p>
-                {[
-                  { label: 'Who we build for', href: '#pathways' },
-                  { label: 'Domains', href: '#domains-section' },
-                  { label: 'WeThink Summit', href: '#summit-section' },
-                  { label: 'The journey', href: '#journey-section' },
-                ].map(l => (
-                  <a key={l.href} href={l.href} style={{ display: 'block', fontSize: '13px', color: TS, textDecoration: 'none', marginBottom: '9px' }}>{l.label}</a>
+                {(siteConfig?.footerExploreLinks && siteConfig.footerExploreLinks.length > 0
+                  ? siteConfig.footerExploreLinks
+                  : [
+                      { label: 'Who we build for', link: '#pathways' },
+                      { label: 'Domains', link: '#domains-section' },
+                      { label: 'WeThink Summit', link: '#summit-section' },
+                      { label: 'The journey', link: '#journey-section' },
+                    ]
+                ).map(l => (
+                  <a key={l.label} href={l.link} style={{ display: 'block', fontSize: '13px', color: TS, textDecoration: 'none', marginBottom: '9px' }}>{l.label}</a>
                 ))}
               </div>
 
               <div>
                 <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 14px' }}>Connect</p>
+                {(siteConfig?.footerConnectLinks && siteConfig.footerConnectLinks.length > 0
+                  ? siteConfig.footerConnectLinks
+                  : []
+                ).map(l => (
+                  <a key={l.label} href={l.link} style={{ display: 'block', fontSize: '13px', color: TS, textDecoration: 'none', marginBottom: '9px' }}>{l.label}</a>
+                ))}
                 <button onClick={onSchoolFormOpen} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>School enquiry</button>
                 <button onClick={onPartnerFormOpen} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>Partner with us</button>
                 <a href="#advisory-section" style={{ display: 'block', fontSize: '13px', color: TS, textDecoration: 'none', marginBottom: '9px' }}>Advisory board</a>
@@ -1386,10 +1555,10 @@ export function MobileSite({ onSchoolFormOpen, onPartnerFormOpen }: Props) {
           {/* Copyright */}
           <div style={{ borderTop: '1px solid rgba(222,192,120,.1)', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
             <p style={{ fontSize: '12px', color: 'rgba(224,206,189,.4)', margin: 0 }}>
-              © 2026 WeThink Bharat. All rights reserved.
+              {siteConfig?.copyrightText ?? '© 2026 WeThink Bharat. All rights reserved.'}
             </p>
             <p style={{ fontSize: '12px', color: 'rgba(224,206,189,.4)', margin: 0 }}>
-              A national experiential learning movement.
+              {siteConfig?.footerTagline ?? 'A national experiential learning movement.'}
             </p>
           </div>
         </footer>

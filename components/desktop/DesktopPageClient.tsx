@@ -5,7 +5,7 @@ import { SchoolFormModal } from '@/components/shared/SchoolFormModal'
 import { PartnerFormModal } from '@/components/shared/PartnerFormModal'
 import { Toast } from '@/components/shared/Toast'
 
-interface AdvisoryMemberData {
+export interface AdvisoryMemberData {
   _id: string
   name: string
   roleOrg?: string
@@ -17,13 +17,15 @@ interface AdvisoryMemberData {
   number?: number
 }
 
-interface CurrentPartnerData {
+export interface CurrentPartnerData {
   _id: string
   name: string
   type?: string
   description?: string
   logoUrl?: string
   categoryName?: string
+  showInHomeMarquee?: boolean
+  showInEcosystemGrid?: boolean
 }
 
 export interface HeroData {

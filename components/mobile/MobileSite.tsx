@@ -31,24 +31,19 @@ const BORDER = '1px solid rgba(222,192,120,.14)'
 
 /* ── keyframes ───────────────────────────────────────────────── */
 const KEYFRAMES = `
-@keyframes wtbSpin { from { transform:rotate(0deg); } to { transform:rotate(360deg); } }
-@keyframes wtbPulse { 0%,100% { box-shadow:0 0 0 0 rgba(222,192,120,.5); } 70% { box-shadow:0 0 0 10px rgba(222,192,120,0); } 100% { box-shadow:0 0 0 0 rgba(222,192,120,0); } }
-@keyframes wtbBob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(9px); } }
+@keyframes wtbPulse { 0%,100% { box-shadow:0 0 0 0 rgba(222,192,120,.5); } 70% { box-shadow:0 0 0 10px rgba(222,192,120,0); } }
 @keyframes wtbMarquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
 @keyframes wtbFadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
-[data-reveal] { opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s ease; }
-[data-reveal].is-visible { opacity:1; transform:translateY(0); }
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal] { opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s ease; }
+  [data-reveal].is-visible { opacity:1; transform:translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal] { opacity:1 !important; transform:none !important; }
+}
 `
 
-/* ── journey cards ───────────────────────────────────────────── */
-const JOURNEY_CARDS = [
-  { icon: 'ti-compass', stage: '01 OPEN', title: 'Open — The Exposure Experience', pill: '2 days', body: 'A 2-day immersive experience where students step into a live industry world for the first time. Real practitioners, real environments, real challenges.', iconUrl: undefined as string | undefined },
-  { icon: 'ti-briefcase', stage: '02 LIVE', title: 'Live — The Real Brief', pill: '2 weeks', body: 'Students work on a genuine industry brief over two weeks. No textbook answers — just real problems that real organisations need solved.', iconUrl: undefined as string | undefined },
-  { icon: 'ti-users', stage: '03 CIRCLE', title: 'Circle — Ongoing Mentorship', pill: 'Continuous', body: 'Ongoing sessions with industry practitioners who guide, challenge and push student thinking — every week, throughout the semester.', iconUrl: undefined as string | undefined },
-  { icon: 'ti-microphone', stage: '04 SUMMIT', title: 'Summit — The National Stage', pill: '4× / year', body: 'The best student work is pitched at the WeThink Summit — a live, nationally recognised event in front of industry leaders and an audience that matters.', iconUrl: undefined as string | undefined },
-  { icon: 'ti-certificate', stage: '05 IMPRINT', title: 'Imprint — Proof for Life', pill: 'Permanent', body: 'Every student receives a permanent, verifiable digital footprint of their work — a WeThink Imprint that belongs to them forever, globally accessible.', iconUrl: undefined as string | undefined },
-]
-
+/* ── journey card backgrounds ────────────────────────────────── */
 const CARD_BG = [
   'linear-gradient(165deg,#2A0E05,#200A03)',
   'linear-gradient(165deg,#3B1407,#2A0E05)',
@@ -57,7 +52,16 @@ const CARD_BG = [
   'linear-gradient(165deg,#8C3623,#5A1E10)',
 ]
 
-/* ── advisory members ────────────────────────────────────────── */
+/* ── fallback journey data ───────────────────────────────────── */
+const JOURNEY_CARDS = [
+  { icon: 'ti-compass', stage: '01 OPEN', title: 'Open — The Exposure Experience', pill: '2 days', body: 'A 2-day immersive experience where students step into a live industry world for the first time. Real practitioners, real environments, real challenges.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-briefcase', stage: '02 LIVE', title: 'Live — The Real Brief', pill: '2 weeks', body: 'Students work on a genuine industry brief over two weeks. No textbook answers — just real problems that real organisations need solved.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-users', stage: '03 CIRCLE', title: 'Circle — Ongoing Mentorship', pill: 'Continuous', body: 'Ongoing sessions with industry practitioners who guide, challenge and push student thinking — every week, throughout the semester.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-microphone', stage: '04 SUMMIT', title: 'Summit — The National Stage', pill: '4× / year', body: 'The best student work is pitched at the WeThink Summit — a live, nationally recognised event in front of industry leaders and an audience that matters.', iconUrl: undefined as string | undefined },
+  { icon: 'ti-certificate', stage: '05 IMPRINT', title: 'Imprint — Proof for Life', pill: 'Permanent', body: 'Every student receives a permanent, verifiable digital footprint of their work — a WeThink Imprint that belongs to them forever, globally accessible.', iconUrl: undefined as string | undefined },
+]
+
+/* ── fallback advisory data ──────────────────────────────────── */
 const NAMED_MEMBERS = [
   { name: 'Dr. Aditi Misra', role: 'Director · DPS Intl', sub: 'Gurgaon, Jaipur & Dharav High School', num: '01', bio: 'A renowned educationist with over three decades in academic leadership and institution-building. Dr. Misra has shaped some of India\'s most respected school communities and has been honoured with the CV Raman Education Award for her transformative contributions to the field.' },
   { name: 'Dr. Amrita Burman', role: 'Director · Sunbeam Group', sub: 'Education Management Expert', num: '02', bio: 'A respected education leader and Director of the Sunbeam Group, with three decades transforming modern education through curriculum innovation, institutional culture-building, and a deep commitment to student-centred learning across India.' },
@@ -80,12 +84,10 @@ const TBA_SEATS = [
   { num: '16', initial: 'E', category: 'Education & Pedagogy' },
 ]
 
-/* ── domain data ─────────────────────────────────────────────── */
+/* ── fallback domain data ────────────────────────────────────── */
 const DOMAINS = [
   {
-    num: '01',
-    title: 'Entrepreneurship',
-    partner: 'Startup Studio · NASSCOM 10,000 Startups',
+    num: '01', title: 'Entrepreneurship', partner: 'Startup Studio · NASSCOM 10,000 Startups',
     levels: [
       { level: 'LEVEL 1', title: 'Find a Problem', body: 'Students identify real-world problems worth solving through structured research and observation.' },
       { level: 'LEVEL 2', title: 'Design & Validate', body: 'Build and test solutions with real users — iterating until the idea holds.' },
@@ -95,9 +97,7 @@ const DOMAINS = [
     outcomes: ['A validated business idea and go-to-market plan', 'A functional prototype tested with real users', 'A pitch presented to a real industry jury'],
   },
   {
-    num: '02',
-    title: 'Media & Communication',
-    partner: 'The Newsroom · Brut',
+    num: '02', title: 'Media & Communication', partner: 'The Newsroom · Brut',
     levels: [
       { level: 'LEVEL 1', title: 'Find the Story', body: 'Students learn to identify stories worth telling — in their schools, communities and the world.' },
       { level: 'LEVEL 2', title: 'Write & Shape It', body: 'From first draft to polished piece — editorial judgment, structure, and voice.' },
@@ -107,9 +107,7 @@ const DOMAINS = [
     outcomes: ['Published journalism and content pieces', 'A portfolio-ready body of work', 'Editorial judgment and media industry knowledge'],
   },
   {
-    num: '03',
-    title: 'Design & Innovation',
-    partner: 'Design Lab · Canva',
+    num: '03', title: 'Design & Innovation', partner: 'Design Lab · Canva',
     levels: [
       { level: 'LEVEL 1', title: 'Observe & Empathise', body: 'Students become researchers — watching, listening, and understanding human problems.' },
       { level: 'LEVEL 2', title: 'Define the Problem', body: 'Turning observations into clear problem statements that are worth designing for.' },
@@ -149,27 +147,10 @@ function ImgPlaceholder({ height }: { height?: string | number }) {
   )
 }
 
-/* ── carousel transform ──────────────────────────────────────── */
-function getCardTransform(idx: number, active: number) {
-  const offset = idx - active
-  const clamped = Math.max(-2, Math.min(2, offset))
-  const xMap: Record<string, number> = { '-2': -440, '-1': -240, '0': 0, '1': 240, '2': 440 }
-  const scaleMap: Record<string, number> = { '-2': 0.82, '-1': 0.92, '0': 1.05, '1': 0.92, '2': 0.82 }
-  const opMap: Record<string, number> = { '-2': 0.35, '-1': 0.7, '0': 1, '1': 0.7, '2': 0.35 }
-  const zMap: Record<string, number> = { '-2': 4, '-1': 6, '0': 10, '1': 6, '2': 4 }
-  const k = String(clamped)
-  return {
-    transform: `translateX(${xMap[k]}px) scale(${scaleMap[k]})`,
-    opacity: opMap[k],
-    zIndex: zMap[k],
-    transition: 'transform 0.45s cubic-bezier(0.25,0.46,0.45,0.94), opacity 0.45s ease',
-    position: 'absolute' as const,
-    left: '50%',
-    top: '50%',
-    marginLeft: '-clamp(107px,10vw,143px)' as unknown as number,
-    marginTop: '-clamp(150px,16vw,192px)' as unknown as number,
-  }
-}
+/* ── route type ──────────────────────────────────────────────── */
+type Route = 'home' | 'vision' | 'domains' | 'summit' | 'ecosystem' | 'advisory' | 'journey' | 'contact'
+
+const SHEET_ROUTES: Route[] = ['vision', 'ecosystem', 'advisory', 'contact']
 
 /* ── Props ───────────────────────────────────────────────────── */
 interface Props {
@@ -195,7 +176,7 @@ interface Props {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MobileSite
+   MobileSite — 8-route SPA
 ═══════════════════════════════════════════════════════════════ */
 export function MobileSite({
   onSchoolFormOpen,
@@ -216,13 +197,14 @@ export function MobileSite({
   siteConfig,
   headerImages,
 }: Props) {
-  const [activeTab, setActiveTab] = useState<'home' | 'domains' | 'journey' | 'summit' | 'menu'>('home')
+  const [activeRoute, setActiveRoute] = useState<Route>('home')
+  const [navStack, setNavStack] = useState<Route[]>([])
   const [sheetOpen, setSheetOpen] = useState(false)
-  const [navStack, setNavStack] = useState<string[]>([])
   const [openAccordion, setOpenAccordion] = useState<number | null>(null)
-  const [activeCard, setActiveCard] = useState(2)
   const [flippedCards, setFlippedCards] = useState<Set<number>>(new Set())
   const [backToTopVisible, setBackToTopVisible] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
+  const [headerSolid, setHeaderSolid] = useState(false)
 
   /* ── derived Sanity data ─────────────────────── */
   const DEFAULT_JOURNEY_ICONS = ['ti-compass', 'ti-briefcase', 'ti-users', 'ti-microphone', 'ti-certificate']
@@ -247,7 +229,7 @@ export function MobileSite({
         teaserImageUrl: d.teaserImageUrl,
         detailImageUrl: d.detailImageUrl,
       }))
-    : DOMAINS.map((d) => ({ ...d, teaserImageUrl: undefined, detailImageUrl: undefined }))
+    : DOMAINS.map((d) => ({ ...d, teaserImageUrl: undefined as string | undefined, detailImageUrl: undefined as string | undefined }))
 
   const activeBeliefs = (beliefsProp && beliefsProp.length > 0)
     ? beliefsProp.map((b) => ({ n: String(b.number).padStart(2, '0'), title: b.title, body: b.body }))
@@ -275,7 +257,7 @@ export function MobileSite({
   const activeGapStats = (gapSection?.stats && gapSection.stats.length > 0)
     ? gapSection.stats.map((s, i) => ({ count: s.value, suffix: s.suffix, label: s.label, body: s.description, borderBottom: i === gapSection.stats.length - 1 }))
     : [
-        { count: '80', suffix: '%', label: 'Graduates are industry-unready', body: "Most Indian graduates lack the applied, real-world skills industry needs on Day 1.", borderBottom: false },
+        { count: '80', suffix: '%', label: 'Graduates are industry-unready', body: 'Most Indian graduates lack the applied, real-world skills industry needs on Day 1.', borderBottom: false },
         { count: '93', suffix: '%', label: 'Students choose without experiencing', body: 'Students pick a stream on secondhand advice — never having lived the domain.', borderBottom: false },
         { count: '14–18', suffix: '', label: 'The window that changes everything', body: 'The last moment before the fork — real experience here changes everything.', borderBottom: true },
       ]
@@ -286,6 +268,39 @@ export function MobileSite({
 
   const homeMarqueePartners = (currentPartnersProp ?? []).filter(p => p.showInHomeMarquee)
   const ecosystemGridPartners = (currentPartnersProp ?? []).filter(p => p.showInEcosystemGrid)
+
+  /* ── navigation ──────────────────────────────── */
+  const navigate = (route: Route, opts?: { domain?: number }) => {
+    setNavStack(prev => [...prev.slice(-39), activeRoute])
+    setActiveRoute(route)
+    if (opts?.domain !== undefined) setOpenAccordion(opts.domain)
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
+  }
+
+  const goBack = () => {
+    const stack = [...navStack]
+    const prev = stack.pop() ?? 'home'
+    setNavStack(stack)
+    setActiveRoute(prev)
+    if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior })
+  }
+
+  const handleTabClick = (id: Route | 'menu') => {
+    if (id === 'menu') { setSheetOpen(true); return }
+    navigate(id as Route)
+  }
+
+  const closeSheet = () => setSheetOpen(false)
+
+  const toggleFlip = (idx: number) => {
+    setFlippedCards(prev => {
+      const next = new Set(prev)
+      if (next.has(idx)) next.delete(idx); else next.add(idx)
+      return next
+    })
+  }
+
+  const isMenuTabActive = SHEET_ROUTES.includes(activeRoute)
 
   /* ── keyframe injection ──────────────────────── */
   useEffect(() => {
@@ -299,1277 +314,1102 @@ export function MobileSite({
     }
   }, [])
 
-  /* ── scroll reveal ───────────────────────────── */
+  /* ── scroll reveal (re-fires on route change) ── */
   useEffect(() => {
-    const els = document.querySelectorAll('[data-reveal]')
+    if (typeof document === 'undefined') return
+    // Reset so animations re-fire when returning to a screen
+    document.querySelectorAll('[data-reveal]').forEach(el => el.classList.remove('is-visible'))
     const obs = new IntersectionObserver(
       entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible') }),
-      { threshold: 0.08 }
+      { rootMargin: '0px 0px -8% 0px', threshold: 0.06 }
     )
-    els.forEach(el => obs.observe(el))
+    document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el))
     return () => obs.disconnect()
-  }, [])
+  }, [activeRoute])
 
   /* ── count-up ────────────────────────────────── */
   useEffect(() => {
+    if (typeof document === 'undefined') return
     const els = document.querySelectorAll<HTMLElement>('[data-count]')
     const obs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return
         const el = entry.target as HTMLElement
         const raw = el.dataset.count ?? '0'
-        const isRange = raw.includes('–')
-        if (isRange) { el.textContent = raw; obs.unobserve(el); return }
-        const target = parseFloat(raw)
+        if (raw.includes('–')) return // range like "14–18"
         const suffix = raw.replace(/[\d.]/g, '')
-        const start = performance.now()
-        const dur = 1800
-        const step = (now: number) => {
-          const progress = Math.min((now - start) / dur, 1)
-          const eased = 1 - Math.pow(1 - progress, 3)
-          el.textContent = Math.round(eased * target) + suffix
-          if (progress < 1) requestAnimationFrame(step)
-        }
-        requestAnimationFrame(step)
+        const num = parseFloat(raw)
+        if (isNaN(num)) return
         obs.unobserve(el)
+        const start = performance.now()
+        const dur = 900
+        const tick = (now: number) => {
+          const t = Math.min((now - start) / dur, 1)
+          const ease = 1 - Math.pow(1 - t, 3)
+          el.textContent = Math.round(ease * num) + suffix
+          if (t < 1) requestAnimationFrame(tick)
+        }
+        requestAnimationFrame(tick)
       })
-    }, { threshold: 0.5 })
+    }, { threshold: 0.3 })
     els.forEach(el => obs.observe(el))
     return () => obs.disconnect()
-  }, [])
+  }, [activeRoute])
 
-  /* ── back-to-top visibility ──────────────────── */
+  /* ── scroll events (progress + header + back-to-top) */
   useEffect(() => {
-    const handleScroll = () => setBackToTopVisible(window.scrollY > 400)
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
+    if (typeof window === 'undefined') return
+    const onScroll = () => {
+      const scrolled = window.scrollY
+      const total = document.documentElement.scrollHeight - window.innerHeight
+      setScrollProgress(total > 0 ? scrolled / total : 0)
+      setHeaderSolid(scrolled > 40)
+      setBackToTopVisible(scrolled > 300)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const toggleFlip = (idx: number) => {
-    setFlippedCards(prev => {
-      const next = new Set(prev)
-      if (next.has(idx)) next.delete(idx); else next.add(idx)
-      return next
-    })
-  }
-
-  const scrollTo = (id: string) => {
-    const el = document.querySelector(id)
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-  }
-
-  const handleTabClick = (tab: typeof activeTab) => {
-    if (tab === 'menu') {
-      setActiveTab('menu')
-      setSheetOpen(true)
-      return
-    }
-    setActiveTab(tab)
-    const map: Record<string, string> = {
-      home: '#home',
-      domains: '#domains-section',
-      journey: '#journey-section',
-      summit: '#summit-section',
-    }
-    scrollTo(map[tab])
-  }
-
-  const closeSheet = () => {
-    setSheetOpen(false)
-    setActiveTab('home')
-  }
-
-  const goBack = () => {
-    const next = [...navStack]
-    const prev = next.pop()
-    setNavStack(next)
-    if (prev) scrollTo(prev)
-  }
-
-  /* ─── TABS ────────────────────────────────────────── */
-  const TABS = [
-    { id: 'home' as const, label: 'Home', icon: 'ti-home-2' },
-    { id: 'domains' as const, label: 'Domains', icon: 'ti-layout-grid' },
-    { id: 'journey' as const, label: 'Journey', icon: 'ti-route' },
-    { id: 'summit' as const, label: 'Summit', icon: 'ti-microphone-2' },
-    { id: 'menu' as const, label: 'Menu', icon: 'ti-menu-2' },
+  /* ── tabs config ─────────────────────────────── */
+  const TABS: { id: Route | 'menu'; label: string; icon: string }[] = [
+    { id: 'home', label: 'Home', icon: 'ti-home-2' },
+    { id: 'domains', label: 'Domains', icon: 'ti-layout-grid' },
+    { id: 'journey', label: 'Journey', icon: 'ti-route' },
+    { id: 'summit', label: 'Summit', icon: 'ti-microphone-2' },
+    { id: 'menu', label: 'Menu', icon: 'ti-menu-2' },
   ]
 
+  /* ══════════════════════════════════════════════════════════════
+     RENDER
+  ══════════════════════════════════════════════════════════════ */
   return (
-    <div style={{ fontFamily: FF, background: BG, color: TP, width: '100%', overflowX: 'hidden', position: 'relative', paddingBottom: '78px' }}>
+    <div style={{ fontFamily: FF, background: BG, color: TP, width: '100%', overflowX: 'hidden', position: 'relative' }}>
+
+      {/* ── scroll progress bar ── */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, right: 0, height: '2px', zIndex: 300,
+        background: 'rgba(255,255,255,.06)',
+        pointerEvents: 'none',
+      }}>
+        <div style={{
+          height: '100%',
+          background: `linear-gradient(90deg, #8C3623, ${GOLD})`,
+          transform: `scaleX(${scrollProgress})`,
+          transformOrigin: 'left',
+          transition: 'transform .1s linear',
+        }} />
+      </div>
 
       {/* ══════════════════════════════════════
-          1. HEADER (fixed)
+          HEADER (fixed)
       ══════════════════════════════════════ */}
       <header style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        background: 'rgba(36,10,3,.55)', backdropFilter: 'blur(14px)',
+        background: headerSolid ? 'rgba(36,10,3,.92)' : 'rgba(36,10,3,.55)',
+        backdropFilter: 'blur(14px)',
         height: '60px',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
         padding: '0 18px',
-        borderBottom: '1px solid rgba(222,192,120,.1)',
+        borderBottom: `1px solid rgba(222,192,120,${headerSolid ? '.18' : '.1'})`,
+        transition: 'background .3s, border-color .3s',
       }}>
-        {navStack.length > 0 && (
+        {/* Back button — shown on every route except home */}
+        {activeRoute !== 'home' && (
           <button
             onClick={goBack}
             aria-label="Go back"
             style={{
               position: 'absolute', left: '12px',
               background: 'none', border: 'none', cursor: 'pointer',
-              color: TP, fontSize: '23px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-              padding: '8px',
+              color: TP, display: 'flex', alignItems: 'center', justifyContent: 'center',
+              width: '40px', height: '40px', padding: 0,
             }}
           >
-            <i className="ti ti-arrow-left" />
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
           </button>
         )}
-        <a href="#home" style={{ textDecoration: 'none', fontSize: '20px', fontWeight: 800, fontFamily: FF }}>
-          <span style={{ color: TP }}>wethink</span><span style={{ color: GOLD }}>bharat</span>
-        </a>
+
+        {/* Logo */}
+        <button
+          onClick={() => navigate('home')}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontFamily: FF, fontSize: '20px', fontWeight: 800 }}
+        >
+          {logoUrl
+            ? <img src={logoUrl} alt="WeThink Bharat" style={{ height: '38px', objectFit: 'contain', pointerEvents: 'none' }} />
+            : <><span style={{ color: TP }}>wethink</span><span style={{ color: GOLD }}>bharat</span></>
+          }
+        </button>
       </header>
 
       {/* ══════════════════════════════════════
-          MAIN CONTENT (padded for header + tab bar)
+          MAIN CONTENT
       ══════════════════════════════════════ */}
       <main style={{ paddingTop: '60px', paddingBottom: '78px' }}>
 
         {/* ════════════════════════════════════
-            2. CINEMATIC HERO
+            HOME ROUTE
         ════════════════════════════════════ */}
-        <section id="home" style={{
-          position: 'relative', minHeight: '100dvh',
-          display: 'flex', alignItems: 'flex-end',
-          overflow: 'hidden',
-          padding: '0 clamp(24px,6vw,64px) 80px',
-          borderBottom: BORDER,
-        }}>
-          <HeroPageBg imageUrl={hero?.heroImageUrl} />
-
-          {/* Content */}
-          <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
-            {/* Status chip */}
-            {(hero?.seasonBanner) && (
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '6px 14px', marginBottom: '24px' }}>
-                <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
-                <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD, letterSpacing: '.06em' }}>{hero.seasonBanner}</span>
-              </div>
-            )}
-
-            {/* H1 */}
-            <h1 style={{
-              fontSize: '44px', fontWeight: 800, letterSpacing: '-0.03em',
-              lineHeight: 0.98, color: TP, margin: '0 0 22px', fontFamily: FF,
+        {activeRoute === 'home' && (
+          <>
+            {/* HERO */}
+            <section style={{
+              position: 'relative', minHeight: '100dvh',
+              display: 'flex', alignItems: 'flex-end',
+              overflow: 'hidden',
+              padding: '0 clamp(24px,6vw,64px) 100px',
+              borderBottom: BORDER,
             }}>
-              {hero?.headlineSpans && hero.headlineSpans.length > 0
-                ? hero.headlineSpans.map((s, i) => (
-                    <span key={i} style={s.gold ? { color: GOLD } : {}}>{s.text}</span>
-                  ))
-                : <>India's students deserve to{' '}<span style={{ color: GOLD }}>discover</span>{' '}before they decide.</>
-              }
-            </h1>
-
-            {/* Body */}
-            <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
-              {hero?.subcopy ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.'}
-            </p>
-
-            {/* CTAs — stacked column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
-              <button
-                onClick={onSchoolFormOpen}
-                style={{
-                  background: GOLD, color: BG, padding: '16px 30px',
-                  borderRadius: '999px', fontSize: '15px', fontWeight: 600,
-                  border: 'none', cursor: 'pointer', fontFamily: FF, width: '100%',
-                }}
-              >
-                {hero?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
-              </button>
-              <a
-                href="#domains-section"
-                style={{
-                  background: 'rgba(52,15,5,.4)', color: TP,
-                  border: '1px solid rgba(224,206,189,.3)', padding: '16px 30px',
-                  borderRadius: '999px', fontSize: '15px', fontWeight: 600,
-                  textDecoration: 'none', fontFamily: FF, width: '100%',
-                  display: 'block', textAlign: 'center', boxSizing: 'border-box',
-                }}
-              >
-                {hero?.secondaryCtaLabel ?? 'Explore the domains'}
-              </a>
-            </div>
-
-            {/* Domains strip */}
-            {hero?.domainsStrip && (
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.18)', borderRadius: '999px', padding: '6px 16px' }}>
-                <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
-                <span style={{ fontSize: '13px', color: TS }}>{hero.domainsStrip}</span>
-              </div>
-            )}
-          </div>
-
-          {/* Scroll cue */}
-          <div style={{
-            position: 'absolute', bottom: '28px', left: '50%', transform: 'translateX(-50%)',
-            zIndex: 3, textAlign: 'center', color: 'rgba(224,206,189,.5)',
-            fontSize: '12px', letterSpacing: '.1em', animation: 'wtbBob 2s ease-in-out infinite',
-          }}>
-            <div>Scroll to enter</div>
-            <div style={{ fontSize: '18px', marginTop: '4px' }}>↓</div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            3. VISION PAGE HERO
-        ════════════════════════════════════ */}
-        <section id="vision-section" style={{
-          position: 'relative', minHeight: 'clamp(200px,30vh,320px)', display: 'flex',
-          alignItems: 'center', overflow: 'hidden',
-          padding: '100px clamp(24px,6vw,64px) 48px', borderBottom: BORDER,
-        }}>
-          <HeroPageBg imageUrl={headerImages?.vision} />
-          <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
-            <h1 style={{ fontSize: 'clamp(32px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              We are building India's first{' '}
-              <span style={{ color: GOLD }}>experiential learning ecosystem.</span>
-            </h1>
-            <p style={{ fontSize: 'clamp(15px,1.5vw,18px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-              WeThink Bharat exists for one reason — so that no Indian student ever has to choose a career they don't understand, in a world they've never experienced.
-            </p>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            4. POETIC INTERSTITIAL
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{
-          position: 'relative', padding: 'clamp(64px,10vw,120px) clamp(24px,6vw,64px)',
-          background: S1, borderBottom: BORDER, overflow: 'hidden', textAlign: 'center',
-        }}>
-          <div aria-hidden="true" style={{
-            position: 'absolute', left: '50%', top: 0,
-            transform: 'translateX(-50%)',
-            fontSize: 'clamp(80px,18vw,160px)', fontWeight: 800,
-            color: 'rgba(222,192,120,.28)', lineHeight: 1, pointerEvents: 'none',
-            userSelect: 'none', zIndex: 0,
-          }}>
-            "
-          </div>
-
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <p style={{
-              fontSize: 'clamp(18px,4.5vw,32px)', fontWeight: 600, color: TP,
-              lineHeight: 1.34, letterSpacing: '-.015em', textAlign: 'left',
-              margin: '0 0 40px', fontFamily: FF,
-            }}>
-              Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam.{' '}
-              <strong style={{ color: GOLD }}>That has to change.</strong>
-            </p>
-
-            <div style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-              <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>
-                The average Indian student knows very little about the world of work before they are asked to commit to it for life. This isn't their failure — it's a structural gap that no one has addressed at scale.
-              </p>
-              <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>
-                WeThink Bharat is built to close that gap — not through lectures or videos or one-day workshops, but through real, structured, industry-driven experiences that live inside the school itself.
-              </p>
-              <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>
-                We believe that a student who has run a simulated startup, filed a news story, or designed a product for a real brief is infinitely better prepared than one who hasn't. And we believe India has the scale, the schools, and the students to make this happen — now.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            5. VISION CONTENT
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-          <SectionLabel>Our vision</SectionLabel>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, maxWidth: '840px', margin: '0 0 40px', fontFamily: FF }}>
-            A Bharat where every student discovers their{' '}
-            <span style={{ color: GOLD }}>capability</span>{' '}
-            before they ever have to choose a path.
-          </h2>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-            {[
-              { label: 'Purpose', text: 'Expose every student to the real world of work — early, and for real.' },
-              { label: 'Vision', text: 'A generation that enters adulthood already knowing what it is capable of.' },
-              { label: 'Mission', text: 'Real briefs, real mentors, and permanent proof — inside every school.' },
-            ].map(card => (
-              <div key={card.label} style={{ border: '1px solid rgba(222,192,120,.16)', background: S1, borderRadius: '16px', padding: '24px 22px' }}>
-                <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 10px' }}>{card.label}</p>
-                <p style={{ fontSize: '15px', lineHeight: 1.6, color: TP, margin: 0 }}>{card.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            6. BELIEFS
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <SectionLabel>What we believe</SectionLabel>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-            Six convictions that drive everything we build
-          </h2>
-          <p style={{ fontSize: 'clamp(14px,1.4vw,16px)', color: TS, lineHeight: 1.7, margin: '0 0 40px' }}>
-            Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {activeBeliefs.map(b => (
-              <div key={b.n} style={{ display: 'flex', gap: '14px', padding: '20px 0', borderTop: '1px solid rgba(222,192,120,.14)' }}>
-                <span style={{ fontSize: '13px', fontWeight: 700, color: GOLD, minWidth: '28px', letterSpacing: '.02em', paddingTop: '2px' }}>{b.n}</span>
-                <div>
-                  <p style={{ fontSize: '16px', fontWeight: 800, color: TP, margin: '0 0 6px', fontFamily: FF }}>{b.title}</p>
-                  <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: 0 }}>{b.body}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            7. PATHWAYS (1-col grid)
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-            Capability across the whole <span style={{ color: GOLD }}>ecosystem</span>
-          </h2>
-          <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
-            WeThink Bharat is designed for everyone inside a school — students, educators, and institutions — each with their own pathway.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '18px' }}>
-            {activePathways.map(c => (
-              <div key={c.label} style={{ borderRadius: '18px', overflow: 'hidden', border: '1px solid rgba(222,192,120,.16)', background: S1 }}>
-                <div style={{ height: '300px', background: S2, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {c.imageUrl
-                    ? <img src={c.imageUrl} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
-                    : <ImgPlaceholder />
+              <HeroPageBg imageUrl={hero?.heroImageUrl} />
+              <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+                {hero?.seasonBanner && (
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '12px', padding: '6px 14px', marginBottom: '24px' }}>
+                    <span style={{ width: '7px', height: '7px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
+                    <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD, letterSpacing: '.06em' }}>{hero.seasonBanner}</span>
+                  </div>
+                )}
+                <h1 style={{ fontSize: '44px', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 0.98, color: TP, margin: '0 0 22px', fontFamily: FF }}>
+                  {hero?.headlineSpans && hero.headlineSpans.length > 0
+                    ? hero.headlineSpans.map((s, i) => <span key={i} style={s.gold ? { color: GOLD } : {}}>{s.text}</span>)
+                    : <>India's students deserve to <span style={{ color: GOLD }}>discover</span> before they decide.</>
                   }
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(20,7,2,.94) 8%,rgba(20,7,2,.1) 62%)' }} />
+                </h1>
+                <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
+                  {hero?.subcopy ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
+                  <button
+                    onClick={onSchoolFormOpen}
+                    style={{ background: GOLD, color: BG, padding: '16px 30px', borderRadius: '14px', fontSize: '15px', fontWeight: 600, border: 'none', cursor: 'pointer', fontFamily: FF, width: '100%' }}
+                  >
+                    {hero?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
+                  </button>
+                  <button
+                    onClick={() => navigate('domains')}
+                    style={{ background: 'rgba(52,15,5,.4)', color: TP, border: '1px solid rgba(224,206,189,.3)', padding: '16px 30px', borderRadius: '14px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', fontFamily: FF, width: '100%' }}
+                  >
+                    {hero?.secondaryCtaLabel ?? 'Explore the domains'}
+                  </button>
                 </div>
-                <div style={{ padding: '24px 24px 26px', marginTop: '-66px', position: 'relative', zIndex: 1 }}>
-                  <i className={`ti ${c.icon}`} style={{ fontSize: '26px', color: GOLD, display: 'block', marginBottom: '12px' }} />
-                  <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 8px' }}>{c.label}</p>
-                  <h3 style={{ fontSize: '24px', fontWeight: 800, color: TP, margin: '0 0 10px', fontFamily: FF }}>{c.title}</h3>
-                  <p style={{ fontSize: '14px', lineHeight: 1.6, color: TS, margin: 0 }}>{c.body}</p>
-                </div>
+                {hero?.domainsStrip && (
+                  <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.18)', borderRadius: '999px', padding: '6px 16px' }}>
+                    <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
+                    <span style={{ fontSize: '13px', color: TS }}>{hero.domainsStrip}</span>
+                  </div>
+                )}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
 
-        {/* ════════════════════════════════════
-            8. PARTNER MARQUEE
-        ════════════════════════════════════ */}
-        <section style={{ padding: 'clamp(28px,4vw,44px) 0', background: BG, borderBottom: BORDER, overflow: 'hidden' }}>
-          <div style={{ display: 'flex', width: 'max-content', animation: 'wtbMarquee 30s linear infinite' }}>
-            {[...Array(2)].map((_, t) => (
-              <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(36px,5vw,64px)', paddingRight: 'clamp(36px,5vw,64px)' }}>
-                {(homeMarqueePartners.length > 0 ? homeMarqueePartners : [
-                  { _id: 'nasscom', name: 'NASSCOM', logoUrl: undefined },
-                  { _id: 'brut', name: 'Brut', logoUrl: undefined },
-                  { _id: 'canva', name: 'Canva', logoUrl: undefined },
-                  { _id: 'inext', name: 'iNEXT', logoUrl: undefined },
-                ]).map(p => (
-                  <div key={p._id} style={{ width: 'clamp(112px,12vw,152px)', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.72 }}>
-                    {p.logoUrl
-                      ? <img src={p.logoUrl} alt={p.name} style={{ maxHeight: '40px', maxWidth: '100%', objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.85 }} />
-                      : <span style={{ fontSize: '14px', fontWeight: 700, color: TP, letterSpacing: '.08em', fontFamily: FF }}>{p.name}</span>
-                    }
+            {/* PATHWAYS */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
+                Capability across the whole <span style={{ color: GOLD }}>ecosystem</span>
+              </h2>
+              <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
+                WeThink Bharat is designed for everyone inside a school — students, educators, and institutions — each with their own pathway.
+              </p>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '18px' }}>
+                {activePathways.map(c => (
+                  <div key={c.label} style={{ borderRadius: '18px', overflow: 'hidden', border: '1px solid rgba(222,192,120,.16)', background: S1 }}>
+                    <div style={{ height: '240px', background: S2, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {c.imageUrl
+                        ? <img src={c.imageUrl} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+                        : <ImgPlaceholder />
+                      }
+                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(20,7,2,.94) 8%,rgba(20,7,2,.1) 62%)' }} />
+                    </div>
+                    <div style={{ padding: '24px 24px 26px' }}>
+                      <i className={`ti ${c.icon}`} style={{ fontSize: '26px', color: GOLD, display: 'block', marginBottom: '12px' }} />
+                      <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 8px' }}>{c.label}</p>
+                      <h3 style={{ fontSize: '22px', fontWeight: 800, color: TP, margin: '0 0 10px', fontFamily: FF }}>{c.title}</h3>
+                      <p style={{ fontSize: '14px', lineHeight: 1.6, color: TS, margin: 0 }}>{c.body}</p>
+                    </div>
                   </div>
                 ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
 
-        {/* ════════════════════════════════════
-            9. IMPACT STATS
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-          <SectionLabel>The gap we close</SectionLabel>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-            Educated unemployment begins with{' '}
-            <span style={{ color: GOLD }}>uninformed choices.</span>
-          </h2>
-          <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: '0 0 26px', maxWidth: '440px' }}>
-            India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for.
-          </p>
-
-          <div>
-            {activeGapStats.map(s => (
-              <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '22px', padding: '24px 0', borderTop: '1px solid rgba(222,192,120,.2)', borderBottom: s.borderBottom ? '1px solid rgba(222,192,120,.2)' : 'none' }}>
-                <div
-                  data-count={s.count + s.suffix}
-                  style={{ fontSize: 'clamp(52px,6.4vw,84px)', fontWeight: 800, color: GOLD, lineHeight: 0.85, letterSpacing: s.count === '14–18' ? '0' : '-0.03em', fontFamily: FF, flexShrink: 0 }}
-                >
-                  {s.count}{s.suffix}
-                </div>
-                <div>
-                  <div style={{ fontSize: '16px', fontWeight: 800, color: TP, marginBottom: '6px', fontFamily: FF }}>{s.label}</div>
-                  <div style={{ fontSize: '13.5px', color: TS, lineHeight: 1.55 }}>{s.body}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            10. DOMAINS TEASER (home)
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <div style={{ marginBottom: '36px' }}>
-            <SectionLabel>Industry domains</SectionLabel>
-            <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-              Domains you <span style={{ color: GOLD }}>experience</span>, not just study.
-            </h2>
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.2)', borderRadius: '999px', padding: '5px 14px' }}>
-              <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
-              <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD }}>Season 1 · 3 domains live</span>
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {activeDomains.map(d => (
-              <a key={d.num} href="#domains-section" style={{ textDecoration: 'none', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(222,192,120,.16)', background: S2, display: 'block' }}>
-                <div style={{ aspectRatio: '3/2', background: BG, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {d.teaserImageUrl
-                    ? <img src={d.teaserImageUrl} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
-                    : <ImgPlaceholder />
-                  }
-                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(36,10,3,.85) 0%,rgba(36,10,3,0) 60%)' }} />
-                  <div style={{ position: 'absolute', top: '14px', left: '14px', background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em' }}>{d.num}</div>
-                </div>
-                <div style={{ padding: '16px 18px 18px' }}>
-                  <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{d.partner}</p>
-                  <h3 style={{ fontSize: '17px', fontWeight: 800, color: TP, margin: 0, fontFamily: FF }}>{d.title}</h3>
-                </div>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            11. SUMMIT TEASER
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', borderBottom: BORDER, background: S1 }}>
-          <div style={{
-            border: '1px solid rgba(222,192,120,.45)', borderRadius: '20px',
-            padding: 'clamp(32px,6vw,60px)',
-            background: 'radial-gradient(120% 140% at 85% 0%,rgba(222,192,120,.22),rgba(58,36,8,.3) 40%,rgba(36,10,3,0) 72%),linear-gradient(135deg,#3a2408,#240a03)',
-            position: 'relative', overflow: 'hidden',
-          }}>
-            <div aria-hidden="true" style={{
-              position: 'absolute', right: '-4%', bottom: '-20%',
-              fontSize: 'clamp(80px,22vw,200px)', fontWeight: 800,
-              color: 'rgba(222,192,120,.08)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none',
-            }}>
-              SUMMIT
-            </div>
-            <div style={{ position: 'relative', zIndex: 1 }}>
-              <SectionLabel>The WeThink Summit</SectionLabel>
-              <h2 style={{ fontSize: 'clamp(22px,5vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                Where a school project becomes a <span style={{ color: GOLD }}>national moment.</span>
-              </h2>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
-                Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.
-              </p>
-              <a href="#summit-section" style={{ display: 'inline-block', background: GOLD, color: BG, padding: '13px 26px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, textDecoration: 'none', fontFamily: FF }}>
-                Discover the Summit ↗
-              </a>
-            </div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            12. TESTIMONIAL
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{
-          padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)',
-          background: S2, borderBottom: BORDER, textAlign: 'center',
-        }}>
-          <div style={{ fontSize: '72px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '16px' }}>"</div>
-          <blockquote style={{ margin: '0 auto', maxWidth: '680px' }}>
-            <p style={{ fontSize: 'clamp(18px,4.5vw,30px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 30px', fontFamily: FF }}>
-              {visionSection?.directorQuote ?? <>Why do we wait until <strong style={{ color: GOLD }}>after graduation</strong> to give students real experience? By then, the choice is already made.</>}
-            </p>
-          </blockquote>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px' }}>
-            <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: S1, border: '1px solid rgba(222,192,120,.3)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', color: GOLD }}>
-              {visionSection?.directorImageUrl
-                ? <img src={visionSection.directorImageUrl} alt={visionSection.directorName ?? 'Director'} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                : (visionSection?.directorName?.[0] ?? 'N')
-              }
-            </div>
-            <div style={{ textAlign: 'left' }}>
-              <p style={{ fontSize: '14px', fontWeight: 700, color: TP, margin: '0 0 2px' }}>{visionSection?.directorName ?? 'Dr. Neha Raghav'}</p>
-              <p style={{ fontSize: '12px', color: GOLD, margin: 0 }}>{visionSection?.directorTitle ?? 'Director, WeThink Bharat'}</p>
-            </div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            13. DOMAINS PAGE HERO
-        ════════════════════════════════════ */}
-        <section style={{
-          position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
-          alignItems: 'center', overflow: 'hidden',
-          padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
-        }}>
-          <HeroPageBg imageUrl={headerImages?.domains} />
-          <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
-            <h1 style={{ fontSize: 'clamp(32px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              Step into the <span style={{ color: GOLD }}>real work.</span>
-            </h1>
-            <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-              Four complete worlds — each with a simulator, a live project, an industry partner, and proof that lasts.
-            </p>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            14. FEATURE: DOMAINS
-        ════════════════════════════════════ */}
-        <section id="domains-section" data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <div style={{ borderRadius: '16px', minHeight: '220px', background: S2, border: '1px solid rgba(222,192,120,.14)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '36px' }}>
-            {domainsIntro?.featureImageUrl
-              ? <img src={domainsIntro.featureImageUrl} alt="" aria-hidden="true" style={{ width: '100%', minHeight: '220px', objectFit: 'cover' }} />
-              : <ImgPlaceholder height="220px" />
-            }
-          </div>
-          <SectionLabel>Industry domains</SectionLabel>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-            Domains you <span style={{ color: GOLD }}>experience</span>, not just study.
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
-            Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end. Students don't learn about it — they do it.
-          </p>
-          <button
-            onClick={onSchoolFormOpen}
-            style={{ background: 'none', border: 'none', cursor: 'pointer', color: GOLD, fontSize: '14px', fontWeight: 600, padding: 0, textDecoration: 'underline', fontFamily: FF }}
-          >
-            Bring domains to my school ↗
-          </button>
-        </section>
-
-        {/* ════════════════════════════════════
-            15. DOMAINS DETAIL (accordion)
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(40px,6vw,80px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-            {activeDomains.map((domain, i) => {
-              const isOpen = openAccordion === i
-              return (
-                <div
-                  key={domain.num}
-                  style={{
-                    border: `1px solid ${isOpen ? 'rgba(222,192,120,.36)' : 'rgba(222,192,120,.16)'}`,
-                    borderRadius: '16px',
-                    background: isOpen ? 'rgba(42,14,5,.6)' : S2,
-                    overflow: 'hidden',
-                    transition: 'background .25s, border-color .25s',
-                  }}
-                >
-                  {/* Accordion header */}
-                  <button
-                    onClick={() => setOpenAccordion(prev => prev === i ? null : i)}
-                    aria-expanded={isOpen}
-                    style={{
-                      width: '100%', display: 'flex', alignItems: 'center', gap: '14px',
-                      padding: '20px 18px', background: 'none', border: 'none',
-                      cursor: 'pointer', textAlign: 'left', fontFamily: FF,
-                    }}
-                  >
-                    <span style={{ fontSize: 'clamp(22px,5vw,36px)', fontWeight: 800, color: 'rgba(222,192,120,.4)', minWidth: '44px', fontFamily: FF }}>{domain.num}</span>
-                    <div style={{ flex: 1 }}>
-                      <h3 style={{ fontSize: '18px', fontWeight: 800, color: isOpen ? GOLD : TP, margin: '0 0 4px', fontFamily: FF, transition: 'color .2s' }}>{domain.title}</h3>
-                      <p style={{ fontSize: '12px', color: GOLD, margin: 0, fontWeight: 600 }}>{domain.partner}</p>
-                    </div>
-                    <i
-                      className="ti ti-chevron-down"
-                      style={{
-                        fontSize: '20px', color: GOLD,
-                        transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                        transition: 'transform .3s',
-                        flexShrink: 0,
-                      }}
-                    />
-                  </button>
-
-                  {/* Accordion body */}
-                  <div style={{
-                    maxHeight: isOpen ? '1000px' : '0',
-                    overflow: 'hidden',
-                    transition: 'max-height .4s cubic-bezier(0.4,0,0.2,1)',
-                  }}>
-                    <div style={{ padding: '0 18px 24px' }}>
-                      {/* Detail image */}
-                      <div style={{ borderRadius: '12px', height: '180px', background: BG, border: '1px solid rgba(222,192,120,.12)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                        {domain.detailImageUrl
-                          ? <img src={domain.detailImageUrl} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                          : <ImgPlaceholder height="180px" />
+            {/* PARTNER MARQUEE */}
+            <section style={{ padding: 'clamp(28px,4vw,44px) 0', background: BG, borderBottom: BORDER, overflow: 'hidden' }}>
+              <div style={{ display: 'flex', width: 'max-content', animation: 'wtbMarquee 30s linear infinite' }}>
+                {[...Array(2)].map((_, t) => (
+                  <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(36px,5vw,64px)', paddingRight: 'clamp(36px,5vw,64px)' }}>
+                    {(homeMarqueePartners.length > 0 ? homeMarqueePartners : [
+                      { _id: 'nasscom', name: 'NASSCOM', logoUrl: undefined },
+                      { _id: 'brut', name: 'Brut', logoUrl: undefined },
+                      { _id: 'canva', name: 'Canva', logoUrl: undefined },
+                      { _id: 'inext', name: 'iNEXT', logoUrl: undefined },
+                    ] as CurrentPartnerData[]).map(p => (
+                      <div key={p._id} style={{ width: 'clamp(112px,12vw,152px)', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.72 }}>
+                        {p.logoUrl
+                          ? <img src={p.logoUrl} alt={p.name} style={{ maxHeight: '40px', maxWidth: '100%', objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.85, pointerEvents: 'none' }} />
+                          : <span style={{ fontSize: '14px', fontWeight: 700, color: TP, letterSpacing: '.08em', fontFamily: FF }}>{p.name}</span>
                         }
                       </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </section>
 
-                      {/* Level grid */}
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
-                        {domain.levels.map(l => (
-                          <div key={l.level} style={{ background: S2, borderRadius: '10px', padding: '14px' }}>
-                            <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 5px' }}>{l.level}</p>
-                            <p style={{ fontSize: '13px', fontWeight: 700, color: TP, margin: '0 0 5px' }}>{l.title}</p>
-                            <p style={{ fontSize: '11px', lineHeight: 1.5, color: TS, margin: 0 }}>{l.body}</p>
+            {/* IMPACT STATS */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+              <SectionLabel>The gap we close</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
+                Educated unemployment begins with{' '}
+                <span style={{ color: GOLD }}>uninformed choices.</span>
+              </h2>
+              <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: '0 0 26px', maxWidth: '440px' }}>
+                India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for.
+              </p>
+              <div>
+                {activeGapStats.map(s => (
+                  <div key={s.label} style={{ display: 'flex', alignItems: 'center', gap: '22px', padding: '24px 0', borderTop: '1px solid rgba(222,192,120,.2)', borderBottom: s.borderBottom ? '1px solid rgba(222,192,120,.2)' : 'none' }}>
+                    <div
+                      data-count={s.count + s.suffix}
+                      style={{ fontSize: 'clamp(52px,6.4vw,84px)', fontWeight: 800, color: GOLD, lineHeight: 0.85, letterSpacing: s.count === '14–18' ? '0' : '-0.03em', fontFamily: FF, flexShrink: 0 }}
+                    >
+                      {s.count}{s.suffix}
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '16px', fontWeight: 800, color: TP, marginBottom: '6px', fontFamily: FF }}>{s.label}</div>
+                      <div style={{ fontSize: '13.5px', color: TS, lineHeight: 1.55 }}>{s.body}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* DOMAIN TEASERS */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+              <div style={{ marginBottom: '36px' }}>
+                <SectionLabel>Industry domains</SectionLabel>
+                <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
+                  Domains you <span style={{ color: GOLD }}>experience</span>, not just study.
+                </h2>
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.2)', borderRadius: '999px', padding: '5px 14px' }}>
+                  <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
+                  <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD }}>Season 1 · 3 domains live</span>
+                </div>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {activeDomains.map((d, i) => (
+                  <div
+                    key={d.num}
+                    onClick={() => navigate('domains', { domain: i })}
+                    style={{ borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(222,192,120,.16)', background: S2, cursor: 'pointer' }}
+                  >
+                    <div style={{ aspectRatio: '3/2', background: BG, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {d.teaserImageUrl
+                        ? <img src={d.teaserImageUrl} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+                        : <ImgPlaceholder />
+                      }
+                      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(36,10,3,.85) 0%,rgba(36,10,3,0) 60%)' }} />
+                      <div style={{ position: 'absolute', top: '14px', left: '14px', background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em' }}>{d.num}</div>
+                    </div>
+                    <div style={{ padding: '16px 18px 18px' }}>
+                      <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{d.partner}</p>
+                      <h3 style={{ fontSize: '17px', fontWeight: 800, color: TP, margin: 0, fontFamily: FF }}>{d.title}</h3>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* SUMMIT TEASER */}
+            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', borderBottom: BORDER, background: S1 }}>
+              <div style={{
+                border: '1px solid rgba(222,192,120,.45)', borderRadius: '20px',
+                padding: 'clamp(32px,6vw,60px)',
+                background: 'radial-gradient(120% 140% at 85% 0%,rgba(222,192,120,.22),rgba(58,36,8,.3) 40%,rgba(36,10,3,0) 72%),linear-gradient(135deg,#3a2408,#240a03)',
+                position: 'relative', overflow: 'hidden',
+              }}>
+                <div aria-hidden="true" style={{ position: 'absolute', right: '-4%', bottom: '-20%', fontSize: 'clamp(80px,22vw,200px)', fontWeight: 800, color: 'rgba(222,192,120,.08)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>
+                  SUMMIT
+                </div>
+                <div style={{ position: 'relative', zIndex: 1 }}>
+                  <SectionLabel>The WeThink Summit</SectionLabel>
+                  <h2 style={{ fontSize: 'clamp(22px,5vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
+                    Where a school project becomes a <span style={{ color: GOLD }}>national moment.</span>
+                  </h2>
+                  <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
+                    Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.
+                  </p>
+                  <button
+                    onClick={() => navigate('summit')}
+                    style={{ display: 'inline-block', background: GOLD, color: BG, padding: '13px 26px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
+                  >
+                    Discover the Summit ↗
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* DIRECTOR QUOTE */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER, textAlign: 'center' }}>
+              <div style={{ fontSize: '72px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '16px' }}>"</div>
+              <blockquote style={{ margin: '0 auto', maxWidth: '680px' }}>
+                <p style={{ fontSize: 'clamp(18px,4.5vw,30px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 30px', fontFamily: FF }}>
+                  {visionSection?.directorQuote ?? <>Why do we wait until <strong style={{ color: GOLD }}>after graduation</strong> to give students real experience? By then, the choice is already made.</>}
+                </p>
+              </blockquote>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px' }}>
+                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: S1, border: '1px solid rgba(222,192,120,.3)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '22px', color: GOLD }}>
+                  {visionSection?.directorImageUrl
+                    ? <img src={visionSection.directorImageUrl} alt={visionSection.directorName ?? 'Director'} style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+                    : (visionSection?.directorName?.[0] ?? 'N')
+                  }
+                </div>
+                <div style={{ textAlign: 'left' }}>
+                  <p style={{ fontSize: '14px', fontWeight: 700, color: TP, margin: '0 0 2px' }}>{visionSection?.directorName ?? 'Dr. Neha Raghav'}</p>
+                  <p style={{ fontSize: '12px', color: GOLD, margin: 0 }}>{visionSection?.directorTitle ?? 'Director, WeThink Bharat'}</p>
+                </div>
+              </div>
+            </section>
+          </>
+        )}
+
+        {/* ════════════════════════════════════
+            VISION ROUTE
+        ════════════════════════════════════ */}
+        {activeRoute === 'vision' && (
+          <>
+            {/* Vision hero */}
+            <section style={{
+              position: 'relative', minHeight: 'clamp(200px,30vh,320px)', display: 'flex',
+              alignItems: 'center', overflow: 'hidden',
+              padding: '100px clamp(24px,6vw,64px) 48px', borderBottom: BORDER,
+            }}>
+              <HeroPageBg imageUrl={headerImages?.vision} />
+              <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+                <h1 style={{ fontSize: 'clamp(32px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: TP, margin: '0 0 20px', fontFamily: FF }}>
+                  We are building India's first{' '}
+                  <span style={{ color: GOLD }}>experiential learning ecosystem.</span>
+                </h1>
+                <p style={{ fontSize: 'clamp(15px,1.5vw,18px)', lineHeight: 1.7, color: TS, margin: 0 }}>
+                  WeThink Bharat exists for one reason — so that no Indian student ever has to choose a career they don't understand, in a world they've never experienced.
+                </p>
+              </div>
+            </section>
+
+            {/* Poetic interstitial */}
+            <section data-reveal="" style={{
+              position: 'relative', padding: 'clamp(64px,10vw,120px) clamp(24px,6vw,64px)',
+              background: S1, borderBottom: BORDER, overflow: 'hidden',
+            }}>
+              <div aria-hidden="true" style={{
+                position: 'absolute', left: '50%', top: 0, transform: 'translateX(-50%)',
+                fontSize: 'clamp(80px,18vw,160px)', fontWeight: 800,
+                color: 'rgba(222,192,120,.28)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none', zIndex: 0,
+              }}>
+                "
+              </div>
+              <div style={{ position: 'relative', zIndex: 1 }}>
+                <p style={{ fontSize: 'clamp(18px,4.5vw,32px)', fontWeight: 600, color: TP, lineHeight: 1.34, letterSpacing: '-.015em', margin: '0 0 40px', fontFamily: FF }}>
+                  Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam.{' '}
+                  <strong style={{ color: GOLD }}>That has to change.</strong>
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>The average Indian student knows very little about the world of work before they are asked to commit to it for life. This isn't their failure — it's a structural gap that no one has addressed at scale.</p>
+                  <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>WeThink Bharat is built to close that gap — not through lectures or videos or one-day workshops, but through real, structured, industry-driven experiences that live inside the school itself.</p>
+                  <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>We believe that a student who has run a simulated startup, filed a news story, or designed a product for a real brief is infinitely better prepared than one who hasn't.</p>
+                </div>
+              </div>
+            </section>
+
+            {/* Vision content */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+              <SectionLabel>Our vision</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 40px', fontFamily: FF }}>
+                A Bharat where every student discovers their{' '}
+                <span style={{ color: GOLD }}>capability</span>{' '}
+                before they ever have to choose a path.
+              </h2>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {[
+                  { label: visionSection?.purpose?.label ?? 'Purpose', text: visionSection?.purpose?.text ?? 'Expose every student to the real world of work — early, and for real.' },
+                  { label: visionSection?.vision?.label ?? 'Vision', text: visionSection?.vision?.text ?? 'A generation that enters adulthood already knowing what it is capable of.' },
+                  { label: visionSection?.mission?.label ?? 'Mission', text: visionSection?.mission?.text ?? 'Real briefs, real mentors, and permanent proof — inside every school.' },
+                ].map(card => (
+                  <div key={card.label} style={{ border: '1px solid rgba(222,192,120,.16)', background: S1, borderRadius: '16px', padding: '24px 22px' }}>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 10px' }}>{card.label}</p>
+                    <p style={{ fontSize: '15px', lineHeight: 1.6, color: TP, margin: 0 }}>{card.text}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Beliefs */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+              <SectionLabel>What we believe</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
+                Six convictions that drive everything we build
+              </h2>
+              <p style={{ fontSize: 'clamp(14px,1.4vw,16px)', color: TS, lineHeight: 1.7, margin: '0 0 40px' }}>
+                Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {activeBeliefs.map(b => (
+                  <div key={b.n} style={{ display: 'flex', gap: '14px', padding: '20px 0', borderTop: '1px solid rgba(222,192,120,.14)' }}>
+                    <span style={{ fontSize: '13px', fontWeight: 700, color: GOLD, minWidth: '28px', letterSpacing: '.02em', paddingTop: '2px' }}>{b.n}</span>
+                    <div>
+                      <p style={{ fontSize: '16px', fontWeight: 800, color: TP, margin: '0 0 6px', fontFamily: FF }}>{b.title}</p>
+                      <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: 0 }}>{b.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
+
+        {/* ════════════════════════════════════
+            DOMAINS ROUTE
+        ════════════════════════════════════ */}
+        {activeRoute === 'domains' && (
+          <>
+            {/* Domains hero */}
+            <section style={{
+              position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
+              alignItems: 'center', overflow: 'hidden',
+              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+            }}>
+              <HeroPageBg imageUrl={headerImages?.domains} />
+              <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+                <h1 style={{ fontSize: 'clamp(32px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
+                  Step into the <span style={{ color: GOLD }}>real work.</span>
+                </h1>
+                <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
+                  Four complete worlds — each with a simulator, a live project, an industry partner, and proof that lasts.
+                </p>
+              </div>
+            </section>
+
+            {/* Feature image + intro */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+              <div style={{ borderRadius: '16px', minHeight: '220px', background: S2, border: '1px solid rgba(222,192,120,.14)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '36px' }}>
+                {domainsIntro?.featureImageUrl
+                  ? <img src={domainsIntro.featureImageUrl} alt="" aria-hidden="true" style={{ width: '100%', minHeight: '220px', objectFit: 'cover', pointerEvents: 'none' }} />
+                  : <ImgPlaceholder height="220px" />
+                }
+              </div>
+              <SectionLabel>Industry domains</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
+                Domains you <span style={{ color: GOLD }}>experience</span>, not just study.
+              </h2>
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
+                Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end.
+              </p>
+              <button
+                onClick={onSchoolFormOpen}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: GOLD, fontSize: '14px', fontWeight: 600, padding: 0, textDecoration: 'underline', fontFamily: FF }}
+              >
+                Bring domains to my school ↗
+              </button>
+            </section>
+
+            {/* Domains accordion */}
+            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,80px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                {activeDomains.map((domain, i) => {
+                  const isOpen = openAccordion === i
+                  return (
+                    <div
+                      key={domain.num}
+                      style={{
+                        border: `1px solid ${isOpen ? 'rgba(222,192,120,.36)' : 'rgba(222,192,120,.16)'}`,
+                        borderRadius: '16px',
+                        background: isOpen ? 'rgba(42,14,5,.6)' : S2,
+                        overflow: 'hidden',
+                        transition: 'background .25s, border-color .25s',
+                      }}
+                    >
+                      <button
+                        onClick={() => setOpenAccordion(prev => prev === i ? null : i)}
+                        aria-expanded={isOpen}
+                        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: '14px', padding: '20px 18px', background: 'none', border: 'none', cursor: 'pointer', textAlign: 'left', fontFamily: FF }}
+                      >
+                        <span style={{ fontSize: 'clamp(22px,5vw,36px)', fontWeight: 800, color: 'rgba(222,192,120,.4)', minWidth: '44px', fontFamily: FF }}>{domain.num}</span>
+                        <div style={{ flex: 1 }}>
+                          <h3 style={{ fontSize: '18px', fontWeight: 800, color: isOpen ? GOLD : TP, margin: '0 0 4px', fontFamily: FF, transition: 'color .2s' }}>{domain.title}</h3>
+                          <p style={{ fontSize: '12px', color: GOLD, margin: 0, fontWeight: 600 }}>{domain.partner}</p>
+                        </div>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={GOLD} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                          style={{ transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform .3s', flexShrink: 0 }}>
+                          <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                      </button>
+
+                      <div style={{ maxHeight: isOpen ? '1200px' : '0', overflow: 'hidden', transition: 'max-height .4s cubic-bezier(0.4,0,0.2,1)', opacity: isOpen ? 1 : 0, transition2: 'opacity .3s' } as React.CSSProperties}>
+                        <div style={{ padding: '0 18px 24px' }}>
+                          <div style={{ borderRadius: '12px', height: '180px', background: BG, border: '1px solid rgba(222,192,120,.12)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                            {domain.detailImageUrl
+                              ? <img src={domain.detailImageUrl} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', pointerEvents: 'none' }} />
+                              : <ImgPlaceholder height="180px" />
+                            }
                           </div>
-                        ))}
-                      </div>
-
-                      {/* Outcomes */}
-                      <div style={{ borderTop: '1px solid rgba(222,192,120,.12)', paddingTop: '18px' }}>
-                        <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 10px' }}>What students walk away with</p>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                          {domain.outcomes.map(item => (
-                            <p key={item} style={{ fontSize: '13px', color: TS, margin: 0 }}>
-                              <span style={{ color: GOLD, marginRight: '8px' }}>—</span>{item}
-                            </p>
-                          ))}
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px', marginBottom: '20px' }}>
+                            {domain.levels.map(l => (
+                              <div key={l.level} style={{ background: S2, borderRadius: '10px', padding: '14px' }}>
+                                <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 5px' }}>{l.level}</p>
+                                <p style={{ fontSize: '13px', fontWeight: 700, color: TP, margin: '0 0 5px' }}>{l.title}</p>
+                                <p style={{ fontSize: '11px', lineHeight: 1.5, color: TS, margin: 0 }}>{l.body}</p>
+                              </div>
+                            ))}
+                          </div>
+                          <div style={{ borderTop: '1px solid rgba(222,192,120,.12)', paddingTop: '18px' }}>
+                            <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 10px' }}>What students walk away with</p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              {domain.outcomes.map(item => (
+                                <p key={item} style={{ fontSize: '13px', color: TS, margin: 0 }}>
+                                  <span style={{ color: GOLD, marginRight: '8px' }}>—</span>{item}
+                                </p>
+                              ))}
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
+                  )
+                })}
+              </div>
+            </section>
+          </>
+        )}
+
+        {/* ════════════════════════════════════
+            SUMMIT ROUTE
+        ════════════════════════════════════ */}
+        {activeRoute === 'summit' && (
+          <>
+            {/* Summit hero */}
+            <section style={{
+              position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
+              alignItems: 'center', overflow: 'hidden',
+              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+            }}>
+              <HeroPageBg imageUrl={headerImages?.summit} />
+              <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+                <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
+                  {summit?.heading ?? <>The national stage where student work meets{' '}<span style={{ color: GOLD }}>a nation watching.</span></>}
+                </h1>
+                <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
+                  The WeThink Summit is where the journey culminates — live, nationally recognised, and permanently recorded.
+                </p>
+              </div>
+            </section>
+
+            {/* What is the Summit */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+              <SectionLabel>What is the WeThink Summit</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
+                Not a competition. A <span style={{ color: GOLD }}>culmination.</span>
+              </h2>
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 14px' }}>
+                The WeThink Summit is the moment where everything students have built becomes real. Not a test they pass or fail — a stage they earn their way onto through genuine work across an entire semester.
+              </p>
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
+                Student teams present their domain projects — whether a startup pitch, a media package, or a design prototype — to a live audience of industry leaders, educators, and peers from across India.
+              </p>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '48px' }}>
+                {(summit?.statChips?.length ? summit.statChips : ['4× per year', 'Pan-India', 'Industry judged', 'Live audience']).map(tag => (
+                  <span key={tag} style={{ background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '6px 14px', fontSize: '12px', fontWeight: 600, color: GOLD }}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+
+              <SectionLabel>Domain tracks — Season 1</SectionLabel>
+              <h3 style={{ fontSize: 'clamp(18px,4vw,24px)', fontWeight: 800, color: TP, margin: '0 0 18px', fontFamily: FF }}>What students compete in</h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {[
+                  { n: '01', title: 'Startup Studio — Entrepreneurship', partner: 'NASSCOM 10,000 Startups', active: true },
+                  { n: '02', title: 'The Newsroom — Media & Communication', partner: 'Brut', active: true },
+                  { n: '03', title: 'Design Lab — Design & Innovation', partner: 'Canva', active: true },
+                  { n: '04', title: 'Finance & Investment Track', partner: 'Phase 2', active: false },
+                  { n: '05', title: 'Public Policy Track', partner: 'Phase 2', active: false },
+                  { n: '06', title: 'Sports & Wellness Track', partner: 'Phase 2', active: false },
+                ].map(row => (
+                  <div key={row.n} style={{
+                    border: row.active ? '1px solid rgba(222,192,120,.4)' : '1px solid rgba(222,192,120,.12)',
+                    background: row.active ? 'rgba(222,192,120,.06)' : 'transparent',
+                    boxShadow: row.active ? 'inset 4px 0 0 #DEC078' : 'none',
+                    borderRadius: '12px', padding: '16px 18px 16px 22px', opacity: row.active ? 1 : 0.55,
+                  }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                      <div>
+                        <span style={{ fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.1em', marginRight: '10px' }}>{row.n}</span>
+                        <span style={{ fontSize: '14px', fontWeight: 700, color: TP }}>{row.title}</span>
+                      </div>
+                      <span style={{ fontSize: '11px', color: TS }}>{row.partner}</span>
+                    </div>
                   </div>
-                </div>
-              )
-            })}
-          </div>
-        </section>
+                ))}
+              </div>
+            </section>
 
-        {/* ════════════════════════════════════
-            16. SUMMIT PAGE HERO
-        ════════════════════════════════════ */}
-        <section id="summit-section" style={{
-          position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
-          alignItems: 'center', overflow: 'hidden',
-          padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
-        }}>
-          <HeroPageBg imageUrl={headerImages?.summit} />
-          <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
-            <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              The national stage where student work meets{' '}
-              <span style={{ color: GOLD }}>a nation watching.</span>
-            </h1>
-            <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-              The WeThink Summit is where the journey culminates — live, nationally recognised, and permanently recorded.
-            </p>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            17. WHAT IS THE SUMMIT
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-          <SectionLabel>What is the WeThink Summit</SectionLabel>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-            Not a competition. A <span style={{ color: GOLD }}>culmination.</span>
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 14px' }}>
-            The WeThink Summit is the moment where everything students have built becomes real. Not a test they pass or fail — a stage they earn their way onto through genuine work across an entire semester.
-          </p>
-          <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
-            Student teams present their domain projects — whether a startup pitch, a media package, or a design prototype — to a live audience of industry leaders, educators, and peers from across India.
-          </p>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '48px' }}>
-            {['4× per year', 'Pan-India', 'Industry judged', 'Live audience'].map(tag => (
-              <span key={tag} style={{ background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '6px 14px', fontSize: '12px', fontWeight: 600, color: GOLD }}>
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <SectionLabel>Domain tracks — Season 1</SectionLabel>
-          <h3 style={{ fontSize: 'clamp(18px,4vw,24px)', fontWeight: 800, color: TP, margin: '0 0 18px', fontFamily: FF }}>What students compete in</h3>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[
-              { n: '01', title: 'Startup Studio — Entrepreneurship', partner: 'NASSCOM 10,000 Startups', active: true },
-              { n: '02', title: 'The Newsroom — Media & Communication', partner: 'Brut', active: true },
-              { n: '03', title: 'Design Lab — Design & Innovation', partner: 'Canva', active: true },
-              { n: '04', title: 'Finance & Investment Track', partner: 'Phase 2', active: false },
-              { n: '05', title: 'Public Policy Track', partner: 'Phase 2', active: false },
-              { n: '06', title: 'Sports & Wellness Track', partner: 'Phase 2', active: false },
-            ].map(row => (
-              <div key={row.n} style={{
-                border: row.active ? '1px solid rgba(222,192,120,.4)' : '1px solid rgba(222,192,120,.12)',
-                background: row.active ? 'rgba(222,192,120,.06)' : 'transparent',
-                boxShadow: row.active ? 'inset 4px 0 0 #DEC078' : 'none',
-                borderRadius: '12px', padding: '16px 18px 16px 22px',
-                opacity: row.active ? 1 : 0.55,
-              }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
-                  <div>
-                    <span style={{ fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.1em', marginRight: '10px' }}>{row.n}</span>
-                    <span style={{ fontSize: '14px', fontWeight: 700, color: TP }}>{row.title}</span>
+            {/* Get involved */}
+            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+              <SectionLabel>Get involved</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
+                Three ways to be part of the Summit
+              </h2>
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
+                Whether you lead a school, run a company, or simply care about what India's next generation can do — there is a place for you at the WeThink Summit.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {(summit?.getInvolvedCards?.length ? summit.getInvolvedCards : [
+                  { audience: 'For schools', title: 'Nominate your student teams', description: 'Schools that run WeThink domains can nominate their top student teams to present at the national Summit stage.', ctaLabel: 'Bring WeThink to my school ↗' },
+                  { audience: 'For industry', title: 'Join as a jury member', description: 'Industry professionals serve as domain judges — bringing authentic evaluation standards and real-world perspective to student work.', ctaLabel: 'Express interest ↗' },
+                  { audience: 'For media & observers', title: 'Attend and amplify', description: "Media professionals, observers, and supporters can attend the Summit as audience members and help tell the story of what India's students are capable of.", ctaLabel: 'Register interest ↗' },
+                ]).map((card, i) => (
+                  <div key={card.audience} style={{
+                    border: i === 0 ? '1px solid rgba(222,192,120,.45)' : '1px solid rgba(222,192,120,.16)',
+                    borderRadius: '16px', padding: '24px 22px',
+                    background: i === 0 ? 'rgba(222,192,120,.04)' : S2,
+                  }}>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{card.audience}</p>
+                    <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>{card.title}</h3>
+                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: '0 0 18px' }}>{card.description}</p>
+                    <button
+                      onClick={i === 0 ? onSchoolFormOpen : onPartnerFormOpen}
+                      style={{
+                        background: i === 0 ? GOLD : 'rgba(222,192,120,.1)', color: i === 0 ? BG : GOLD,
+                        border: i === 0 ? 'none' : '1px solid rgba(222,192,120,.3)',
+                        borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: FF,
+                      }}
+                    >
+                      {card.ctaLabel}
+                    </button>
                   </div>
-                  <span style={{ fontSize: '11px', color: TS }}>{row.partner}</span>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
 
-        {/* ════════════════════════════════════
-            18. GET INVOLVED
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <SectionLabel>Get involved</SectionLabel>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-            Three ways to be part of the Summit
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
-            Whether you lead a school, run a company, or simply care about what India's next generation can do — there is a place for you at the WeThink Summit.
-          </p>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            <div style={{ border: '1px solid rgba(222,192,120,.45)', borderRadius: '16px', padding: '24px 22px', background: 'rgba(222,192,120,.04)' }}>
-              <i className="ti ti-school" style={{ fontSize: '24px', color: GOLD, display: 'block', marginBottom: '12px' }} />
-              <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>For schools</p>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>Nominate your student teams</h3>
-              <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: '0 0 18px' }}>Schools that run WeThink domains can nominate their top student teams to present at the national Summit stage.</p>
-              <button onClick={onSchoolFormOpen} style={{ background: GOLD, color: BG, border: 'none', borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: FF }}>Bring WeThink to my school ↗</button>
-            </div>
-            <div style={{ border: '1px solid rgba(222,192,120,.16)', borderRadius: '16px', padding: '24px 22px', background: S2 }}>
-              <i className="ti ti-building-factory-2" style={{ fontSize: '24px', color: GOLD, display: 'block', marginBottom: '12px' }} />
-              <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>For industry</p>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>Join as a jury member</h3>
-              <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: '0 0 18px' }}>Industry professionals serve as domain judges — bringing authentic evaluation standards and real-world perspective to student work.</p>
-              <button onClick={onPartnerFormOpen} style={{ background: 'rgba(222,192,120,.1)', color: GOLD, border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: FF }}>Express interest ↗</button>
-            </div>
-            <div style={{ border: '1px solid rgba(222,192,120,.16)', borderRadius: '16px', padding: '24px 22px', background: S2 }}>
-              <i className="ti ti-eye" style={{ fontSize: '24px', color: GOLD, display: 'block', marginBottom: '12px' }} />
-              <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>For media &amp; observers</p>
-              <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>Attend and amplify</h3>
-              <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: '0 0 18px' }}>Media professionals, observers, and supporters can attend the Summit as audience members and help tell the story of what India's students are capable of.</p>
-              <button onClick={onPartnerFormOpen} style={{ background: 'rgba(222,192,120,.1)', color: GOLD, border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: FF }}>Register interest ↗</button>
-            </div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            19. NUMBERED DISCOVER LIST
-        ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER }}>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 8px', fontFamily: FF }}>
-            Everything to <span style={{ color: GOLD }}>discover</span>
-          </h2>
-          <p style={{ fontSize: '14px', color: TS, margin: '0 0 32px' }}>Tap a strand to explore it.</p>
-          <div>
-            {[
-              { n: '01', label: 'Entrepreneurship', href: '#domains-section' },
-              { n: '02', label: 'Media & Communication', href: '#domains-section' },
-              { n: '03', label: 'Design & Innovation', href: '#domains-section' },
-              { n: '04', label: 'The WeThink Summit', href: '#summit-section' },
-            ].map(item => (
-              <a
-                key={item.n}
-                href={item.href}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: '16px',
-                  padding: 'clamp(16px,3vw,26px) 4px',
-                  borderTop: '1px solid rgba(222,192,120,.14)',
-                  textDecoration: 'none',
-                  fontSize: 'clamp(18px,5vw,32px)', fontWeight: 800, color: TP, fontFamily: FF,
-                }}
-              >
-                <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD, width: '32px', flexShrink: 0 }}>{item.n}</span>
-                <span style={{ flex: 1 }}>{item.label}</span>
-                <span style={{ fontSize: '18px', color: GOLD }}>↗</span>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            20. ECOSYSTEM PAGE HERO
-        ════════════════════════════════════ */}
-        <section style={{
-          position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
-          alignItems: 'center', overflow: 'hidden',
-          padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
-        }}>
-          <HeroPageBg imageUrl={headerImages?.ecosystem} />
-          <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
-            <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              More than a partnership,{' '}
-              <span style={{ color: GOLD }}>a movement.</span>
-            </h1>
-            <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-              Every organisation in the WeThink ecosystem is here because they believe the same thing — that India's students deserve better, sooner.
-            </p>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            21. ECOSYSTEM (2-col grid)
-        ════════════════════════════════════ */}
-        <section id="ecosystem-section" data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 36px', fontFamily: FF }}>
-            Not just Collaborators.<br />
-            <span style={{ color: GOLD }}>Changemakers.</span>
-          </h2>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>
-            {[
-              { icon: 'ti-building-factory-2', label: 'Industry Partners', names: 'NASSCOM · Brut · Canva', body: 'Domain owners — they design the brief, supply the mentor, and judge the final work.' },
-              { icon: 'ti-presentation', label: 'Experience Partners', names: 'Summit · Studios', body: 'They create the environments — live stages, immersive studios, and experiential spaces.' },
-              { icon: 'ti-school', label: 'Learning Partners', names: 'Educator network', body: 'Schools and educators who run WeThink programs and shape the student journey on the ground.' },
-              { icon: 'ti-certificate-2', label: 'Knowledge Partners', names: 'iNEXT', body: 'Research, credential validation, and the intellectual foundation behind every WeThink program.' },
-            ].map(c => (
-              <div key={c.label} style={{ border: '1px solid rgba(222,192,120,.16)', background: S1, borderRadius: '14px', padding: '20px 18px' }}>
-                <i className={`ti ${c.icon}`} style={{ fontSize: '22px', color: GOLD, display: 'block', marginBottom: '12px' }} />
-                <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 5px' }}>{c.label}</p>
-                <p style={{ fontSize: '14px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>{c.names}</p>
-                <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0 }}>{c.body}</p>
+            {/* Discover list */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER }}>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 8px', fontFamily: FF }}>
+                Everything to <span style={{ color: GOLD }}>discover</span>
+              </h2>
+              <p style={{ fontSize: '14px', color: TS, margin: '0 0 32px' }}>Tap a strand to explore it.</p>
+              <div>
+                {[
+                  { n: '01', label: 'Entrepreneurship', route: 'domains' as Route, domain: 0 },
+                  { n: '02', label: 'Media & Communication', route: 'domains' as Route, domain: 1 },
+                  { n: '03', label: 'Design & Innovation', route: 'domains' as Route, domain: 2 },
+                  { n: '04', label: 'The WeThink Summit', route: 'summit' as Route, domain: undefined },
+                ].map(item => (
+                  <button
+                    key={item.n}
+                    onClick={() => navigate(item.route, item.domain !== undefined ? { domain: item.domain } : undefined)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '16px', width: '100%',
+                      padding: 'clamp(16px,3vw,26px) 4px',
+                      borderTop: '1px solid rgba(222,192,120,.14)',
+                      background: 'none', border: 'none', borderRadius: 0,
+                      cursor: 'pointer',
+                      fontSize: 'clamp(18px,5vw,32px)', fontWeight: 800, color: TP, fontFamily: FF,
+                      textAlign: 'left',
+                    }}
+                  >
+                    <span style={{ fontSize: '12px', fontWeight: 600, color: GOLD, width: '32px', flexShrink: 0 }}>{item.n}</span>
+                    <span style={{ flex: 1 }}>{item.label}</span>
+                    <span style={{ fontSize: '18px', color: GOLD }}>↗</span>
+                  </button>
+                ))}
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
+          </>
+        )}
 
         {/* ════════════════════════════════════
-            22. CURRENT PARTNERS
+            ECOSYSTEM ROUTE
         ════════════════════════════════════ */}
-        <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <div style={{ marginBottom: '36px' }}>
-            <SectionLabel>Current partners</SectionLabel>
-            <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 6px', fontFamily: FF }}>
-              Who we <span style={{ color: GOLD }}>work with</span>
-            </h2>
-            <p style={{ fontSize: '14px', color: TS, margin: '0 0 20px' }}>A growing network of Changemakers.</p>
-            <button
-              onClick={onPartnerFormOpen}
-              style={{ background: 'none', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 600, color: GOLD, cursor: 'pointer', fontFamily: FF }}
-            >
-              Join the ecosystem →
-            </button>
-          </div>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
-            {(ecosystemGridPartners.length > 0 ? ecosystemGridPartners : [
-              { _id: '1', type: 'Industry Partner', name: 'NASSCOM 10,000 Startups', categoryName: 'Entrepreneurship Domain Partner', description: 'India\'s largest startup ecosystem brings its expertise into WeThink schools — designing the Startup Studio domain and serving as the lead industry partner for the Entrepreneurship track.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
-              { _id: '2', type: 'Media Partner', name: 'Brut', categoryName: 'Media & Communication Domain Partner', description: 'The digital-native media organisation behind some of India\'s most impactful journalism brings its newsroom to WeThink — designing the Media & Communication domain and editorial mentorship program.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
-              { _id: '3', type: 'Design Partner', name: 'Canva', categoryName: 'Design & Innovation Domain Partner', description: 'The global design platform joins WeThink as the Design & Innovation domain partner — bringing professional design tools, briefs, and mentors directly into the school environment.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
-            ] as CurrentPartnerData[]).map(p => (
-              <div key={p._id} style={{ background: S2, border: '1px solid rgba(222,192,120,.16)', borderRadius: '14px', padding: '22px 20px' }}>
-                {p.logoUrl && (
-                  <img src={p.logoUrl} alt={p.name} style={{ height: '32px', objectFit: 'contain', objectPosition: 'left', marginBottom: '14px', display: 'block' }} />
-                )}
-                <span style={{ display: 'inline-block', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em', marginBottom: '12px' }}>{p.type ?? p.categoryName}</span>
-                <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 4px', fontFamily: FF }}>{p.name}</h3>
-                <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 10px', fontWeight: 600 }}>{p.categoryName}</p>
-                <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0 }}>{p.description}</p>
+        {activeRoute === 'ecosystem' && (
+          <>
+            {/* Ecosystem hero */}
+            <section style={{
+              position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
+              alignItems: 'center', overflow: 'hidden',
+              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+            }}>
+              <HeroPageBg imageUrl={headerImages?.ecosystem} />
+              <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+                <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
+                  More than a partnership,{' '}
+                  <span style={{ color: GOLD }}>a movement.</span>
+                </h1>
+                <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
+                  Every organisation in the WeThink ecosystem is here because they believe the same thing — that India's students deserve better, sooner.
+                </p>
               </div>
-            ))}
-          </div>
-        </section>
+            </section>
+
+            {/* 2-col partner type grid */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 36px', fontFamily: FF }}>
+                Not just Collaborators.<br />
+                <span style={{ color: GOLD }}>Changemakers.</span>
+              </h2>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>
+                {[
+                  { icon: 'ti-building-factory-2', label: 'Industry Partners', names: 'NASSCOM · Brut · Canva', body: 'Domain owners — they design the brief, supply the mentor, and judge the final work.' },
+                  { icon: 'ti-presentation', label: 'Experience Partners', names: 'Summit · Studios', body: 'They create the environments — live stages, immersive studios, and experiential spaces.' },
+                  { icon: 'ti-school', label: 'Learning Partners', names: 'Educator network', body: 'Schools and educators who run WeThink programs and shape the student journey on the ground.' },
+                  { icon: 'ti-certificate-2', label: 'Knowledge Partners', names: 'iNEXT', body: 'Research, credential validation, and the intellectual foundation behind every WeThink program.' },
+                ].map(c => (
+                  <div key={c.label} style={{ border: '1px solid rgba(222,192,120,.16)', background: S1, borderRadius: '14px', padding: '20px 18px' }}>
+                    <i className={`ti ${c.icon}`} style={{ fontSize: '22px', color: GOLD, display: 'block', marginBottom: '12px' }} />
+                    <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 5px' }}>{c.label}</p>
+                    <p style={{ fontSize: '14px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>{c.names}</p>
+                    <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0 }}>{c.body}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {/* Current partners */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+              <div style={{ marginBottom: '36px' }}>
+                <SectionLabel>Current partners</SectionLabel>
+                <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 6px', fontFamily: FF }}>
+                  Who we <span style={{ color: GOLD }}>work with</span>
+                </h2>
+                <p style={{ fontSize: '14px', color: TS, margin: '0 0 20px' }}>A growing network of Changemakers.</p>
+                <button
+                  onClick={onPartnerFormOpen}
+                  style={{ background: 'none', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 600, color: GOLD, cursor: 'pointer', fontFamily: FF }}
+                >
+                  Join the ecosystem →
+                </button>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                {(ecosystemGridPartners.length > 0 ? ecosystemGridPartners : [
+                  { _id: '1', type: 'Industry Partner', name: 'NASSCOM 10,000 Startups', categoryName: 'Entrepreneurship Domain Partner', description: 'India\'s largest startup ecosystem brings its expertise into WeThink schools — designing the Startup Studio domain and serving as the lead industry partner for the Entrepreneurship track.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
+                  { _id: '2', type: 'Media Partner', name: 'Brut', categoryName: 'Media & Communication Domain Partner', description: 'The digital-native media organisation behind some of India\'s most impactful journalism brings its newsroom to WeThink — designing the Media & Communication domain and editorial mentorship program.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
+                  { _id: '3', type: 'Design Partner', name: 'Canva', categoryName: 'Design & Innovation Domain Partner', description: 'The global design platform joins WeThink as the Design & Innovation domain partner — bringing professional design tools, briefs, and mentors directly into the school environment.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
+                ] as CurrentPartnerData[]).map(p => (
+                  <div key={p._id} style={{ background: S2, border: '1px solid rgba(222,192,120,.16)', borderRadius: '14px', padding: '22px 20px' }}>
+                    {p.logoUrl && <img src={p.logoUrl} alt={p.name} style={{ height: '32px', objectFit: 'contain', objectPosition: 'left', marginBottom: '14px', display: 'block', pointerEvents: 'none' }} />}
+                    <span style={{ display: 'inline-block', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em', marginBottom: '12px' }}>{p.type ?? p.categoryName}</span>
+                    <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 4px', fontFamily: FF }}>{p.name}</h3>
+                    <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 10px', fontWeight: 600 }}>{p.categoryName}</p>
+                    <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0 }}>{p.description}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
 
         {/* ════════════════════════════════════
-            23. JOURNEY PAGE HERO
+            JOURNEY ROUTE — vertical card stack
         ════════════════════════════════════ */}
-        <section style={{
-          position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
-          alignItems: 'center', overflow: 'hidden',
-          padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
-        }}>
-          <HeroPageBg imageUrl={headerImages?.journey} />
-          <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
-            <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              Five stages. One <span style={{ color: GOLD }}>transformation.</span>
-            </h1>
-            <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-              The WeThink journey moves students from exposure to permanent proof — through five structured, connected stages that build on each other.
-            </p>
-          </div>
-        </section>
+        {activeRoute === 'journey' && (
+          <>
+            {/* Journey hero */}
+            <section style={{
+              position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
+              alignItems: 'center', overflow: 'hidden',
+              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+            }}>
+              <HeroPageBg imageUrl={headerImages?.journey} />
+              <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+                <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
+                  Five stages. One <span style={{ color: GOLD }}>transformation.</span>
+                </h1>
+                <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
+                  The WeThink journey moves students from exposure to permanent proof — through five structured, connected stages that build on each other.
+                </p>
+              </div>
+            </section>
 
-        {/* ════════════════════════════════════
-            24. JOURNEY CAROUSEL
-        ════════════════════════════════════ */}
-        <section id="journey-section" data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-            From exposure to <span style={{ color: GOLD }}>permanent proof</span>
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 48px' }}>
-            Each stage is designed to build on the last — so that by the time a student reaches the Summit, they are genuinely ready for it.
-          </p>
-
-          {/* Carousel */}
-          <div style={{ position: 'relative', width: '100%', height: 'clamp(380px,48vw,520px)', overflow: 'hidden' }}>
-            <div style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%,-50%)', width: 0, height: 0 }}>
-              {activeJourneyCards.map((card, idx) => {
-                const t = getCardTransform(idx, activeCard)
-                const cardW = 'clamp(190px,48vw,260px)'
-                const cardH = 'clamp(280px,68vw,360px)'
-                const borderOpacity = 0.18 + (idx === activeCard ? 0.26 : 0)
-                return (
+            {/* Journey vertical card stack */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
+                From exposure to <span style={{ color: GOLD }}>permanent proof</span>
+              </h2>
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
+                Each stage is designed to build on the last — so that by the time a student reaches the Summit, they are genuinely ready for it.
+              </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                {activeJourneyCards.map((card, idx) => (
                   <div
                     key={idx}
-                    onClick={() => setActiveCard(idx)}
                     style={{
-                      position: 'absolute',
-                      left: '50%',
-                      top: '50%',
-                      width: cardW,
-                      height: cardH,
-                      marginLeft: `calc(${cardW} / -2)`,
-                      marginTop: `calc(${cardH} / -2)`,
+                      background: CARD_BG[idx] ?? S2,
+                      border: '1px solid rgba(222,192,120,.22)',
                       borderRadius: '20px',
-                      border: `1px solid rgba(222,192,120,${borderOpacity})`,
-                      background: CARD_BG[idx] ?? 'linear-gradient(165deg,#3B1407,#2A0E05)',
-                      padding: '24px 22px',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      boxShadow: '0 24px 52px -22px rgba(0,0,0,.72)',
-                      cursor: 'pointer',
-                      transition: 'transform .5s cubic-bezier(.4,0,.2,1), opacity .5s ease',
-                      transform: t.transform,
-                      opacity: t.opacity,
-                      zIndex: t.zIndex,
+                      padding: '28px 24px',
                     }}
                   >
                     {card.iconUrl
-                      ? <img src={card.iconUrl} alt="" aria-hidden="true" style={{ width: '26px', height: '26px', objectFit: 'contain', marginBottom: '10px', filter: 'brightness(0) saturate(100%) invert(79%) sepia(31%) saturate(468%) hue-rotate(1deg) brightness(97%) contrast(93%)' }} />
-                      : <i className={`ti ${card.icon}`} style={{ fontSize: '26px', color: GOLD, marginBottom: '10px' }} />
+                      ? <img src={card.iconUrl} alt="" aria-hidden="true" style={{ width: '28px', height: '28px', objectFit: 'contain', marginBottom: '12px', display: 'block', filter: 'brightness(0) saturate(100%) invert(79%) sepia(31%) saturate(468%) hue-rotate(1deg) brightness(97%) contrast(93%)', pointerEvents: 'none' }} />
+                      : <i className={`ti ${card.icon}`} style={{ fontSize: '28px', color: GOLD, display: 'block', marginBottom: '12px' }} />
                     }
                     <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{card.stage}</p>
-                    <h3 style={{ fontSize: '15px', fontWeight: 800, color: TP, margin: '0 0 10px', lineHeight: 1.3, fontFamily: FF }}>{card.title}</h3>
-                    <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0, flex: 1 }}>{card.body}</p>
-                    <div style={{ marginTop: '14px' }}>
-                      <span style={{ background: 'rgba(222,192,120,.12)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '4px 10px', fontSize: '11px', fontWeight: 600, color: GOLD }}>{card.pill}</span>
-                    </div>
+                    <h3 style={{ fontSize: '17px', fontWeight: 800, color: TP, margin: '0 0 10px', lineHeight: 1.3, fontFamily: FF }}>{card.title}</h3>
+                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: '0 0 16px' }}>{card.body}</p>
+                    <span style={{ background: 'rgba(222,192,120,.12)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 600, color: GOLD }}>
+                      {card.pill}
+                    </span>
                   </div>
-                )
-              })}
-            </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
 
-            {/* Prev button */}
-            <button
-              onClick={() => setActiveCard(c => (c - 1 + activeJourneyCards.length) % activeJourneyCards.length)}
-              aria-label="Previous stage"
-              style={{
-                position: 'absolute', left: '8px', top: '50%', transform: 'translateY(-50%)',
-                zIndex: 20, width: '40px', height: '40px', borderRadius: '50%',
-                background: 'rgba(42,14,5,.8)', border: '1px solid rgba(222,192,120,.3)',
-                cursor: 'pointer', color: GOLD, fontSize: '18px', display: 'flex',
-                alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-            </button>
-
-            {/* Next button */}
-            <button
-              onClick={() => setActiveCard(c => (c + 1) % activeJourneyCards.length)}
-              aria-label="Next stage"
-              style={{
-                position: 'absolute', right: '8px', top: '50%', transform: 'translateY(-50%)',
-                zIndex: 20, width: '40px', height: '40px', borderRadius: '50%',
-                background: 'rgba(42,14,5,.8)', border: '1px solid rgba(222,192,120,.3)',
-                cursor: 'pointer', color: GOLD, fontSize: '18px', display: 'flex',
-                alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
-            </button>
-
-            {/* Hint */}
-            <p style={{
-              position: 'absolute', bottom: '6px', left: '50%', transform: 'translateX(-50%)',
-              fontSize: '11px', color: 'rgba(224,206,189,.4)', whiteSpace: 'nowrap', zIndex: 20,
+        {/* ════════════════════════════════════
+            ADVISORY ROUTE
+        ════════════════════════════════════ */}
+        {activeRoute === 'advisory' && (
+          <>
+            {/* Advisory hero */}
+            <section style={{
+              position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
+              alignItems: 'center', overflow: 'hidden',
+              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
             }}>
-              Tap a card to bring it forward
-            </p>
-          </div>
+              <HeroPageBg imageUrl={headerImages?.advisory} />
+              <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
+                <h1 style={{ fontSize: 'clamp(28px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
+                  Leaders who believe the system can — and{' '}
+                  <span style={{ color: GOLD }}>must change.</span>
+                </h1>
+                <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
+                  The WeThink Advisory Board is composed of India's most respected institution builders — educational leaders who don't just endorse the mission, they hold it accountable.
+                </p>
+              </div>
+            </section>
 
-          {/* Dots */}
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '20px' }}>
-            {activeJourneyCards.map((_, idx) => (
-              <button
-                key={idx}
-                onClick={() => setActiveCard(idx)}
-                aria-label={`Go to stage ${idx + 1}`}
-                style={{
-                  width: idx === activeCard ? '22px' : '8px', height: '8px',
-                  borderRadius: '999px', border: 'none', cursor: 'pointer',
-                  background: idx === activeCard ? GOLD : 'rgba(222,192,120,.25)',
-                  transition: 'all .3s ease', padding: 0,
-                }}
-              />
-            ))}
-          </div>
-        </section>
+            {/* Advisory flip grid */}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
+                The people who keep the work <span style={{ color: GOLD }}>honest.</span>
+              </h2>
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 40px' }}>
+                Educators, institution builders, and industry leaders who bring decades of real-world experience to WeThink's strategic direction.
+              </p>
 
-        {/* ════════════════════════════════════
-            25. ADVISORY PAGE HERO
-        ════════════════════════════════════ */}
-        <section style={{
-          position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
-          alignItems: 'center', overflow: 'hidden',
-          padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
-        }}>
-          <HeroPageBg imageUrl={headerImages?.advisory} />
-          <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
-            <h1 style={{ fontSize: 'clamp(28px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              Leaders who believe the system can — and{' '}
-              <span style={{ color: GOLD }}>must change.</span>
-            </h1>
-            <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-              The WeThink Advisory Board is composed of India's most respected institution builders — educational leaders who don't just endorse the mission, they hold it accountable.
-            </p>
-          </div>
-        </section>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>
+                {/* Named members */}
+                {(useAdvisoryFromSanity ? namedAdvisory : NAMED_MEMBERS.map((m) => ({
+                  _id: m.name, name: m.name, roleOrg: m.role, bio: m.bio,
+                  headshotUrl: undefined, initial: m.name[0], status: 'member' as const,
+                  categoryLabel: m.sub, number: parseInt(m.num),
+                }))).map((member, idx) => {
+                  const isFlipped = flippedCards.has(idx)
+                  const numLabel = String(member.number ?? idx + 1).padStart(2, '0')
+                  return (
+                    <div
+                      key={member._id ?? idx}
+                      onClick={() => toggleFlip(idx)}
+                      style={{ perspective: '1600px', height: '380px', cursor: 'pointer' }}
+                    >
+                      <div style={{
+                        position: 'relative', width: '100%', height: '100%',
+                        transformStyle: 'preserve-3d',
+                        transition: 'transform .6s cubic-bezier(.4,0,.2,1)',
+                        transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
+                      }}>
+                        {/* Front */}
+                        <div style={{
+                          position: 'absolute', inset: 0,
+                          backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+                          background: S2, borderRadius: '14px',
+                          border: '1px solid rgba(222,192,120,.18)', overflow: 'hidden',
+                          display: 'flex', flexDirection: 'column',
+                        }}>
+                          <div style={{ flex: 1, background: S1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                            {member.headshotUrl
+                              ? <img src={member.headshotUrl} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', position: 'absolute', inset: 0, pointerEvents: 'none' }} />
+                              : <span style={{ fontSize: '32px', color: 'rgba(222,192,120,.15)' }}>{member.name[0]}</span>
+                            }
+                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(36,10,3,.5) 0%,rgba(36,10,3,0) 60%)' }} />
+                            <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 700, color: GOLD }}>
+                              {numLabel}
+                            </div>
+                            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(222,192,120,.15)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 600, color: GOLD }}>
+                              Tap ↻
+                            </div>
+                          </div>
+                          <div style={{ padding: '13px 14px 15px', background: S2, borderTop: '1px solid rgba(222,192,120,.14)' }}>
+                            <p style={{ fontSize: '13px', fontWeight: 800, color: TP, margin: '0 0 2px', fontFamily: FF }}>{member.name}</p>
+                            <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 2px' }}>{member.roleOrg}</p>
+                            <p style={{ fontSize: '10px', color: TS, margin: 0 }}>{member.categoryLabel}</p>
+                          </div>
+                        </div>
+                        {/* Back */}
+                        <div style={{
+                          position: 'absolute', inset: 0,
+                          backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
+                          transform: 'rotateY(180deg)',
+                          background: 'linear-gradient(165deg,#3B1407,#2A0E05)',
+                          border: '1px solid rgba(222,192,120,.34)', borderRadius: '14px',
+                          padding: '18px 16px', display: 'flex', flexDirection: 'column', gap: '10px',
+                        }}>
+                          <div style={{ fontFamily: 'Georgia,serif', fontSize: '52px', color: '#8C3623', lineHeight: 0.8 }}>"</div>
+                          <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.12em', margin: 0 }}>{member.name}</p>
+                          <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0, flex: 1 }}>{member.bio}</p>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
 
-        {/* ════════════════════════════════════
-            26. ADVISORY FLIP GRID (2-col, tap to flip)
-        ════════════════════════════════════ */}
-        <section id="advisory-section" data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-          <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-            The people who keep the work <span style={{ color: GOLD }}>honest.</span>
-          </h2>
-          <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 40px' }}>
-            Educators, institution builders, and industry leaders who bring decades of real-world experience to WeThink's strategic direction.
-          </p>
-
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>
-            {/* Named members — Sanity or hardcoded fallback */}
-            {(useAdvisoryFromSanity ? namedAdvisory : NAMED_MEMBERS.map((m) => ({
-              _id: m.name,
-              name: m.name,
-              roleOrg: m.role,
-              bio: m.bio,
-              headshotUrl: undefined,
-              initial: m.name[0],
-              status: 'member' as const,
-              categoryLabel: m.sub,
-              number: parseInt(m.num),
-            }))).map((member, idx) => {
-              const isFlipped = flippedCards.has(idx)
-              const numLabel = String(member.number ?? idx + 1).padStart(2, '0')
-              return (
-                <div
-                  key={member._id ?? idx}
-                  onClick={() => toggleFlip(idx)}
-                  style={{ perspective: '1600px', height: '380px', cursor: 'pointer', position: 'relative' }}
-                >
-                  <div style={{
-                    position: 'relative', width: '100%', height: '100%',
-                    transformStyle: 'preserve-3d',
-                    transition: 'transform .6s cubic-bezier(.4,0,.2,1)',
-                    transform: isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)',
-                  }}>
-                    {/* Front */}
-                    <div style={{
-                      position: 'absolute', inset: 0,
-                      backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-                      background: S2, borderRadius: '14px',
-                      border: '1px solid rgba(222,192,120,.18)', overflow: 'hidden',
+                {/* TBA seats */}
+                {(useAdvisoryFromSanity ? tbaAdvisory : TBA_SEATS.map((s, i) => ({
+                  _id: `tba-${i}`, initial: s.initial, categoryLabel: s.category, number: parseInt(s.num),
+                  name: '', roleOrg: undefined, bio: '', headshotUrl: undefined, status: 'announcing' as const,
+                } as AdvisoryMemberData & { initial?: string }))).map((seat, idx) => (
+                  <div
+                    key={seat._id ?? `tba-${idx}`}
+                    style={{
+                      height: '380px', borderRadius: '14px',
+                      border: '1px dashed rgba(222,192,120,.2)',
+                      background: 'rgba(42,14,5,.4)',
                       display: 'flex', flexDirection: 'column',
-                    }}>
-                      <div style={{ flex: 1, background: S1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
-                        {member.headshotUrl
-                          ? <img src={member.headshotUrl} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', position: 'absolute', inset: 0 }} />
-                          : <span style={{ fontSize: '32px', color: 'rgba(222,192,120,.15)' }}>{member.name[0]}</span>
-                        }
-                        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(36,10,3,.5) 0%,rgba(36,10,3,0) 60%)' }} />
-                        <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 700, color: GOLD }}>
-                          {numLabel}
-                        </div>
-                        <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(222,192,120,.15)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 600, color: GOLD }}>
-                          Tap ↻
-                        </div>
-                      </div>
-                      <div style={{ padding: '13px 14px 15px', background: S2, borderTop: '1px solid rgba(222,192,120,.14)' }}>
-                        <p style={{ fontSize: '13px', fontWeight: 800, color: TP, margin: '0 0 2px', fontFamily: FF }}>{member.name}</p>
-                        <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 2px' }}>{member.roleOrg}</p>
-                        <p style={{ fontSize: '10px', color: TS, margin: 0 }}>{member.categoryLabel}</p>
-                      </div>
+                      alignItems: 'center', justifyContent: 'center', gap: '10px',
+                      padding: '16px',
+                    }}
+                  >
+                    <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(222,192,120,.07)', border: '1px dashed rgba(222,192,120,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 800, color: 'rgba(222,192,120,.3)' }}>
+                      {seat.initial ?? seat.name?.[0] ?? '?'}
                     </div>
+                    <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(245,238,226,.35)', margin: 0, textAlign: 'center' }}>Advisory seat</p>
+                    <p style={{ fontSize: '11px', color: 'rgba(222,192,120,.35)', margin: 0, textAlign: 'center' }}>{seat.categoryLabel}</p>
+                    <p style={{ fontSize: '10px', color: 'rgba(224,206,189,.3)', margin: 0, textAlign: 'center' }}>Announcing · Season 1</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          </>
+        )}
 
-                    {/* Back */}
-                    <div style={{
-                      position: 'absolute', inset: 0,
-                      backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-                      transform: 'rotateY(180deg)',
-                      background: 'linear-gradient(165deg,#3B1407,#2A0E05)',
-                      border: '1px solid rgba(222,192,120,.34)', borderRadius: '14px',
-                      padding: '18px 16px', display: 'flex', flexDirection: 'column', gap: '10px',
-                    }}>
-                      <div style={{ fontFamily: 'Georgia,serif', fontSize: '52px', color: '#8C3623', lineHeight: 0.8 }}>"</div>
-                      <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.12em', margin: 0 }}>{member.name}</p>
-                      <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0, flex: 1 }}>{member.bio}</p>
-                    </div>
+        {/* ════════════════════════════════════
+            CONTACT / APPLY ROUTE
+        ════════════════════════════════════ */}
+        {activeRoute === 'contact' && (
+          <>
+            {/* Apply CTA */}
+            <section data-reveal="" style={{
+              padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)',
+              background: S1, textAlign: 'center',
+              position: 'relative', overflow: 'hidden',
+              minHeight: '60vh', display: 'flex', alignItems: 'center',
+            }}>
+              <div aria-hidden="true" style={{
+                position: 'absolute', right: '-8%', bottom: '-12%',
+                fontSize: 'clamp(80px,22vw,200px)', fontWeight: 800,
+                color: 'rgba(222,192,120,.04)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none',
+              }}>APPLY</div>
+              <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
+                <h2 style={{ fontSize: 'clamp(24px,6vw,44px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
+                  {applyCta?.heading
+                    ? applyCta.heading
+                    : <>Your students are ready for a <span style={{ color: GOLD }}>national stage.</span></>
+                  }
+                </h2>
+                <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 auto 32px', maxWidth: '480px' }}>
+                  {applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.'}
+                </p>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <button onClick={onSchoolFormOpen} style={{ background: GOLD, color: BG, padding: '16px 32px', borderRadius: '999px', fontSize: '15px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}>
+                    {applyCta?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
+                  </button>
+                  <button onClick={onPartnerFormOpen} style={{ background: 'rgba(52,15,5,.4)', color: TP, border: '1px solid rgba(224,206,189,.3)', padding: '16px 32px', borderRadius: '999px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', fontFamily: FF }}>
+                    {applyCta?.secondaryCtaLabel ?? 'Partner with us'}
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* Footer */}
+            <footer style={{ padding: 'clamp(44px,7vw,64px) clamp(24px,6vw,64px) 40px', background: S1, borderTop: '1px solid rgba(222,192,120,.14)' }}>
+              <div style={{
+                border: '1px solid rgba(222,192,120,.2)', borderRadius: '18px',
+                padding: 'clamp(24px,4vw,40px)',
+                background: 'linear-gradient(120deg,#340F05,#2A0E05)',
+                marginBottom: '48px',
+              }}>
+                <div style={{ maxWidth: '560px', marginBottom: '24px' }}>
+                  <SectionLabel>Partner with us</SectionLabel>
+                  <h3 style={{ fontSize: 'clamp(20px,4vw,28px)', fontWeight: 800, color: TP, margin: '0 0 10px', fontFamily: FF }}>Build the future of Young Bharat with us</h3>
+                  <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: 0 }}>Whether you are an industry leader, an educator, a media organisation, or a policymaker — there is a role for you in the WeThink ecosystem.</p>
+                </div>
+                <button onClick={onPartnerFormOpen} style={{ background: GOLD, color: BG, padding: '13px 26px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}>
+                  Become a partner ↗
+                </button>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', marginBottom: '40px' }}>
+                <div>
+                  <p style={{ fontSize: '20px', fontWeight: 800, color: TP, margin: '0 0 6px', fontFamily: FF }}>
+                    <span style={{ color: TP }}>wethink</span><span style={{ color: GOLD }}>bharat</span>
+                  </p>
+                  <p style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(224,206,189,.55)', margin: 0 }}>An initiative of Viksit Bharat Foundation</p>
+                </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+                  <div>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 14px' }}>Explore</p>
+                    {(siteConfig?.footerExploreLinks?.length ? siteConfig.footerExploreLinks : [
+                      { label: 'Who we build for', link: '#pathways' },
+                      { label: 'Domains', link: '#domains' },
+                      { label: 'WeThink Summit', link: '#summit' },
+                      { label: 'The journey', link: '#journey' },
+                    ]).map(l => (
+                      <button key={l.label} onClick={() => navigate(l.link.replace('#', '') as Route)} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>{l.label}</button>
+                    ))}
+                  </div>
+                  <div>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 14px' }}>Connect</p>
+                    <button onClick={onSchoolFormOpen} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>School enquiry</button>
+                    <button onClick={onPartnerFormOpen} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>Partner with us</button>
+                    <button onClick={() => navigate('advisory')} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>Advisory board</button>
                   </div>
                 </div>
-              )
-            })}
-
-            {/* TBA seats — Sanity announcing members or hardcoded fallback */}
-            {(useAdvisoryFromSanity ? tbaAdvisory : TBA_SEATS.map((s, i) => ({
-              _id: `tba-${i}`,
-              initial: s.initial,
-              categoryLabel: s.category,
-              number: parseInt(s.num),
-            } as AdvisoryMemberData & { initial?: string }))).map((seat, idx) => (
-              <div
-                key={seat._id ?? `tba-${idx}`}
-                style={{
-                  height: '380px', borderRadius: '14px',
-                  border: '1px dashed rgba(222,192,120,.2)',
-                  background: 'rgba(42,14,5,.4)',
-                  display: 'flex', flexDirection: 'column',
-                  alignItems: 'center', justifyContent: 'center', gap: '10px',
-                  padding: '16px',
-                }}
-              >
-                <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(222,192,120,.07)', border: '1px dashed rgba(222,192,120,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 800, color: 'rgba(222,192,120,.3)' }}>
-                  {seat.initial ?? (seat.name?.[0] ?? '?')}
-                </div>
-                <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(245,238,226,.35)', margin: 0, textAlign: 'center' }}>Advisory seat</p>
-                <p style={{ fontSize: '11px', color: 'rgba(222,192,120,.35)', margin: 0, textAlign: 'center' }}>{seat.categoryLabel}</p>
-                <p style={{ fontSize: '10px', color: 'rgba(224,206,189,.3)', margin: 0, textAlign: 'center' }}>Announcing · Season 1</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            27. APPLY CTA
-        ════════════════════════════════════ */}
-        <section id="apply" data-reveal="" style={{
-          padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)',
-          background: S1, textAlign: 'center',
-          position: 'relative', overflow: 'hidden',
-        }}>
-          <div aria-hidden="true" style={{
-            position: 'absolute', right: '-8%', bottom: '-12%',
-            fontSize: 'clamp(80px,22vw,200px)', fontWeight: 800,
-            color: 'rgba(222,192,120,.04)', lineHeight: 1,
-            pointerEvents: 'none', userSelect: 'none',
-          }}>
-            APPLY
-          </div>
-
-          <div style={{ position: 'relative', zIndex: 1 }}>
-            <h2 style={{ fontSize: 'clamp(24px,6vw,44px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-              {applyCta?.heading
-                ? applyCta.heading
-                : <>Your students are ready for a <span style={{ color: GOLD }}>national stage.</span></>
-              }
-            </h2>
-            <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 auto 32px', maxWidth: '480px' }}>
-              {applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.'}
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <button
-                onClick={onSchoolFormOpen}
-                style={{ background: GOLD, color: BG, padding: '16px 32px', borderRadius: '999px', fontSize: '15px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
-              >
-                {applyCta?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
-              </button>
-              <button
-                onClick={onPartnerFormOpen}
-                style={{ background: 'rgba(52,15,5,.4)', color: TP, border: '1px solid rgba(224,206,189,.3)', padding: '16px 32px', borderRadius: '999px', fontSize: '15px', fontWeight: 600, cursor: 'pointer', fontFamily: FF }}
-              >
-                {applyCta?.secondaryCtaLabel ?? 'Partner with us'}
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* ════════════════════════════════════
-            28. FOOTER
-        ════════════════════════════════════ */}
-        <footer style={{ padding: 'clamp(44px,7vw,64px) clamp(24px,6vw,64px) 40px', background: S1, borderTop: '1px solid rgba(222,192,120,.14)' }}>
-          {/* Partner CTA card */}
-          <div style={{
-            border: '1px solid rgba(222,192,120,.2)', borderRadius: '18px',
-            padding: 'clamp(24px,4vw,40px)',
-            background: 'linear-gradient(120deg,#340F05,#2A0E05)',
-            marginBottom: '48px',
-          }}>
-            <div style={{ maxWidth: '560px', marginBottom: '24px' }}>
-              <SectionLabel>Partner with us</SectionLabel>
-              <h3 style={{ fontSize: 'clamp(20px,4vw,28px)', fontWeight: 800, color: TP, margin: '0 0 10px', fontFamily: FF }}>
-                Build the future of Young Bharat with us
-              </h3>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: 0 }}>
-                Whether you are an industry leader, an educator, a media organisation, or a policymaker — there is a role for you in the WeThink ecosystem.
-              </p>
-            </div>
-            <button
-              onClick={onPartnerFormOpen}
-              style={{ background: GOLD, color: BG, padding: '13px 26px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
-            >
-              Become a partner ↗
-            </button>
-          </div>
-
-          {/* Footer grid */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', marginBottom: '40px' }}>
-            <div>
-              <p style={{ fontSize: '20px', fontWeight: 800, color: TP, margin: '0 0 6px', fontFamily: FF }}>
-                <span style={{ color: TP }}>wethink</span><span style={{ color: GOLD }}>bharat</span>
-              </p>
-              <p style={{ fontSize: '12px', lineHeight: 1.6, color: 'rgba(224,206,189,.55)', margin: 0 }}>An initiative of Viksit Bharat Foundation</p>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-              <div>
-                <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 14px' }}>Explore</p>
-                {(siteConfig?.footerExploreLinks && siteConfig.footerExploreLinks.length > 0
-                  ? siteConfig.footerExploreLinks
-                  : [
-                      { label: 'Who we build for', link: '#pathways' },
-                      { label: 'Domains', link: '#domains-section' },
-                      { label: 'WeThink Summit', link: '#summit-section' },
-                      { label: 'The journey', link: '#journey-section' },
-                    ]
-                ).map(l => (
-                  <a key={l.label} href={l.link} style={{ display: 'block', fontSize: '13px', color: TS, textDecoration: 'none', marginBottom: '9px' }}>{l.label}</a>
-                ))}
               </div>
 
-              <div>
-                <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 14px' }}>Connect</p>
-                {(siteConfig?.footerConnectLinks && siteConfig.footerConnectLinks.length > 0
-                  ? siteConfig.footerConnectLinks
-                  : []
-                ).map(l => (
-                  <a key={l.label} href={l.link} style={{ display: 'block', fontSize: '13px', color: TS, textDecoration: 'none', marginBottom: '9px' }}>{l.label}</a>
-                ))}
-                <button onClick={onSchoolFormOpen} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>School enquiry</button>
-                <button onClick={onPartnerFormOpen} style={{ display: 'block', fontSize: '13px', color: TS, background: 'none', border: 'none', cursor: 'pointer', padding: '0 0 9px', fontFamily: FF, textAlign: 'left' }}>Partner with us</button>
-                <a href="#advisory-section" style={{ display: 'block', fontSize: '13px', color: TS, textDecoration: 'none', marginBottom: '9px' }}>Advisory board</a>
+              <div style={{ borderTop: '1px solid rgba(222,192,120,.1)', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                <p style={{ fontSize: '12px', color: 'rgba(224,206,189,.4)', margin: 0 }}>
+                  {siteConfig?.copyrightText ?? '© 2026 WeThink Bharat. All rights reserved.'}
+                </p>
+                <p style={{ fontSize: '12px', color: 'rgba(224,206,189,.4)', margin: 0 }}>
+                  {siteConfig?.footerTagline ?? 'A national experiential learning movement.'}
+                </p>
               </div>
-            </div>
-          </div>
+            </footer>
+          </>
+        )}
 
-          {/* Copyright */}
-          <div style={{ borderTop: '1px solid rgba(222,192,120,.1)', paddingTop: '20px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
-            <p style={{ fontSize: '12px', color: 'rgba(224,206,189,.4)', margin: 0 }}>
-              {siteConfig?.copyrightText ?? '© 2026 WeThink Bharat. All rights reserved.'}
-            </p>
-            <p style={{ fontSize: '12px', color: 'rgba(224,206,189,.4)', margin: 0 }}>
-              {siteConfig?.footerTagline ?? 'A national experiential learning movement.'}
-            </p>
-          </div>
-        </footer>
       </main>
 
-      {/* ════════════════════════════════════
-          29. BOTTOM TAB BAR (fixed)
-      ════════════════════════════════════ */}
+      {/* ══════════════════════════════════════
+          BACK TO TOP (fixed, above tab bar)
+      ══════════════════════════════════════ */}
+      {backToTopVisible && (
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Back to top"
+          style={{
+            position: 'fixed', right: '16px', bottom: 'calc(72px + env(safe-area-inset-bottom))', zIndex: 180,
+            width: '42px', height: '42px', borderRadius: '50%',
+            background: GOLD, color: BG, border: 'none', cursor: 'pointer',
+            fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            boxShadow: '0 4px 20px rgba(0,0,0,.4)',
+          }}
+        >
+          ↑
+        </button>
+      )}
+
+      {/* ══════════════════════════════════════
+          BOTTOM TAB BAR (fixed)
+      ══════════════════════════════════════ */}
       <nav style={{
-        position: 'fixed',
-        left: 0, right: 0, bottom: 0,
+        position: 'fixed', left: 0, right: 0, bottom: 0,
         height: 'calc(60px + env(safe-area-inset-bottom))',
         paddingBottom: 'env(safe-area-inset-bottom)',
         background: 'rgba(30,8,2,.94)',
@@ -1579,7 +1419,9 @@ export function MobileSite({
         zIndex: 200,
       }}>
         {TABS.map(tab => {
-          const isActive = activeTab === tab.id
+          const isActive = tab.id === 'menu'
+            ? isMenuTabActive
+            : activeRoute === tab.id
           return (
             <button
               key={tab.id}
@@ -1599,17 +1441,15 @@ export function MobileSite({
         })}
       </nav>
 
-      {/* ════════════════════════════════════
-          30. BOTTOM SHEET (Menu)
-      ════════════════════════════════════ */}
+      {/* ══════════════════════════════════════
+          BOTTOM SHEET (Menu)
+      ══════════════════════════════════════ */}
       {sheetOpen && (
         <div style={{ position: 'fixed', inset: 0, zIndex: 210 }}>
-          {/* Backdrop */}
           <div
             onClick={closeSheet}
             style={{ position: 'absolute', inset: 0, background: 'rgba(20,6,2,.6)', backdropFilter: 'blur(3px)' }}
           />
-          {/* Card */}
           <div style={{
             position: 'absolute', left: 0, right: 0, bottom: 0,
             background: '#240A03',
@@ -1618,62 +1458,37 @@ export function MobileSite({
             padding: `14px 18px calc(20px + env(safe-area-inset-bottom))`,
             animation: 'wtbFadeUp .28s ease',
           }}>
-            {/* Drag handle */}
             <div style={{ width: '40px', height: '4px', borderRadius: '2px', background: 'rgba(224,206,189,.3)', margin: '0 auto 12px' }} />
-
-            {/* Sheet links */}
             {[
-              { icon: 'ti-eye', label: 'Vision', target: '#vision-section' },
-              { icon: 'ti-affiliate', label: 'Ecosystem', target: '#ecosystem-section' },
-              { icon: 'ti-users-group', label: 'Advisory Board', target: '#advisory-section' },
-              { icon: 'ti-send', label: 'Bring to my school', target: null },
-            ].map(link => (
-              <a
+              { icon: 'ti-eye', label: 'Vision', route: 'vision' as Route },
+              { icon: 'ti-affiliate', label: 'Ecosystem', route: 'ecosystem' as Route },
+              { icon: 'ti-users-group', label: 'Advisory Board', route: 'advisory' as Route },
+              { icon: 'ti-send', label: 'Bring to my school', route: null },
+            ].map((link, i, arr) => (
+              <button
                 key={link.label}
-                href={link.target ?? '#'}
-                onClick={(e) => {
-                  e.preventDefault()
-                  if (link.target === null) {
-                    closeSheet()
-                    setTimeout(() => onSchoolFormOpen(), 120)
+                onClick={() => {
+                  closeSheet()
+                  if (link.route === null) {
+                    setTimeout(() => onSchoolFormOpen(), 150)
                   } else {
-                    closeSheet()
-                    setTimeout(() => scrollTo(link.target!), 120)
+                    setTimeout(() => navigate(link.route!), 150)
                   }
                 }}
                 style={{
-                  display: 'flex', alignItems: 'center', gap: '14px', padding: '15px 8px',
-                  textDecoration: 'none', color: link.target === null ? GOLD : TP,
-                  fontSize: '17px', fontWeight: 600,
-                  borderBottom: link.target === null ? 'none' : '1px solid rgba(222,192,120,.1)',
-                  fontFamily: FF,
+                  display: 'flex', alignItems: 'center', gap: '14px', width: '100%',
+                  padding: '15px 8px', background: 'none', border: 'none', borderRadius: 0,
+                  borderBottom: i < arr.length - 1 ? '1px solid rgba(222,192,120,.1)' : 'none',
+                  cursor: 'pointer', color: link.route === null ? GOLD : TP,
+                  fontSize: '17px', fontWeight: 600, fontFamily: FF, textAlign: 'left',
                 }}
               >
                 <i className={`ti ${link.icon}`} style={{ fontSize: '20px', color: GOLD }} />
                 {link.label}
-              </a>
+              </button>
             ))}
           </div>
         </div>
-      )}
-
-      {/* ════════════════════════════════════
-          31. BACK TO TOP (fixed)
-      ════════════════════════════════════ */}
-      {backToTopVisible && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          aria-label="Back to top"
-          style={{
-            position: 'fixed', right: '16px', bottom: 'calc(72px + env(safe-area-inset-bottom))', zIndex: 180,
-            width: '42px', height: '42px', borderRadius: '50%',
-            background: GOLD, color: BG, border: 'none', cursor: 'pointer',
-            fontSize: '18px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '0 4px 20px rgba(0,0,0,.4)',
-          }}
-        >
-          ↑
-        </button>
       )}
     </div>
   )

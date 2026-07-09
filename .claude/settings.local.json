@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(npx tsc:*)",
+      "Bash(git -C /c/Users/vasu.d.sharma/Git/.claude/worktrees/agent-a2a02bcf log --oneline -3)",
+      "Bash(git -C /c/Users/vasu.d.sharma/Git/wethink-bharat status --short)",
+      "Bash(git -C /c/Users/vasu.d.sharma/Git/wethink-bharat worktree list)",
+      "Bash(npm run:*)",
+      "Bash(node:*)",
+      "Bash(curl:*)",
+      "Bash(npx next:*)"
+    ]
+  }
+}

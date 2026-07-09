@@ -1,28 +1,23 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
 
-const MOBILE_UA_REGEX = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
+const MOBILE_UA = /android|iphone|ipod|blackberry|iemobile|opera mini/i
 
-export function proxy(req: NextRequest) {
-  // Allow disabling via env flag
-  if (process.env.ENABLE_DEVICE_REDIRECT === 'false') return NextResponse.next()
+export function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl
 
-  const ua = req.headers.get('user-agent') || ''
-  const isMobile = MOBILE_UA_REGEX.test(ua)
-  const { pathname } = req.nextUrl
+  // Already on the mobile route — don't redirect again
+  if (pathname.startsWith('/m')) return NextResponse.next()
 
-  // Redirect mobile users from / to /m
-  if (isMobile && pathname === '/') {
-    return NextResponse.redirect(new URL('/m', req.url))
-  }
-
-  // Redirect desktop users from /m to /
-  if (!isMobile && pathname === '/m') {
-    return NextResponse.redirect(new URL('/', req.url))
+  const ua = request.headers.get('user-agent') ?? ''
+  if (MOBILE_UA.test(ua)) {
+    return NextResponse.redirect(new URL('/m', request.url))
   }
 
   return NextResponse.next()
 }
 
 export const config = {
-  matcher: ['/', '/m'],
+  // Run on all page routes; skip static files, images, api, studio
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|api|studio).*)'],
 }

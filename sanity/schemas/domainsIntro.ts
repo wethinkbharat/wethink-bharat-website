@@ -29,6 +29,7 @@ export const domainsIntro = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || to mark where gold colour starts. E.g. "Domains you ||experience, not just study."',
     }),
     defineField({
       name: 'subtext',

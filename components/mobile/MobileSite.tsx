@@ -599,7 +599,7 @@ export function MobileSite({
               <div style={{ marginBottom: '36px' }}>
                 <SectionLabel>Industry domains</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-                  {domainsIntro?.heading ?? <>Domains you <span style={{ color: GOLD }}>experience</span>, not just study.</>}
+                  {goldSplit(domainsIntro?.heading ?? 'Domains you ||experience, not just study.')}
                 </h2>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.2)', borderRadius: '999px', padding: '5px 14px' }}>
                   <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />

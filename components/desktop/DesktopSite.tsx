@@ -871,7 +871,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section id="pathways" data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '32px', flexWrap: 'wrap', marginBottom: '40px' }}>
               <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: 0, fontFamily: FF }}>
-                {pathwaysIntro?.heading ?? 'Capability across the whole ecosystem'}
+                {pathwaysIntro?.heading ?? <>Capability across the whole <span style={{ color: GOLD }}>ecosystem</span></>}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '380px', margin: 0 }}>
                 {pathwaysIntro?.subtext ?? 'We don\'t build students in isolation. We build the educators who guide them and the schools that hold it all together.'}

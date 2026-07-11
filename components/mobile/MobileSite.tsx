@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import type {
   AdvisoryMemberData,
   CurrentPartnerData,
@@ -29,6 +29,12 @@ const GOLD = '#DEC078'
 const TP = '#F5EEE2'
 const TS = '#E0CEBD'
 const BORDER = '1px solid rgba(222,192,120,.14)'
+
+function goldLast(text: string, fromWord: string): React.ReactNode {
+  const i = text.toLowerCase().indexOf(fromWord.toLowerCase())
+  if (i < 0) return text
+  return <>{text.slice(0, i)}<span style={{ color: GOLD }}>{text.slice(i)}</span></>
+}
 
 /* ── keyframes ───────────────────────────────────────────────── */
 const KEYFRAMES = `
@@ -509,7 +515,7 @@ export function MobileSite({
             {/* PATHWAYS */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-                {pathwaysIntro?.heading ?? <>Capability across the whole <span style={{ color: GOLD }}>ecosystem</span></>}
+                {goldLast(pathwaysIntro?.heading ?? 'Capability across the whole ecosystem', 'ecosystem')}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
                 {pathwaysIntro?.subtext ?? "We don't build students in isolation. We build the educators who guide them and the schools that hold it all together."}
@@ -562,7 +568,7 @@ export function MobileSite({
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                {gapSection?.heading ?? <>Educated unemployment begins with{' '}<span style={{ color: GOLD }}>uninformed choices.</span></>}
+                {goldLast(gapSection?.heading ?? 'Educated unemployment begins with uninformed choices.', 'uninformed choices')}
               </h2>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: '0 0 26px', maxWidth: '440px' }}>
                 {gapSection?.intro ?? "India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for."}

@@ -1,5 +1,5 @@
 'use client'
-import { useState, useEffect, useRef, useCallback, useMemo } from 'react'
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react'
 
 /* ─────────────────────────────────────────────────────────
    TYPES & CONSTANTS
@@ -207,6 +207,12 @@ const TP = '#F5EEE2'
 const TS = '#E0CEBD'
 const BORDER = '1px solid rgba(222,192,120,.14)'
 
+function goldLast(text: string, fromWord: string): React.ReactNode {
+  const i = text.toLowerCase().indexOf(fromWord.toLowerCase())
+  if (i < 0) return text
+  return <>{text.slice(0, i)}<span style={{ color: GOLD }}>{text.slice(i)}</span></>
+}
+
 /* ─────────────────────────────────────────────────────────
    KEYFRAME CSS INJECTION
 ───────────────────────────────────────────────────────── */
@@ -413,6 +419,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           const isRange = raw.includes('–')
           if (isRange) { el.textContent = raw; obs.unobserve(el); return }
           const target = parseFloat(raw)
+          if (isNaN(target)) { el.textContent = raw; obs.unobserve(el); return }
           const suffix = raw.replace(/[\d.]/g, '')
           const start = performance.now()
           const dur = 900
@@ -871,7 +878,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section id="pathways" data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '32px', flexWrap: 'wrap', marginBottom: '40px' }}>
               <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: 0, fontFamily: FF }}>
-                {pathwaysIntro?.heading ?? <>Capability across the whole <span style={{ color: GOLD }}>ecosystem</span></>}
+                {goldLast(pathwaysIntro?.heading ?? 'Capability across the whole ecosystem', 'ecosystem')}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '380px', margin: 0 }}>
                 {pathwaysIntro?.subtext ?? 'We don\'t build students in isolation. We build the educators who guide them and the schools that hold it all together.'}
@@ -939,7 +946,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               <div>
                 <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {gapSection?.heading ?? <>Educated unemployment begins with <span style={{ color: GOLD }}>uninformed choices.</span></>}
+                  {goldLast(gapSection?.heading ?? 'Educated unemployment begins with uninformed choices.', 'uninformed choices')}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: 0 }}>
                   {gapSection?.intro ?? "Millions of graduates enter the workforce unprepared — not because they aren't capable, but because they were never given the chance to explore what they were capable of."}

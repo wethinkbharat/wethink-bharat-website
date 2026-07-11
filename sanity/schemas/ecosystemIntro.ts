@@ -22,12 +22,33 @@ export const ecosystemIntro = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || for gold.',
     }),
     defineField({
       name: 'subtext',
       title: 'Sub-text',
       type: 'text',
       rows: 3,
+      description: 'Use || for gold.',
+    }),
+    defineField({
+      name: 'sectionHeading',
+      title: 'Section Heading',
+      type: 'string',
+      description: 'Use || for gold. E.g. "Not just Collaborators. ||Changemakers."',
+    }),
+    defineField({
+      name: 'partnersHeading',
+      title: 'Partners Section Heading',
+      type: 'string',
+      description: 'Use || for gold. E.g. "Who we ||work with"',
+    }),
+    defineField({
+      name: 'partnersSubtext',
+      title: 'Partners Section Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Use || for gold.',
     }),
   ],
 

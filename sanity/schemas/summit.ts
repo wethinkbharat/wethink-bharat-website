@@ -27,6 +27,32 @@ export const summit = defineType({
       description: 'Short paragraph shown in the Summit teaser card on the homepage. Use || to mark where gold colour starts.',
     }),
     defineField({
+      name: 'heroSubtext',
+      title: 'Page Hero Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Subtitle below the summit page hero heading. Use || for gold.',
+    }),
+    defineField({
+      name: 'sectionHeading',
+      title: '"What is the Summit" Heading',
+      type: 'string',
+      description: 'Use || for gold. E.g. "Not a competition. A ||culmination."',
+    }),
+    defineField({
+      name: 'getInvolvedHeading',
+      title: 'Get Involved Heading',
+      type: 'string',
+      description: 'Use || for gold.',
+    }),
+    defineField({
+      name: 'getInvolvedSubtext',
+      title: 'Get Involved Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Use || for gold.',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'array',

@@ -25,6 +25,20 @@ export const journeyIntro = defineType({
       type: 'string',
       description: 'Use || to mark where gold colour starts. E.g. "Five stages. One ||transformation."',
     }),
+    defineField({
+      name: 'heroSubtext',
+      title: 'Page Hero Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Subtitle below the journey page hero heading. Use || for gold.',
+    }),
+    defineField({
+      name: 'sectionSubtext',
+      title: 'Section Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Subtext beside the orbit section heading. Use || for gold.',
+    }),
   ],
 
   preview: {

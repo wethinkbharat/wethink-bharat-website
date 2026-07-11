@@ -15,6 +15,8 @@ import type {
   SummitData,
   JourneyStageData,
   JourneyIntroData,
+  EcosystemIntroData,
+  AdvisoryIntroData,
   ApplyCtaData,
   SiteConfigData,
   HeaderImagesData,
@@ -31,9 +33,13 @@ const TS = '#E0CEBD'
 const BORDER = '1px solid rgba(222,192,120,.14)'
 
 function goldSplit(text: string): React.ReactNode {
-  const i = text.indexOf('||')
-  if (i < 0) return text
-  return <>{text.slice(0, i)}<span style={{ color: GOLD }}>{text.slice(i + 2)}</span></>
+  const first = text.indexOf('||')
+  if (first < 0) return text
+  const second = text.indexOf('||', first + 2)
+  if (second < 0) {
+    return <>{text.slice(0, first)}<span style={{ color: GOLD }}>{text.slice(first + 2)}</span></>
+  }
+  return <>{text.slice(0, first)}<span style={{ color: GOLD }}>{text.slice(first + 2, second)}</span>{text.slice(second + 2)}</>
 }
 
 /* ── keyframes ───────────────────────────────────────────────── */
@@ -179,6 +185,8 @@ interface Props {
   summit?: SummitData | null
   journeyStages?: JourneyStageData[]
   journeyIntro?: JourneyIntroData | null
+  ecosystemIntro?: EcosystemIntroData | null
+  advisoryIntro?: AdvisoryIntroData | null
   applyCta?: ApplyCtaData | null
   siteConfig?: SiteConfigData | null
   headerImages?: HeaderImagesData
@@ -205,6 +213,8 @@ export function MobileSite({
   summit,
   journeyStages: journeyStagesProp,
   journeyIntro,
+  ecosystemIntro,
+  advisoryIntro,
   applyCta,
   siteConfig,
   headerImages,
@@ -796,10 +806,10 @@ export function MobileSite({
               <HeroPageBg imageUrl={headerImages?.domains} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
                 <h1 style={{ fontSize: 'clamp(32px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  Step into the <span style={{ color: GOLD }}>real work.</span>
+                  {goldSplit(domainsIntro?.heroHeading ?? 'Step into the ||real work.')}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-                  Four complete worlds — each with a simulator, a live project, an industry partner, and proof that lasts.
+                  {goldSplit(domainsIntro?.heroSubtext ?? 'Four complete worlds — each with a simulator, a live project, an industry partner, and proof that lasts.')}
                 </p>
               </div>
             </section>
@@ -913,7 +923,7 @@ export function MobileSite({
                   {goldSplit(summit?.heading ?? 'The national stage where student work meets ||a nation watching.')}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-                  The WeThink Summit is where the journey culminates — live, nationally recognised, and permanently recorded.
+                  {goldSplit(summit?.heroSubtext ?? 'The WeThink Summit is where the journey culminates — live, nationally recognised, and permanently recorded.')}
                 </p>
               </div>
             </section>
@@ -922,7 +932,7 @@ export function MobileSite({
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <SectionLabel>What is the WeThink Summit</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                Not a competition. A <span style={{ color: GOLD }}>culmination.</span>
+                {goldSplit(summit?.sectionHeading ?? 'Not a competition. A ||culmination.')}
               </h2>
               {summit?.body
                 ? summit.body.split('\n\n').map((para, i, arr) => (
@@ -978,10 +988,10 @@ export function MobileSite({
             <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
               <SectionLabel>Get involved</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-                Three ways to be part of the Summit
+                {goldSplit(summit?.getInvolvedHeading ?? 'Three ways to be part of the Summit')}
               </h2>
               <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
-                Whether you lead a school, run a company, or simply care about what India's next generation can do — there is a place for you at the WeThink Summit.
+                {goldSplit(summit?.getInvolvedSubtext ?? "Whether you lead a school, run a company, or simply care about what India's next generation can do — there is a place for you at the WeThink Summit.")}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {(summit?.getInvolvedCards?.length ? summit.getInvolvedCards : [
@@ -1062,11 +1072,10 @@ export function MobileSite({
               <HeroPageBg imageUrl={headerImages?.ecosystem} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
                 <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  More than a partnership,{' '}
-                  <span style={{ color: GOLD }}>a movement.</span>
+                  {goldSplit(ecosystemIntro?.heading ?? 'More than a partnership, ||a movement.')}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-                  Every organisation in the WeThink ecosystem is here because they believe the same thing — that India's students deserve better, sooner.
+                  {goldSplit(ecosystemIntro?.subtext ?? "Every organisation in the WeThink ecosystem is here because they believe the same thing — that India's students deserve better, sooner.")}
                 </p>
               </div>
             </section>
@@ -1074,8 +1083,7 @@ export function MobileSite({
             {/* 2-col partner type grid */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 36px', fontFamily: FF }}>
-                Not just Collaborators.<br />
-                <span style={{ color: GOLD }}>Changemakers.</span>
+                {goldSplit(ecosystemIntro?.sectionHeading ?? 'Not just Collaborators. ||Changemakers.')}
               </h2>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>
                 {[
@@ -1099,9 +1107,9 @@ export function MobileSite({
               <div style={{ marginBottom: '36px' }}>
                 <SectionLabel>Current partners</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 6px', fontFamily: FF }}>
-                  Who we <span style={{ color: GOLD }}>work with</span>
+                  {goldSplit(ecosystemIntro?.partnersHeading ?? 'Who we ||work with')}
                 </h2>
-                <p style={{ fontSize: '14px', color: TS, margin: '0 0 20px' }}>A growing network of Changemakers.</p>
+                <p style={{ fontSize: '14px', color: TS, margin: '0 0 20px' }}>{goldSplit(ecosystemIntro?.partnersSubtext ?? 'A growing network of Changemakers.')}</p>
                 <button
                   onClick={onPartnerFormOpen}
                   style={{ background: 'none', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 600, color: GOLD, cursor: 'pointer', fontFamily: FF }}
@@ -1145,7 +1153,7 @@ export function MobileSite({
                   {goldSplit(journeyIntro?.heading ?? 'Five stages. One ||transformation.')}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-                  The WeThink journey moves students from exposure to permanent proof — through five structured, connected stages that build on each other.
+                  {goldSplit(journeyIntro?.heroSubtext ?? 'The WeThink journey moves students from exposure to permanent proof — through five structured, connected stages that build on each other.')}
                 </p>
               </div>
             </section>
@@ -1156,7 +1164,7 @@ export function MobileSite({
                 From exposure to <span style={{ color: GOLD }}>permanent proof</span>
               </h2>
               <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
-                Each stage is designed to build on the last — so that by the time a student reaches the Summit, they are genuinely ready for it.
+                {goldSplit(journeyIntro?.sectionSubtext ?? 'Each stage is designed to build on the last — so that by the time a student reaches the Summit, they are genuinely ready for it.')}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {activeJourneyCards.map((card, idx) => (
@@ -1200,11 +1208,10 @@ export function MobileSite({
               <HeroPageBg imageUrl={headerImages?.advisory} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
                 <h1 style={{ fontSize: 'clamp(28px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  Leaders who believe the system can — and{' '}
-                  <span style={{ color: GOLD }}>must change.</span>
+                  {goldSplit(advisoryIntro?.heading ?? "Leaders who believe the system can — and ||must change.")}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
-                  The WeThink Advisory Board is composed of India's most respected institution builders — educational leaders who don't just endorse the mission, they hold it accountable.
+                  {goldSplit(advisoryIntro?.subtext ?? "The WeThink Advisory Board is composed of India's most respected institution builders — educational leaders who don't just endorse the mission, they hold it accountable.")}
                 </p>
               </div>
             </section>
@@ -1212,10 +1219,10 @@ export function MobileSite({
             {/* Advisory flip grid */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-                The people who keep the work <span style={{ color: GOLD }}>honest.</span>
+                {goldSplit(advisoryIntro?.sectionHeading ?? 'The people who keep the work ||honest.')}
               </h2>
               <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 40px' }}>
-                Educators, institution builders, and industry leaders who bring decades of real-world experience to WeThink's strategic direction.
+                {goldSplit(advisoryIntro?.sectionSubtext ?? "Educators, institution builders, and industry leaders who bring decades of real-world experience to WeThink's strategic direction.")}
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>

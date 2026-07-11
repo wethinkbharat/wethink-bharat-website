@@ -21,6 +21,19 @@ export const domainsIntro = defineType({
       options: { hotspot: true },
     }),
     defineField({
+      name: 'heroHeading',
+      title: 'Page Hero Heading',
+      type: 'string',
+      description: 'Use || to mark gold. E.g. "Step into the ||real work."',
+    }),
+    defineField({
+      name: 'heroSubtext',
+      title: 'Page Hero Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Subtitle below hero heading. Use || for gold.',
+    }),
+    defineField({
       name: 'kicker',
       title: 'Kicker',
       type: 'string',

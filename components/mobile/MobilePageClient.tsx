@@ -19,6 +19,8 @@ import type {
   SummitData,
   JourneyStageData,
   JourneyIntroData,
+  EcosystemIntroData,
+  AdvisoryIntroData,
   ApplyCtaData,
   SiteConfigData,
   HeaderImagesData,
@@ -40,6 +42,8 @@ interface Props {
   summit?: SummitData | null
   journeyStages?: JourneyStageData[]
   journeyIntro?: JourneyIntroData | null
+  ecosystemIntro?: EcosystemIntroData | null
+  advisoryIntro?: AdvisoryIntroData | null
   applyCta?: ApplyCtaData | null
   siteConfig?: SiteConfigData | null
   headerImages?: HeaderImagesData
@@ -61,6 +65,8 @@ export function MobilePageClient({
   summit,
   journeyStages,
   journeyIntro,
+  ecosystemIntro,
+  advisoryIntro,
   applyCta,
   siteConfig,
   headerImages,
@@ -94,6 +100,8 @@ export function MobilePageClient({
         summit={summit}
         journeyStages={journeyStages}
         journeyIntro={journeyIntro}
+        ecosystemIntro={ecosystemIntro}
+        advisoryIntro={advisoryIntro}
         applyCta={applyCta}
         siteConfig={siteConfig}
         headerImages={headerImages}

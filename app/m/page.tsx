@@ -185,6 +185,8 @@ export default async function MobilePage() {
   }))
 
   const processedDomainsIntro = domainsIntro ? {
+    heroHeading: domainsIntro.heroHeading,
+    heroSubtext: domainsIntro.heroSubtext,
     kicker: domainsIntro.kicker,
     heading: domainsIntro.heading,
     subtext: domainsIntro.subtext,
@@ -210,6 +212,10 @@ export default async function MobilePage() {
   const processedSummit = summit ? {
     heading: summit.heading,
     homepageTeaser: summit.homepageTeaser,
+    heroSubtext: summit.heroSubtext,
+    sectionHeading: summit.sectionHeading,
+    getInvolvedHeading: summit.getInvolvedHeading,
+    getInvolvedSubtext: summit.getInvolvedSubtext,
     body: blocksToText((summit.body ?? []) as unknown[]),
     pullQuote: summit.pullQuote,
     statChips: summit.statChips ?? [],
@@ -233,6 +239,23 @@ export default async function MobilePage() {
   const processedJourneyIntro = journeyIntro ? {
     kicker: journeyIntro.kicker,
     heading: journeyIntro.heading,
+    heroSubtext: journeyIntro.heroSubtext,
+    sectionSubtext: journeyIntro.sectionSubtext,
+  } : null
+
+  const processedEcosystemIntro = ecosystemIntro ? {
+    heading: ecosystemIntro.heading,
+    subtext: ecosystemIntro.subtext,
+    sectionHeading: ecosystemIntro.sectionHeading,
+    partnersHeading: ecosystemIntro.partnersHeading,
+    partnersSubtext: ecosystemIntro.partnersSubtext,
+  } : null
+
+  const processedAdvisoryIntro = advisoryIntro ? {
+    heading: advisoryIntro.heading,
+    subtext: advisoryIntro.subtext,
+    sectionHeading: advisoryIntro.sectionHeading,
+    sectionSubtext: advisoryIntro.sectionSubtext,
   } : null
 
   const processedApplyCta = applyCta ? {
@@ -276,6 +299,8 @@ export default async function MobilePage() {
       summit={processedSummit}
       journeyStages={processedJourneyStages}
       journeyIntro={processedJourneyIntro}
+      ecosystemIntro={processedEcosystemIntro}
+      advisoryIntro={processedAdvisoryIntro}
       applyCta={processedApplyCta}
       siteConfig={siteConfig}
       headerImages={headerImages}

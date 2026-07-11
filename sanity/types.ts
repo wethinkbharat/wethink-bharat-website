@@ -165,6 +165,8 @@ export interface DomainsIntro {
   _type: 'domainsIntro'
   headerImage?: SanityImage
   featureImage?: SanityImage
+  heroHeading?: string
+  heroSubtext?: string
   kicker?: string
   heading?: string
   subtext?: string
@@ -211,6 +213,10 @@ export interface Summit {
   headerImage?: SanityImage
   heading?: string
   homepageTeaser?: string
+  heroSubtext?: string
+  sectionHeading?: string
+  getInvolvedHeading?: string
+  getInvolvedSubtext?: string
   body: PortableTextBlock[]
   pullQuote?: string
   statChips: string[]
@@ -227,6 +233,8 @@ export interface JourneyIntro {
   headerImage?: SanityImage
   kicker?: string
   heading?: string
+  heroSubtext?: string
+  sectionSubtext?: string
 }
 
 export interface JourneyStage {
@@ -251,6 +259,9 @@ export interface EcosystemIntro {
   kicker?: string
   heading?: string
   subtext?: string
+  sectionHeading?: string
+  partnersHeading?: string
+  partnersSubtext?: string
 }
 
 export interface PartnerCategory {
@@ -284,6 +295,9 @@ export interface AdvisoryIntro {
   headerImage?: SanityImage
   kicker?: string
   heading?: string
+  subtext?: string
+  sectionHeading?: string
+  sectionSubtext?: string
 }
 
 export interface AdvisoryMember {

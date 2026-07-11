@@ -97,6 +97,8 @@ export interface PathwayData {
 }
 
 export interface DomainsIntroData {
+  heroHeading?: string
+  heroSubtext?: string
   kicker?: string
   heading?: string
   subtext?: string
@@ -132,6 +134,10 @@ export interface GetInvolvedCardData {
 export interface SummitData {
   heading?: string
   homepageTeaser?: string
+  heroSubtext?: string
+  sectionHeading?: string
+  getInvolvedHeading?: string
+  getInvolvedSubtext?: string
   body?: string
   pullQuote?: string
   statChips: string[]
@@ -149,6 +155,8 @@ export interface JourneyStageData {
 export interface JourneyIntroData {
   kicker?: string
   heading?: string
+  heroSubtext?: string
+  sectionSubtext?: string
 }
 
 export interface ApplyCtaData {
@@ -180,6 +188,21 @@ export interface HeaderImagesData {
   summit?: string
 }
 
+export interface EcosystemIntroData {
+  heading?: string
+  subtext?: string
+  sectionHeading?: string
+  partnersHeading?: string
+  partnersSubtext?: string
+}
+
+export interface AdvisoryIntroData {
+  heading?: string
+  subtext?: string
+  sectionHeading?: string
+  sectionSubtext?: string
+}
+
 interface Props {
   logoUrl?: string
   hero?: HeroData | null
@@ -196,6 +219,8 @@ interface Props {
   summit?: SummitData | null
   journeyStages?: JourneyStageData[]
   journeyIntro?: JourneyIntroData | null
+  ecosystemIntro?: EcosystemIntroData | null
+  advisoryIntro?: AdvisoryIntroData | null
   applyCta?: ApplyCtaData | null
   siteConfig?: SiteConfigData | null
   headerImages?: HeaderImagesData
@@ -217,6 +242,8 @@ export function DesktopPageClient({
   summit,
   journeyStages,
   journeyIntro,
+  ecosystemIntro,
+  advisoryIntro,
   applyCta,
   siteConfig,
   headerImages,
@@ -250,6 +277,8 @@ export function DesktopPageClient({
         summit={summit}
         journeyStages={journeyStages}
         journeyIntro={journeyIntro}
+        ecosystemIntro={ecosystemIntro}
+        advisoryIntro={advisoryIntro}
         applyCta={applyCta}
         siteConfig={siteConfig}
         headerImages={headerImages}

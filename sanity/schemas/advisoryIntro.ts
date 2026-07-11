@@ -22,6 +22,27 @@ export const advisoryIntro = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || for gold.',
+    }),
+    defineField({
+      name: 'subtext',
+      title: 'Page Hero Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Subtitle below advisory page hero heading. Use || for gold.',
+    }),
+    defineField({
+      name: 'sectionHeading',
+      title: 'Section Heading',
+      type: 'string',
+      description: 'Use || for gold. E.g. "The people who keep the work ||honest."',
+    }),
+    defineField({
+      name: 'sectionSubtext',
+      title: 'Section Subtext',
+      type: 'text',
+      rows: 3,
+      description: 'Use || for gold.',
     }),
   ],
 

@@ -123,7 +123,9 @@ export default async function MobilePage() {
     headlineSpans: blocksToSpans((hero.headline ?? []) as unknown[]),
     subcopy: hero.subcopy,
     primaryCtaLabel: hero.primaryCtaLabel,
+    primaryCtaLink: hero.primaryCtaLink,
     secondaryCtaLabel: hero.secondaryCtaLabel,
+    secondaryCtaLink: hero.secondaryCtaLink,
     domainsStrip: hero.domainsStrip,
     scrollCueText: hero.scrollCueText,
     heroImageUrl: imgUrl(hero.heroImage, 1600),
@@ -132,6 +134,7 @@ export default async function MobilePage() {
   const processedVisionSection = visionSection ? {
     kicker: visionSection.kicker,
     heading: visionSection.heading,
+    bodyBlocks: blocksToText((visionSection.bodyBlocks ?? []) as unknown[]),
     directorImageUrl: imgUrl(visionSection.directorImage, 200),
     directorName: visionSection.directorName,
     directorTitle: visionSection.directorTitle,
@@ -202,12 +205,15 @@ export default async function MobilePage() {
 
   const processedSummit = summit ? {
     heading: summit.heading,
+    body: blocksToText((summit.body ?? []) as unknown[]),
+    pullQuote: summit.pullQuote,
     statChips: summit.statChips ?? [],
     getInvolvedCards: (summit.getInvolvedCards ?? []).map((c) => ({
       audience: c.audience ?? '',
       title: c.title ?? '',
       description: c.description ?? '',
       ctaLabel: c.ctaLabel ?? '',
+      ctaLink: c.ctaLink,
     })),
   } : null
 
@@ -232,6 +238,7 @@ export default async function MobilePage() {
   } : null
 
   const siteConfig = siteSettings ? {
+    primaryCtaLabel: siteSettings.primaryCtaLabel,
     footerTagline: siteSettings.footerTagline,
     copyrightText: siteSettings.copyrightText,
     footerExploreLinks: (siteSettings.footerExploreLinks ?? []).map((l) => ({ label: l.label, link: l.link })),

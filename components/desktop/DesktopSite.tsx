@@ -34,7 +34,9 @@ interface HeroData {
   headlineSpans: { text: string; gold: boolean }[]
   subcopy?: string
   primaryCtaLabel?: string
+  primaryCtaLink?: string
   secondaryCtaLabel?: string
+  secondaryCtaLink?: string
   domainsStrip?: string
   scrollCueText?: string
   heroImageUrl?: string
@@ -43,6 +45,7 @@ interface HeroData {
 interface VisionSectionData {
   kicker?: string
   heading?: string
+  bodyBlocks?: string
   directorImageUrl?: string
   directorName?: string
   directorTitle?: string
@@ -120,10 +123,13 @@ interface GetInvolvedCardData {
   title: string
   description: string
   ctaLabel: string
+  ctaLink?: string
 }
 
 interface SummitData {
   heading?: string
+  body?: string
+  pullQuote?: string
   statChips: string[]
   getInvolvedCards: GetInvolvedCardData[]
 }
@@ -154,6 +160,7 @@ interface FooterLinkData {
 }
 
 interface SiteConfigData {
+  primaryCtaLabel?: string
   footerTagline?: string
   copyrightText?: string
   footerExploreLinks: FooterLinkData[]
@@ -737,7 +744,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               fontWeight: 600, fontFamily: FF,
             }}
           >
-            Bring to my school
+            {siteConfig?.primaryCtaLabel ?? 'Bring to my school'}
           </SpringBtn>
         </nav>
       </header>
@@ -774,7 +781,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               fontWeight: 700, fontFamily: FF, marginTop: '16px',
             }}
           >
-            Bring to my school
+            {siteConfig?.primaryCtaLabel ?? 'Bring to my school'}
           </SpringBtn>
         </div>
       )}
@@ -822,7 +829,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                     border: 'none', cursor: 'pointer', fontFamily: FF,
                   }}
                 >
-                  Bring WeThink to my school ↗
+                  {hero?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
                 </SpringBtn>
                 <button
                   onClick={() => navigate('domains')}
@@ -1122,15 +1129,22 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               </p>
 
               <div style={{ maxWidth: '820px', margin: '0 auto', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '22px' }}>
-                <p style={{ fontSize: 'clamp(15px,1.5vw,17px)', lineHeight: 1.75, color: TS, margin: 0 }}>
-                  India produces the world's largest number of graduates every year — yet most are judged unprepared for work. Not because they're unintelligent or didn't study, but because the system never let them experience the world they were being prepared for.
-                </p>
-                <p style={{ fontSize: 'clamp(15px,1.5vw,17px)', lineHeight: 1.75, color: TS, margin: 0 }}>
-                  The gap isn't academic — it's experiential. Students know the theory. They've never felt what it's like to pitch to an investor, design something a real user rejects, or navigate a real deadline.
-                </p>
-                <p style={{ fontSize: 'clamp(15px,1.5vw,17px)', lineHeight: 1.75, color: TS, margin: 0 }}>
-                  <span style={{ color: TP, fontWeight: 700 }}>WeThink Bharat is the answer</span> — a structured, industry-integrated, school-delivered experiential learning movement that lets every student discover who they are before they decide who they will become.
-                </p>
+                {visionSection?.bodyBlocks
+                  ? visionSection.bodyBlocks.split('\n\n').map((para, i) => (
+                      <p key={i} style={{ fontSize: 'clamp(15px,1.5vw,17px)', lineHeight: 1.75, color: TS, margin: 0 }}>{para}</p>
+                    ))
+                  : <>
+                      <p style={{ fontSize: 'clamp(15px,1.5vw,17px)', lineHeight: 1.75, color: TS, margin: 0 }}>
+                        India produces the world's largest number of graduates every year — yet most are judged unprepared for work. Not because they&apos;re unintelligent or didn&apos;t study, but because the system never let them experience the world they were being prepared for.
+                      </p>
+                      <p style={{ fontSize: 'clamp(15px,1.5vw,17px)', lineHeight: 1.75, color: TS, margin: 0 }}>
+                        The gap isn&apos;t academic — it&apos;s experiential. Students know the theory. They&apos;ve never felt what it&apos;s like to pitch to an investor, design something a real user rejects, or navigate a real deadline.
+                      </p>
+                      <p style={{ fontSize: 'clamp(15px,1.5vw,17px)', lineHeight: 1.75, color: TS, margin: 0 }}>
+                        <span style={{ color: TP, fontWeight: 700 }}>WeThink Bharat is the answer</span> — a structured, industry-integrated, school-delivered experiential learning movement that lets every student discover who they are before they decide who they will become.
+                      </p>
+                    </>
+                }
               </div>
             </div>
           </section>
@@ -1339,8 +1353,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <HeroDecorRing speed="50s" />
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '1360px', margin: '0 auto', width: '100%' }}>
               <h1 style={{ fontSize: 'clamp(38px,6.4vw,88px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 24px', maxWidth: '900px', fontFamily: FF }}>
-                The national stage where student work meets{' '}
-                <span style={{ color: GOLD }}>a nation watching.</span>
+                {summit?.heading ?? <>The national stage where student work meets{' '}<span style={{ color: GOLD }}>a nation watching.</span></>}
               </h1>
               <p style={{ fontSize: 'clamp(16px,1.5vw,19px)', lineHeight: 1.7, color: TS, maxWidth: '520px', margin: 0 }}>
                 Four times a year, WeThink Bharat students from across India converge — to present, compete, and be recognised in front of the country's top industry leaders.
@@ -1356,12 +1369,19 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
                   Not a competition. A <span style={{ color: GOLD }}>culmination.</span>
                 </h2>
-                <p style={{ fontSize: '15px', lineHeight: 1.75, color: TS, margin: '0 0 16px' }}>
-                  The WeThink Summit is the moment the entire programme builds toward. After weeks of simulating, building, and publishing — students bring their best work to a national audience and stand behind it in front of people who have spent their careers in the very industries they have been learning about.
-                </p>
-                <p style={{ fontSize: '15px', lineHeight: 1.75, color: TS, margin: '0 0 28px' }}>
-                  This is a real showcase — with real industry judges, real stakes, and real recognition that follows students for the rest of their lives.
-                </p>
+                {summit?.body
+                  ? summit.body.split('\n\n').map((para, i) => (
+                      <p key={i} style={{ fontSize: '15px', lineHeight: 1.75, color: TS, margin: i < summit.body!.split('\n\n').length - 1 ? '0 0 16px' : '0 0 28px' }}>{para}</p>
+                    ))
+                  : <>
+                      <p style={{ fontSize: '15px', lineHeight: 1.75, color: TS, margin: '0 0 16px' }}>
+                        The WeThink Summit is the moment the entire programme builds toward. After weeks of simulating, building, and publishing — students bring their best work to a national audience and stand behind it in front of people who have spent their careers in the very industries they have been learning about.
+                      </p>
+                      <p style={{ fontSize: '15px', lineHeight: 1.75, color: TS, margin: '0 0 28px' }}>
+                        This is a real showcase — with real industry judges, real stakes, and real recognition that follows students for the rest of their lives.
+                      </p>
+                    </>
+                }
                 <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
                   {(summit?.statChips && summit.statChips.length > 0 ? summit.statChips : ['4× per year', 'Pan-India', 'Industry judged', 'Live audience']).map((tag) => (
                     <span key={tag} style={{ background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '6px 14px', fontSize: '13px', fontWeight: 600, color: GOLD }}>
@@ -1421,30 +1441,20 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               </p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '16px' }}>
-              <div style={{ border: '1px solid rgba(222,192,120,.35)', background: 'rgba(222,192,120,.05)', borderRadius: '14px', padding: '22px' }}>
-                <p style={{ fontSize: '10.5px', letterSpacing: '.14em', textTransform: 'uppercase', color: GOLD, fontWeight: 600, margin: '0 0 8px' }}>For schools</p>
-                <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>Nominate your student teams</h3>
-                <p style={{ fontSize: '13px', lineHeight: 1.55, color: TS, margin: '0 0 16px' }}>Schools that have completed at least one WeThink Bharat domain cycle are eligible to nominate teams.</p>
-                <SpringBtn onClick={onSchoolFormOpen} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: TP, fontFamily: FF, padding: 0, borderBottom: `1.5px solid ${GOLD}`, paddingBottom: '2px' }}>
-                  Nominate your school ↗
-                </SpringBtn>
-              </div>
-              <div style={{ border: '1px solid rgba(222,192,120,.16)', background: S2, borderRadius: '14px', padding: '22px' }}>
-                <p style={{ fontSize: '10.5px', letterSpacing: '.14em', textTransform: 'uppercase', color: GOLD, fontWeight: 600, margin: '0 0 8px' }}>For industry</p>
-                <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>Join as a jury member</h3>
-                <p style={{ fontSize: '13px', lineHeight: 1.55, color: TS, margin: '0 0 16px' }}>Industry leaders are invited to join domain juries and recognise India's most motivated student work on a national stage.</p>
-                <SpringBtn onClick={onPartnerFormOpen} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: TP, fontFamily: FF, padding: 0, borderBottom: `1.5px solid ${GOLD}`, paddingBottom: '2px' }}>
-                  Express interest ↗
-                </SpringBtn>
-              </div>
-              <div style={{ border: '1px solid rgba(222,192,120,.16)', background: S2, borderRadius: '14px', padding: '22px' }}>
-                <p style={{ fontSize: '10.5px', letterSpacing: '.14em', textTransform: 'uppercase', color: GOLD, fontWeight: 600, margin: '0 0 8px' }}>For media &amp; observers</p>
-                <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>Attend and amplify</h3>
-                <p style={{ fontSize: '13px', lineHeight: 1.55, color: TS, margin: '0 0 16px' }}>Journalists, educators, and partner organisations are welcome to attend and share the story of what India's students are capable of.</p>
-                <SpringBtn onClick={onPartnerFormOpen} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: TP, fontFamily: FF, padding: 0, borderBottom: `1.5px solid ${GOLD}`, paddingBottom: '2px' }}>
-                  Request an invitation ↗
-                </SpringBtn>
-              </div>
+              {(summit?.getInvolvedCards && summit.getInvolvedCards.length > 0 ? summit.getInvolvedCards : [
+                { audience: 'For schools', title: 'Nominate your student teams', description: 'Schools that have completed at least one WeThink Bharat domain cycle are eligible to nominate teams.', ctaLabel: 'Nominate your school ↗', ctaLink: undefined },
+                { audience: 'For industry', title: 'Join as a jury member', description: "Industry leaders are invited to join domain juries and recognise India's most motivated student work on a national stage.", ctaLabel: 'Express interest ↗', ctaLink: undefined },
+                { audience: 'For media & observers', title: 'Attend and amplify', description: "Journalists, educators, and partner organisations are welcome to attend and share the story of what India's students are capable of.", ctaLabel: 'Request an invitation ↗', ctaLink: undefined },
+              ] as GetInvolvedCardData[]).map((card, i) => (
+                <div key={card.audience} style={{ border: i === 0 ? '1px solid rgba(222,192,120,.35)' : '1px solid rgba(222,192,120,.16)', background: i === 0 ? 'rgba(222,192,120,.05)' : S2, borderRadius: '14px', padding: '22px' }}>
+                  <p style={{ fontSize: '10.5px', letterSpacing: '.14em', textTransform: 'uppercase', color: GOLD, fontWeight: 600, margin: '0 0 8px' }}>{card.audience}</p>
+                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>{card.title}</h3>
+                  <p style={{ fontSize: '13px', lineHeight: 1.55, color: TS, margin: '0 0 16px' }}>{card.description}</p>
+                  <SpringBtn onClick={i === 0 ? onSchoolFormOpen : onPartnerFormOpen} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: TP, fontFamily: FF, padding: 0, borderBottom: `1.5px solid ${GOLD}`, paddingBottom: '2px' }}>
+                    {card.ctaLabel}
+                  </SpringBtn>
+                </div>
+              ))}
             </div>
           </section>
         </>
@@ -1848,10 +1858,10 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <div style={{ position: 'relative', zIndex: 1, maxWidth: '700px', margin: '0 auto' }}>
             <SectionLabel>Get involved</SectionLabel>
             <h2 style={{ fontSize: 'clamp(32px,5vw,64px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              Join the movement.
+              {applyCta?.heading ?? 'Join the movement.'}
             </h2>
             <p style={{ fontSize: 'clamp(15px,1.5vw,18px)', lineHeight: 1.7, color: TS, maxWidth: '560px', margin: '0 auto 44px' }}>
-              Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.
+              {applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.'}
             </p>
             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <SpringBtn
@@ -1862,7 +1872,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   border: 'none', cursor: 'pointer', fontFamily: FF,
                 }}
               >
-                Bring WeThink to my school ↗
+                {applyCta?.primaryCtaLabel ?? 'Bring WeThink to my school ↗'}
               </SpringBtn>
               <SpringBtn
                 onClick={onPartnerFormOpen}
@@ -1873,7 +1883,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   cursor: 'pointer', fontFamily: FF,
                 }}
               >
-                Partner with us
+                {applyCta?.secondaryCtaLabel ?? 'Partner with us'}
               </SpringBtn>
             </div>
           </div>

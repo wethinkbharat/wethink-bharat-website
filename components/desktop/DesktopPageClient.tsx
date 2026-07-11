@@ -33,7 +33,9 @@ export interface HeroData {
   headlineSpans: { text: string; gold: boolean }[]
   subcopy?: string
   primaryCtaLabel?: string
+  primaryCtaLink?: string
   secondaryCtaLabel?: string
+  secondaryCtaLink?: string
   domainsStrip?: string
   scrollCueText?: string
   heroImageUrl?: string
@@ -42,6 +44,7 @@ export interface HeroData {
 export interface VisionSectionData {
   kicker?: string
   heading?: string
+  bodyBlocks?: string
   directorImageUrl?: string
   directorName?: string
   directorTitle?: string
@@ -119,10 +122,13 @@ export interface GetInvolvedCardData {
   title: string
   description: string
   ctaLabel: string
+  ctaLink?: string
 }
 
 export interface SummitData {
   heading?: string
+  body?: string
+  pullQuote?: string
   statChips: string[]
   getInvolvedCards: GetInvolvedCardData[]
 }
@@ -153,6 +159,7 @@ export interface FooterLinkData {
 }
 
 export interface SiteConfigData {
+  primaryCtaLabel?: string
   footerTagline?: string
   copyrightText?: string
   footerExploreLinks: FooterLinkData[]

@@ -1,5 +1,6 @@
 export const revalidate = 60
 
+import type { Metadata } from 'next'
 import { DesktopPageClient } from '@/components/desktop/DesktopPageClient'
 import {
   getAdvisoryMembers,
@@ -44,6 +45,17 @@ function blocksToSpans(blocks: unknown[]): HeadlineSpan[] {
     }
   }
   return result
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const s = await getSiteSettings().catch(() => null)
+  return {
+    title: s?.seoTitle ?? "WeThink Bharat — Experiential Learning for India's Students",
+    description: s?.seoDescription ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint for every student.',
+    openGraph: s?.seoImage?.asset
+      ? { images: [urlFor(s.seoImage as Parameters<typeof urlFor>[0]).width(1200).url()] }
+      : undefined,
+  }
 }
 
 export default async function DesktopPage() {
@@ -121,7 +133,9 @@ export default async function DesktopPage() {
     headlineSpans: blocksToSpans((hero.headline ?? []) as unknown[]),
     subcopy: hero.subcopy,
     primaryCtaLabel: hero.primaryCtaLabel,
+    primaryCtaLink: hero.primaryCtaLink,
     secondaryCtaLabel: hero.secondaryCtaLabel,
+    secondaryCtaLink: hero.secondaryCtaLink,
     domainsStrip: hero.domainsStrip,
     scrollCueText: hero.scrollCueText,
     heroImageUrl: imgUrl(hero.heroImage, 2400),
@@ -130,6 +144,7 @@ export default async function DesktopPage() {
   const processedVisionSection = visionSection ? {
     kicker: visionSection.kicker,
     heading: visionSection.heading,
+    bodyBlocks: blocksToText((visionSection.bodyBlocks ?? []) as unknown[]),
     directorImageUrl: imgUrl(visionSection.directorImage, 200),
     directorName: visionSection.directorName,
     directorTitle: visionSection.directorTitle,
@@ -200,12 +215,15 @@ export default async function DesktopPage() {
 
   const processedSummit = summit ? {
     heading: summit.heading,
+    body: blocksToText((summit.body ?? []) as unknown[]),
+    pullQuote: summit.pullQuote,
     statChips: summit.statChips ?? [],
     getInvolvedCards: (summit.getInvolvedCards ?? []).map((c) => ({
       audience: c.audience ?? '',
       title: c.title ?? '',
       description: c.description ?? '',
       ctaLabel: c.ctaLabel ?? '',
+      ctaLink: c.ctaLink,
     })),
   } : null
 
@@ -230,6 +248,7 @@ export default async function DesktopPage() {
   } : null
 
   const siteConfig = siteSettings ? {
+    primaryCtaLabel: siteSettings.primaryCtaLabel,
     footerTagline: siteSettings.footerTagline,
     copyrightText: siteSettings.copyrightText,
     footerExploreLinks: (siteSettings.footerExploreLinks ?? []).map((l) => ({ label: l.label, link: l.link })),

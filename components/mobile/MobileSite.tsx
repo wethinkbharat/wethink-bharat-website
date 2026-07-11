@@ -910,12 +910,19 @@ export function MobileSite({
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
                 Not a competition. A <span style={{ color: GOLD }}>culmination.</span>
               </h2>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 14px' }}>
-                The WeThink Summit is the moment where everything students have built becomes real. Not a test they pass or fail — a stage they earn their way onto through genuine work across an entire semester.
-              </p>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
-                Student teams present their domain projects — whether a startup pitch, a media package, or a design prototype — to a live audience of industry leaders, educators, and peers from across India.
-              </p>
+              {summit?.body
+                ? summit.body.split('\n\n').map((para, i, arr) => (
+                    <p key={i} style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: i < arr.length - 1 ? '0 0 14px' : '0 0 24px' }}>{para}</p>
+                  ))
+                : <>
+                    <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 14px' }}>
+                      The WeThink Summit is the moment where everything students have built becomes real. Not a test they pass or fail — a stage they earn their way onto through genuine work across an entire semester.
+                    </p>
+                    <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
+                      Student teams present their domain projects — whether a startup pitch, a media package, or a design prototype — to a live audience of industry leaders, educators, and peers from across India.
+                    </p>
+                  </>
+              }
               <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '48px' }}>
                 {(summit?.statChips?.length ? summit.statChips : ['4× per year', 'Pan-India', 'Industry judged', 'Live audience']).map(tag => (
                   <span key={tag} style={{ background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '6px 14px', fontSize: '12px', fontWeight: 600, color: GOLD }}>

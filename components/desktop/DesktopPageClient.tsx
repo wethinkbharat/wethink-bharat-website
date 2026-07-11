@@ -73,6 +73,7 @@ export interface GapStatData {
 export interface GapSectionData {
   kicker?: string
   heading?: string
+  intro?: string
   stats: GapStatData[]
 }
 
@@ -134,6 +135,11 @@ export interface JourneyStageData {
   iconUrl?: string
 }
 
+export interface JourneyIntroData {
+  kicker?: string
+  heading?: string
+}
+
 export interface ApplyCtaData {
   heading?: string
   body?: string
@@ -177,6 +183,7 @@ interface Props {
   domains?: DomainData[]
   summit?: SummitData | null
   journeyStages?: JourneyStageData[]
+  journeyIntro?: JourneyIntroData | null
   applyCta?: ApplyCtaData | null
   siteConfig?: SiteConfigData | null
   headerImages?: HeaderImagesData
@@ -197,6 +204,7 @@ export function DesktopPageClient({
   domains,
   summit,
   journeyStages,
+  journeyIntro,
   applyCta,
   siteConfig,
   headerImages,
@@ -229,6 +237,7 @@ export function DesktopPageClient({
         domains={domains}
         summit={summit}
         journeyStages={journeyStages}
+        journeyIntro={journeyIntro}
         applyCta={applyCta}
         siteConfig={siteConfig}
         headerImages={headerImages}

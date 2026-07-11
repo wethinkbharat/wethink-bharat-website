@@ -74,6 +74,7 @@ interface GapStatData {
 interface GapSectionData {
   kicker?: string
   heading?: string
+  intro?: string
   stats: GapStatData[]
 }
 
@@ -135,6 +136,11 @@ interface JourneyStageData {
   iconUrl?: string
 }
 
+interface JourneyIntroData {
+  kicker?: string
+  heading?: string
+}
+
 interface ApplyCtaData {
   heading?: string
   body?: string
@@ -171,6 +177,7 @@ interface Props {
   domains?: DomainData[]
   summit?: SummitData | null
   journeyStages?: JourneyStageData[]
+  journeyIntro?: JourneyIntroData | null
   applyCta?: ApplyCtaData | null
   siteConfig?: SiteConfigData | null
   headerImages?: {
@@ -284,7 +291,7 @@ function SpringBtn({ onClick, style, children, className }: {
 /* ─────────────────────────────────────────────────────────
    MAIN COMPONENT
 ───────────────────────────────────────────────────────── */
-export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero, advisoryMembers, currentPartners, visionSection, beliefsIntro, beliefs, gapSection, pathwaysIntro, pathways, domainsIntro, domains, summit, journeyStages, applyCta, siteConfig, headerImages }: Props) {
+export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero, advisoryMembers, currentPartners, visionSection, beliefsIntro, beliefs, gapSection, pathwaysIntro, pathways, domainsIntro, domains, summit, journeyStages, journeyIntro, applyCta, siteConfig, headerImages }: Props) {
   /* ── routing ─────────────────────────────────────────── */
   const [currentRoute, setCurrentRoute] = useState<Route>('home')
 
@@ -927,7 +934,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   {gapSection?.heading ?? 'Educated unemployment begins with uninformed choices.'}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: 0 }}>
-                  Millions of graduates enter the workforce unprepared — not because they aren&apos;t capable, but because they were never given the chance to explore what they were capable of.
+                  {gapSection?.intro ?? "Millions of graduates enter the workforce unprepared — not because they aren't capable, but because they were never given the chance to explore what they were capable of."}
                 </p>
               </div>
               <div>
@@ -1220,10 +1227,10 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               <div>
                 <SectionLabel>Industry domains</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  Domains you <span style={{ color: GOLD }}>experience</span>, not just study.
+                  {domainsIntro?.heading ?? <>Domains you <span style={{ color: GOLD }}>experience</span>, not just study.</>}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
-                  Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end. Students don't learn about it — they do it.
+                  {domainsIntro?.subtext ?? "Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end. Students don't learn about it — they do it."}
                 </p>
                 <SpringBtn
                   onClick={onSchoolFormOpen}
@@ -1690,7 +1697,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <HeroDecorRing speed="52s" size="clamp(160px,20vw,280px)" />
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '1360px', margin: '0 auto', width: '100%' }}>
               <h1 style={{ fontSize: 'clamp(38px,6.4vw,88px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 24px', maxWidth: '800px', fontFamily: FF }}>
-                Five stages. One <span style={{ color: GOLD }}>transformation.</span>
+                {journeyIntro?.heading ?? <>Five stages. One <span style={{ color: GOLD }}>transformation.</span></>}
               </h1>
               <p style={{ fontSize: 'clamp(16px,1.5vw,19px)', lineHeight: 1.7, color: TS, maxWidth: '520px', margin: 0 }}>
                 Five structured experiences that carry a student from a first taste of a domain to permanent, citable proof.
@@ -1703,7 +1710,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap', marginBottom: '44px', maxWidth: '1360px', marginLeft: 'auto', marginRight: 'auto' }}>
               <h2 style={{ margin: 0, fontSize: 'clamp(28px,4vw,54px)', lineHeight: 1.04, fontWeight: 800, color: TP, letterSpacing: '-.02em', maxWidth: '620px', fontFamily: FF }}>
-                From exposure to <span style={{ color: GOLD }}>permanent proof</span>
+                {journeyIntro?.kicker ?? <>From exposure to <span style={{ color: GOLD }}>permanent proof</span></>}
               </h2>
               <p style={{ margin: 0, fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '320px' }}>
                 Five structured experiences that carry a student from a first taste of a domain to a globally citable record of what they built.

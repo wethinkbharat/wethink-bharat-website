@@ -18,6 +18,7 @@ import type {
   DomainData,
   SummitData,
   JourneyStageData,
+  JourneyIntroData,
   ApplyCtaData,
   SiteConfigData,
   HeaderImagesData,
@@ -38,6 +39,7 @@ interface Props {
   domains?: DomainData[]
   summit?: SummitData | null
   journeyStages?: JourneyStageData[]
+  journeyIntro?: JourneyIntroData | null
   applyCta?: ApplyCtaData | null
   siteConfig?: SiteConfigData | null
   headerImages?: HeaderImagesData
@@ -58,6 +60,7 @@ export function MobilePageClient({
   domains,
   summit,
   journeyStages,
+  journeyIntro,
   applyCta,
   siteConfig,
   headerImages,
@@ -90,6 +93,7 @@ export function MobilePageClient({
         domains={domains}
         summit={summit}
         journeyStages={journeyStages}
+        journeyIntro={journeyIntro}
         applyCta={applyCta}
         siteConfig={siteConfig}
         headerImages={headerImages}

@@ -156,6 +156,7 @@ export default async function MobilePage() {
   const processedGapSection = gapSection ? {
     kicker: gapSection.kicker,
     heading: gapSection.heading,
+    intro: blocksToText((gapSection.intro ?? []) as unknown[]),
     stats: (gapSection.stats ?? []).map((s) => ({
       value: s.value,
       suffix: s.suffix ?? '',
@@ -218,6 +219,11 @@ export default async function MobilePage() {
     iconUrl: imgUrl(s.icon, 120),
   }))
 
+  const processedJourneyIntro = journeyIntro ? {
+    kicker: journeyIntro.kicker,
+    heading: journeyIntro.heading,
+  } : null
+
   const processedApplyCta = applyCta ? {
     heading: applyCta.heading,
     body: applyCta.body,
@@ -257,6 +263,7 @@ export default async function MobilePage() {
       domains={processedDomains}
       summit={processedSummit}
       journeyStages={processedJourneyStages}
+      journeyIntro={processedJourneyIntro}
       applyCta={processedApplyCta}
       siteConfig={siteConfig}
       headerImages={headerImages}

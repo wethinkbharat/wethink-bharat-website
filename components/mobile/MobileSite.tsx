@@ -14,6 +14,7 @@ import type {
   DomainData,
   SummitData,
   JourneyStageData,
+  JourneyIntroData,
   ApplyCtaData,
   SiteConfigData,
   HeaderImagesData,
@@ -170,6 +171,7 @@ interface Props {
   domains?: DomainData[]
   summit?: SummitData | null
   journeyStages?: JourneyStageData[]
+  journeyIntro?: JourneyIntroData | null
   applyCta?: ApplyCtaData | null
   siteConfig?: SiteConfigData | null
   headerImages?: HeaderImagesData
@@ -187,12 +189,15 @@ export function MobileSite({
   currentPartners: currentPartnersProp,
   visionSection,
   beliefs: beliefsProp,
+  beliefsIntro,
   gapSection,
   pathways: pathwaysProp,
+  pathwaysIntro,
   domainsIntro,
   domains: domainsProp,
   summit,
   journeyStages: journeyStagesProp,
+  journeyIntro,
   applyCta,
   siteConfig,
   headerImages,
@@ -504,7 +509,7 @@ export function MobileSite({
             {/* PATHWAYS */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-                Capability across the whole <span style={{ color: GOLD }}>ecosystem</span>
+                {pathwaysIntro?.heading ?? <>Capability across the whole <span style={{ color: GOLD }}>ecosystem</span></>}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
                 WeThink Bharat is designed for everyone inside a school — students, educators, and institutions — each with their own pathway.
@@ -560,7 +565,7 @@ export function MobileSite({
                 {gapSection?.heading ?? <>Educated unemployment begins with{' '}<span style={{ color: GOLD }}>uninformed choices.</span></>}
               </h2>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: '0 0 26px', maxWidth: '440px' }}>
-                India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for.
+                {gapSection?.intro ?? "India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for."}
               </p>
               <div>
                 {activeGapStats.map(s => (
@@ -585,7 +590,7 @@ export function MobileSite({
               <div style={{ marginBottom: '36px' }}>
                 <SectionLabel>Industry domains</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-                  Domains you <span style={{ color: GOLD }}>experience</span>, not just study.
+                  {domainsIntro?.heading ?? <>Domains you <span style={{ color: GOLD }}>experience</span>, not just study.</>}
                 </h2>
                 <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', background: 'rgba(222,192,120,.08)', border: '1px solid rgba(222,192,120,.2)', borderRadius: '999px', padding: '5px 14px' }}>
                   <span style={{ width: '6px', height: '6px', borderRadius: '50%', background: GOLD, display: 'inline-block', animation: 'wtbPulse 2s infinite' }} />
@@ -743,10 +748,10 @@ export function MobileSite({
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
               <SectionLabel>What we believe</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-                Six convictions that drive everything we build
+                {beliefsIntro?.heading ?? 'Six convictions that drive everything we build'}
               </h2>
               <p style={{ fontSize: 'clamp(14px,1.4vw,16px)', color: TS, lineHeight: 1.7, margin: '0 0 40px' }}>
-                Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.
+                {beliefsIntro?.intro ?? 'Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.'}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {activeBeliefs.map(b => (
@@ -795,10 +800,10 @@ export function MobileSite({
               </div>
               <SectionLabel>Industry domains</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                Domains you <span style={{ color: GOLD }}>experience</span>, not just study.
+                {domainsIntro?.heading ?? <>Domains you <span style={{ color: GOLD }}>experience</span>, not just study.</>}
               </h2>
               <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
-                Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end.
+                {domainsIntro?.subtext ?? 'Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end.'}
               </p>
               <button
                 onClick={onSchoolFormOpen}
@@ -1116,7 +1121,7 @@ export function MobileSite({
               <HeroPageBg imageUrl={headerImages?.journey} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
                 <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  Five stages. One <span style={{ color: GOLD }}>transformation.</span>
+                  {journeyIntro?.heading ?? <>Five stages. One <span style={{ color: GOLD }}>transformation.</span></>}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
                   The WeThink journey moves students from exposure to permanent proof — through five structured, connected stages that build on each other.

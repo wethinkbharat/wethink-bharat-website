@@ -46,7 +46,7 @@ export const gapSection = defineType({
           type: 'object',
           name: 'stat',
           fields: [
-            defineField({ name: 'value', title: 'Value', type: 'string', description: 'e.g. "47"' }),
+            defineField({ name: 'value', title: 'Value', type: 'string', description: 'e.g. "47", "14–18", "90%", any text' }),
             defineField({
               name: 'suffix',
               title: 'Suffix',

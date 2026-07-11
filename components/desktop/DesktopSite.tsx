@@ -939,7 +939,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               <div>
                 <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {gapSection?.heading ?? 'Educated unemployment begins with uninformed choices.'}
+                  {gapSection?.heading ?? <>Educated unemployment begins with <span style={{ color: GOLD }}>uninformed choices.</span></>}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: 0 }}>
                   {gapSection?.intro ?? "Millions of graduates enter the workforce unprepared — not because they aren't capable, but because they were never given the chance to explore what they were capable of."}

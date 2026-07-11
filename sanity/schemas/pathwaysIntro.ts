@@ -15,6 +15,7 @@ export const pathwaysIntro = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || to mark where gold colour starts. E.g. "Capability across the whole ||ecosystem"',
     }),
     defineField({
       name: 'subtext',

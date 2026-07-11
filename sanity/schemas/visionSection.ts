@@ -23,7 +23,7 @@ export const visionSection = defineType({
       name: 'heroHeading',
       title: 'Page Hero Heading',
       type: 'string',
-      description: 'Large heading shown at the top of the Vision page, e.g. "We are building India\'s first experiential learning ecosystem."',
+      description: 'Use || to mark where gold colour starts. E.g. "We are building India\'s first ||experiential learning ecosystem."',
     }),
     defineField({
       name: 'heroSubtext',
@@ -37,15 +37,13 @@ export const visionSection = defineType({
       title: 'Poetic Quote',
       type: 'text',
       rows: 3,
-      description: 'Large opening quote in the Vision page interstitial. End it with "That has to change." to keep the gold accent.',
+      description: 'Use || to mark where gold colour starts. E.g. "...board exam. ||That has to change."',
     }),
     defineField({
       name: 'heading',
       title: 'Heading',
       type: 'string',
-      description:
-        'Two-tone support: wrap the coloured portion in square brackets in the UI, ' +
-        'or split at the component level using a delimiter such as "|".',
+      description: 'Use || to mark where gold colour starts. E.g. "A Bharat where every student discovers their ||capability before they choose a path."',
     }),
 
     defineField({

@@ -15,6 +15,7 @@ export const gapSection = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || to mark where gold colour starts. E.g. "Educated unemployment begins with ||uninformed choices."',
     }),
     defineField({
       name: 'intro',

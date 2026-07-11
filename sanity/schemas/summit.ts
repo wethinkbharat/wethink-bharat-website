@@ -17,6 +17,7 @@ export const summit = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || to mark where gold colour starts. E.g. "The national stage where student work meets ||a nation watching."',
     }),
     defineField({
       name: 'homepageTeaser',

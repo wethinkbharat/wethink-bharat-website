@@ -211,10 +211,10 @@ const TP = '#F5EEE2'
 const TS = '#E0CEBD'
 const BORDER = '1px solid rgba(222,192,120,.14)'
 
-function goldLast(text: string, fromWord: string): React.ReactNode {
-  const i = text.toLowerCase().indexOf(fromWord.toLowerCase())
+function goldSplit(text: string): React.ReactNode {
+  const i = text.indexOf('||')
   if (i < 0) return text
-  return <>{text.slice(0, i)}<span style={{ color: GOLD }}>{text.slice(i)}</span></>
+  return <>{text.slice(0, i)}<span style={{ color: GOLD }}>{text.slice(i + 2)}</span></>
 }
 
 /* ─────────────────────────────────────────────────────────
@@ -884,7 +884,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section id="pathways" data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '32px', flexWrap: 'wrap', marginBottom: '40px' }}>
               <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: 0, fontFamily: FF }}>
-                {goldLast(pathwaysIntro?.heading ?? 'Capability across the whole ecosystem', 'ecosystem')}
+                {goldSplit(pathwaysIntro?.heading ?? 'Capability across the whole ||ecosystem')}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '380px', margin: 0 }}>
                 {pathwaysIntro?.subtext ?? 'We don\'t build students in isolation. We build the educators who guide them and the schools that hold it all together.'}
@@ -952,7 +952,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               <div>
                 <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {goldLast(gapSection?.heading ?? 'Educated unemployment begins with uninformed choices.', 'uninformed choices')}
+                  {goldSplit(gapSection?.heading ?? 'Educated unemployment begins with ||uninformed choices.')}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: 0 }}>
                   {gapSection?.intro ?? "Millions of graduates enter the workforce unprepared — not because they aren't capable, but because they were never given the chance to explore what they were capable of."}
@@ -1054,7 +1054,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               <div style={{ position: 'relative', zIndex: 1, maxWidth: '600px' }}>
                 <SectionLabel>The WeThink Summit</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {summit?.heading ?? 'Where a school project becomes a national moment.'}
+                  {goldSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.')}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
                   {summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.'}
@@ -1108,7 +1108,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <HeroDecorRing />
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '1360px', margin: '0 auto', width: '100%' }}>
               <h1 style={{ fontSize: 'clamp(38px,6.4vw,88px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: TP, margin: '0 0 24px', maxWidth: '900px', fontFamily: FF }}>
-                {goldLast(visionSection?.heroHeading ?? "We are building India's first experiential learning ecosystem.", 'experiential learning ecosystem.')}
+                {goldSplit(visionSection?.heroHeading ?? "We are building India's first ||experiential learning ecosystem.")}
               </h1>
               <p style={{ fontSize: 'clamp(16px,1.5vw,19px)', lineHeight: 1.7, color: TS, maxWidth: '560px', margin: 0 }}>
                 {visionSection?.heroSubtext ?? "WeThink Bharat exists for one reason — so that no Indian student ever has to choose a career they don't understand, in a world they've never experienced."}
@@ -1137,10 +1137,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 lineHeight: 1.34, letterSpacing: '-.015em', textAlign: 'justify',
                 margin: '0 0 48px', fontFamily: FF,
               }}>
-                {goldLast(
-                  visionSection?.poeticQuote ?? "Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam. That has to change.",
-                  'That has to change.'
-                )}
+                {goldSplit(visionSection?.poeticQuote ?? "Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam. ||That has to change.")}
               </p>
 
               <div style={{ maxWidth: '820px', margin: '0 auto', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '22px' }}>
@@ -1368,7 +1365,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <HeroDecorRing speed="50s" />
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '1360px', margin: '0 auto', width: '100%' }}>
               <h1 style={{ fontSize: 'clamp(38px,6.4vw,88px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 24px', maxWidth: '900px', fontFamily: FF }}>
-                {summit?.heading ?? <>The national stage where student work meets{' '}<span style={{ color: GOLD }}>a nation watching.</span></>}
+                {goldSplit(summit?.heading ?? 'The national stage where student work meets ||a nation watching.')}
               </h1>
               <p style={{ fontSize: 'clamp(16px,1.5vw,19px)', lineHeight: 1.7, color: TS, maxWidth: '520px', margin: 0 }}>
                 Four times a year, WeThink Bharat students from across India converge — to present, compete, and be recognised in front of the country's top industry leaders.

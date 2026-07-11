@@ -30,10 +30,10 @@ const TP = '#F5EEE2'
 const TS = '#E0CEBD'
 const BORDER = '1px solid rgba(222,192,120,.14)'
 
-function goldLast(text: string, fromWord: string): React.ReactNode {
-  const i = text.toLowerCase().indexOf(fromWord.toLowerCase())
+function goldSplit(text: string): React.ReactNode {
+  const i = text.indexOf('||')
   if (i < 0) return text
-  return <>{text.slice(0, i)}<span style={{ color: GOLD }}>{text.slice(i)}</span></>
+  return <>{text.slice(0, i)}<span style={{ color: GOLD }}>{text.slice(i + 2)}</span></>
 }
 
 /* ── keyframes ───────────────────────────────────────────────── */
@@ -518,7 +518,7 @@ export function MobileSite({
             {/* PATHWAYS */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-                {goldLast(pathwaysIntro?.heading ?? 'Capability across the whole ecosystem', 'ecosystem')}
+                {goldSplit(pathwaysIntro?.heading ?? 'Capability across the whole ||ecosystem')}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
                 {pathwaysIntro?.subtext ?? "We don't build students in isolation. We build the educators who guide them and the schools that hold it all together."}
@@ -571,7 +571,7 @@ export function MobileSite({
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                {goldLast(gapSection?.heading ?? 'Educated unemployment begins with uninformed choices.', 'uninformed choices')}
+                {goldSplit(gapSection?.heading ?? 'Educated unemployment begins with ||uninformed choices.')}
               </h2>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: '0 0 26px', maxWidth: '440px' }}>
                 {gapSection?.intro ?? "India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for."}
@@ -644,7 +644,7 @@ export function MobileSite({
                 <div style={{ position: 'relative', zIndex: 1 }}>
                   <SectionLabel>The WeThink Summit</SectionLabel>
                   <h2 style={{ fontSize: 'clamp(22px,5vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                    {goldLast(summit?.heading ?? 'Where a school project becomes a national moment.', 'national moment')}
+                    {goldSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.')}
                   </h2>
                   <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
                     {summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.'}
@@ -721,10 +721,7 @@ export function MobileSite({
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <p style={{ fontSize: 'clamp(18px,4.5vw,32px)', fontWeight: 600, color: TP, lineHeight: 1.34, letterSpacing: '-.015em', margin: '0 0 40px', fontFamily: FF }}>
-                  {goldLast(
-                    visionSection?.poeticQuote ?? "Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam. That has to change.",
-                    'That has to change.'
-                  )}
+                  {goldSplit(visionSection?.poeticQuote ?? "Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam. ||That has to change.")}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                   {visionSection?.bodyBlocks
@@ -745,7 +742,7 @@ export function MobileSite({
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
               <SectionLabel>{visionSection?.kicker ?? 'Our vision'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 40px', fontFamily: FF }}>
-                {goldLast(visionSection?.heading ?? 'A Bharat where every student discovers their capability before they ever have to choose a path.', 'capability')}
+                {goldSplit(visionSection?.heading ?? 'A Bharat where every student discovers their ||capability before they ever have to choose a path.')}
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {[

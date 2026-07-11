@@ -206,6 +206,7 @@ export default async function MobilePage() {
 
   const processedSummit = summit ? {
     heading: summit.heading,
+    homepageTeaser: summit.homepageTeaser,
     body: blocksToText((summit.body ?? []) as unknown[]),
     pullQuote: summit.pullQuote,
     statChips: summit.statChips ?? [],

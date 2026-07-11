@@ -216,6 +216,7 @@ export default async function DesktopPage() {
 
   const processedSummit = summit ? {
     heading: summit.heading,
+    homepageTeaser: summit.homepageTeaser,
     body: blocksToText((summit.body ?? []) as unknown[]),
     pullQuote: summit.pullQuote,
     statChips: summit.statChips ?? [],

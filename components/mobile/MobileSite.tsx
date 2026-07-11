@@ -643,10 +643,10 @@ export function MobileSite({
                 <div style={{ position: 'relative', zIndex: 1 }}>
                   <SectionLabel>The WeThink Summit</SectionLabel>
                   <h2 style={{ fontSize: 'clamp(22px,5vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                    Where a school project becomes a <span style={{ color: GOLD }}>national moment.</span>
+                    {goldLast(summit?.heading ?? 'Where a school project becomes a national moment.', 'national moment')}
                   </h2>
                   <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
-                    Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.
+                    {summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.'}
                   </p>
                   <button
                     onClick={() => navigate('summit')}

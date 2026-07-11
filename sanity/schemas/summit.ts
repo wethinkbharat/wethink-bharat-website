@@ -19,6 +19,13 @@ export const summit = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'homepageTeaser',
+      title: 'Homepage Teaser',
+      type: 'text',
+      rows: 3,
+      description: 'Short paragraph shown in the Summit teaser card on the homepage.',
+    }),
+    defineField({
       name: 'body',
       title: 'Body',
       type: 'array',

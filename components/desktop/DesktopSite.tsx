@@ -129,6 +129,7 @@ interface GetInvolvedCardData {
 
 interface SummitData {
   heading?: string
+  homepageTeaser?: string
   body?: string
   pullQuote?: string
   statChips: string[]
@@ -1053,7 +1054,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   {summit?.heading ?? 'Where a school project becomes a national moment.'}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
-                  Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.
+                  {summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.'}
                 </p>
                 <SpringBtn
                   onClick={() => navigate('summit')}

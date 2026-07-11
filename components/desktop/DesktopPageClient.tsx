@@ -128,6 +128,7 @@ export interface GetInvolvedCardData {
 
 export interface SummitData {
   heading?: string
+  homepageTeaser?: string
   body?: string
   pullQuote?: string
   statChips: string[]

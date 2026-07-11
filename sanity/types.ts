@@ -207,6 +207,7 @@ export interface Summit {
   _type: 'summit'
   headerImage?: SanityImage
   heading?: string
+  homepageTeaser?: string
   body: PortableTextBlock[]
   pullQuote?: string
   statChips: string[]

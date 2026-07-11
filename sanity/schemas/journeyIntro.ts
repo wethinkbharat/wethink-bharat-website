@@ -14,16 +14,10 @@ export const journeyIntro = defineType({
       options: { hotspot: true },
     }),
     defineField({
-      name: 'kicker',
-      title: 'Kicker',
-      type: 'string',
-      description: 'Use || to mark where gold colour starts. E.g. "From exposure to ||permanent proof"',
-    }),
-    defineField({
       name: 'heading',
-      title: 'Heading',
+      title: 'Page Hero Heading',
       type: 'string',
-      description: 'Use || to mark where gold colour starts. E.g. "Five stages. One ||transformation."',
+      description: 'Large H1 heading on the Journey page hero. Use || for gold. E.g. "Five stages. One ||transformation."',
     }),
     defineField({
       name: 'heroSubtext',
@@ -33,11 +27,17 @@ export const journeyIntro = defineType({
       description: 'Subtitle below the journey page hero heading. Use || for gold.',
     }),
     defineField({
+      name: 'kicker',
+      title: 'Section Heading',
+      type: 'string',
+      description: 'Heading above the 5-stage orbit diagram. Use || for gold. E.g. "From exposure to ||permanent proof"',
+    }),
+    defineField({
       name: 'sectionSubtext',
       title: 'Section Subtext',
       type: 'text',
       rows: 2,
-      description: 'Subtext beside the orbit section heading. Use || for gold.',
+      description: 'Smaller text beside the Section Heading above the orbit diagram. Use || for gold.',
     }),
   ],
 

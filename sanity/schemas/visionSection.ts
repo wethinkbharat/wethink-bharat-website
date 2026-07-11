@@ -20,6 +20,26 @@ export const visionSection = defineType({
       description: 'Small label above the heading, e.g. "Our Vision"',
     }),
     defineField({
+      name: 'heroHeading',
+      title: 'Page Hero Heading',
+      type: 'string',
+      description: 'Large heading shown at the top of the Vision page, e.g. "We are building India\'s first experiential learning ecosystem."',
+    }),
+    defineField({
+      name: 'heroSubtext',
+      title: 'Page Hero Subtext',
+      type: 'text',
+      rows: 2,
+      description: 'Subtitle shown below the hero heading on the Vision page.',
+    }),
+    defineField({
+      name: 'poeticQuote',
+      title: 'Poetic Quote',
+      type: 'text',
+      rows: 3,
+      description: 'Large opening quote in the Vision page interstitial. End it with "That has to change." to keep the gold accent.',
+    }),
+    defineField({
       name: 'heading',
       title: 'Heading',
       type: 'string',

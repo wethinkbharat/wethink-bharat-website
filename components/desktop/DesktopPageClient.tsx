@@ -42,6 +42,9 @@ export interface HeroData {
 }
 
 export interface VisionSectionData {
+  heroHeading?: string
+  heroSubtext?: string
+  poeticQuote?: string
   kicker?: string
   heading?: string
   bodyBlocks?: string

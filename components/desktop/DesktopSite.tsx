@@ -43,6 +43,9 @@ interface HeroData {
 }
 
 interface VisionSectionData {
+  heroHeading?: string
+  heroSubtext?: string
+  poeticQuote?: string
   kicker?: string
   heading?: string
   bodyBlocks?: string
@@ -1068,7 +1071,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
 
           {/* TESTIMONIAL */}
           <section data-reveal style={{ padding: 'clamp(72px,10vw,150px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER, textAlign: 'center' }}>
-            <div style={{ fontSize: '90px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '18px' }}>{'\u201C'}</div>
+            <div style={{ fontSize: '90px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '18px', display: 'inline-block', animation: 'wtbBob 4s ease-in-out infinite' }}>{'\u201C'}</div>
             <blockquote style={{ margin: '0 auto', maxWidth: '820px' }}>
               <p style={{ fontSize: 'clamp(22px,3vw,38px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 36px', fontFamily: FF }}>
                 {visionSection?.directorQuote ?? 'Why do we wait until after graduation to give students real experience? By then, the choice is already made.'}
@@ -1105,11 +1108,10 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <HeroDecorRing />
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '1360px', margin: '0 auto', width: '100%' }}>
               <h1 style={{ fontSize: 'clamp(38px,6.4vw,88px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, color: TP, margin: '0 0 24px', maxWidth: '900px', fontFamily: FF }}>
-                We are building India's first{' '}
-                <span style={{ color: GOLD }}>experiential learning ecosystem.</span>
+                {goldLast(visionSection?.heroHeading ?? "We are building India's first experiential learning ecosystem.", 'experiential learning ecosystem.')}
               </h1>
               <p style={{ fontSize: 'clamp(16px,1.5vw,19px)', lineHeight: 1.7, color: TS, maxWidth: '560px', margin: 0 }}>
-                WeThink Bharat exists for one reason — so that no Indian student ever has to choose a career they don't understand, in a world they've never experienced.
+                {visionSection?.heroSubtext ?? "WeThink Bharat exists for one reason — so that no Indian student ever has to choose a career they don't understand, in a world they've never experienced."}
               </p>
             </div>
           </section>
@@ -1124,7 +1126,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               transform: 'translateX(-50%)',
               fontSize: 'clamp(96px,13vw,180px)', fontWeight: 800,
               color: 'rgba(222,192,120,.28)', lineHeight: 1, pointerEvents: 'none',
-              userSelect: 'none', zIndex: 0,
+              userSelect: 'none', zIndex: 0, animation: 'wtbBob 4s ease-in-out infinite',
             }}>
               {'\u201C'}
             </div>
@@ -1135,8 +1137,10 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 lineHeight: 1.34, letterSpacing: '-.015em', textAlign: 'justify',
                 margin: '0 0 48px', fontFamily: FF,
               }}>
-                Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam.{' '}
-                <strong style={{ color: GOLD }}>That has to change.</strong>
+                {goldLast(
+                  visionSection?.poeticQuote ?? "Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam. That has to change.",
+                  'That has to change.'
+                )}
               </p>
 
               <div style={{ maxWidth: '820px', margin: '0 auto', textAlign: 'left', display: 'flex', flexDirection: 'column', gap: '22px' }}>

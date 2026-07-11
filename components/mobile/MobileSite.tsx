@@ -41,6 +41,7 @@ const KEYFRAMES = `
 @keyframes wtbPulse { 0%,100% { box-shadow:0 0 0 0 rgba(222,192,120,.5); } 70% { box-shadow:0 0 0 10px rgba(222,192,120,0); } }
 @keyframes wtbMarquee { 0% { transform:translateX(0); } 100% { transform:translateX(-50%); } }
 @keyframes wtbFadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+@keyframes wtbBob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(8px); } }
 @media (prefers-reduced-motion: no-preference) {
   [data-reveal] { opacity:0; transform:translateY(22px); transition:opacity .65s ease, transform .65s ease; }
   [data-reveal].is-visible { opacity:1; transform:translateY(0); }
@@ -660,7 +661,7 @@ export function MobileSite({
 
             {/* DIRECTOR QUOTE */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER, textAlign: 'center' }}>
-              <div style={{ fontSize: '72px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '16px' }}>"</div>
+              <div style={{ fontSize: '72px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '16px', display: 'inline-block', animation: 'wtbBob 4s ease-in-out infinite' }}>"</div>
               <blockquote style={{ margin: '0 auto', maxWidth: '680px' }}>
                 <p style={{ fontSize: 'clamp(18px,4.5vw,30px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 30px', fontFamily: FF }}>
                   {visionSection?.directorQuote ?? <>Why do we wait until <strong style={{ color: GOLD }}>after graduation</strong> to give students real experience? By then, the choice is already made.</>}
@@ -714,29 +715,37 @@ export function MobileSite({
                 position: 'absolute', left: '50%', top: 0, transform: 'translateX(-50%)',
                 fontSize: 'clamp(80px,18vw,160px)', fontWeight: 800,
                 color: 'rgba(222,192,120,.28)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none', zIndex: 0,
+                animation: 'wtbBob 4s ease-in-out infinite',
               }}>
                 "
               </div>
               <div style={{ position: 'relative', zIndex: 1 }}>
                 <p style={{ fontSize: 'clamp(18px,4.5vw,32px)', fontWeight: 600, color: TP, lineHeight: 1.34, letterSpacing: '-.015em', margin: '0 0 40px', fontFamily: FF }}>
-                  Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam.{' '}
-                  <strong style={{ color: GOLD }}>That has to change.</strong>
+                  {goldLast(
+                    visionSection?.poeticQuote ?? "Every year, millions of students in India make the most important decision of their lives based almost entirely on what their parents did, what relatives suggested, or what scored highest in a board exam. That has to change.",
+                    'That has to change.'
+                  )}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>The average Indian student knows very little about the world of work before they are asked to commit to it for life. This isn't their failure — it's a structural gap that no one has addressed at scale.</p>
-                  <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>WeThink Bharat is built to close that gap — not through lectures or videos or one-day workshops, but through real, structured, industry-driven experiences that live inside the school itself.</p>
-                  <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>We believe that a student who has run a simulated startup, filed a news story, or designed a product for a real brief is infinitely better prepared than one who hasn't.</p>
+                  {visionSection?.bodyBlocks
+                    ? visionSection.bodyBlocks.split('\n\n').map((para, i) => (
+                        <p key={i} style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>{para}</p>
+                      ))
+                    : <>
+                        <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>The average Indian student knows very little about the world of work before they are asked to commit to it for life. This isn&apos;t their failure — it&apos;s a structural gap that no one has addressed at scale.</p>
+                        <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>WeThink Bharat is built to close that gap — not through lectures or videos or one-day workshops, but through real, structured, industry-driven experiences that live inside the school itself.</p>
+                        <p style={{ fontSize: 'clamp(14px,1.5vw,16px)', lineHeight: 1.75, color: TS, margin: 0 }}>We believe that a student who has run a simulated startup, filed a news story, or designed a product for a real brief is infinitely better prepared than one who hasn&apos;t.</p>
+                      </>
+                  }
                 </div>
               </div>
             </section>
 
             {/* Vision content */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-              <SectionLabel>Our vision</SectionLabel>
+              <SectionLabel>{visionSection?.kicker ?? 'Our vision'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 40px', fontFamily: FF }}>
-                A Bharat where every student discovers their{' '}
-                <span style={{ color: GOLD }}>capability</span>{' '}
-                before they ever have to choose a path.
+                {goldLast(visionSection?.heading ?? 'A Bharat where every student discovers their capability before they ever have to choose a path.', 'capability')}
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {[

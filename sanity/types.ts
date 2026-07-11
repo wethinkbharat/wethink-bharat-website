@@ -77,6 +77,9 @@ export interface VisionSection {
   _id: 'visionSection'
   _type: 'visionSection'
   headerImage?: SanityImage
+  heroHeading?: string
+  heroSubtext?: string
+  poeticQuote?: string
   kicker?: string
   heading?: string
   bodyBlocks: PortableTextBlock[]

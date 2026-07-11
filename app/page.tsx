@@ -142,6 +142,9 @@ export default async function DesktopPage() {
   } : null
 
   const processedVisionSection = visionSection ? {
+    heroHeading: visionSection.heroHeading,
+    heroSubtext: visionSection.heroSubtext,
+    poeticQuote: visionSection.poeticQuote,
     kicker: visionSection.kicker,
     heading: visionSection.heading,
     bodyBlocks: blocksToText((visionSection.bodyBlocks ?? []) as unknown[]),

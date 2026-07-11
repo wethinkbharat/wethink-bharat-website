@@ -181,6 +181,7 @@ export default async function DesktopPage() {
   const processedPathwaysIntro = pathwaysIntro ? {
     kicker: pathwaysIntro.kicker,
     heading: pathwaysIntro.heading,
+    subtext: pathwaysIntro.subtext,
   } : null
 
   const processedPathways = pathways.map((p) => ({

@@ -512,7 +512,7 @@ export function MobileSite({
                 {pathwaysIntro?.heading ?? <>Capability across the whole <span style={{ color: GOLD }}>ecosystem</span></>}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
-                WeThink Bharat is designed for everyone inside a school — students, educators, and institutions — each with their own pathway.
+                {pathwaysIntro?.subtext ?? "We don't build students in isolation. We build the educators who guide them and the schools that hold it all together."}
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '18px' }}>
                 {activePathways.map(c => (

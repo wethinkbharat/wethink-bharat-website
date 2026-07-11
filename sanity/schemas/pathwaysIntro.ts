@@ -16,6 +16,12 @@ export const pathwaysIntro = defineType({
       title: 'Heading',
       type: 'string',
     }),
+    defineField({
+      name: 'subtext',
+      title: 'Subtext',
+      type: 'text',
+      rows: 3,
+    }),
   ],
 
   preview: {

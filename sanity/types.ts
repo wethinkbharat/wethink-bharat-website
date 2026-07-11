@@ -119,6 +119,7 @@ export interface PathwaysIntro {
   _type: 'pathwaysIntro'
   kicker?: string
   heading?: string
+  subtext?: string
 }
 
 export interface Pathway {

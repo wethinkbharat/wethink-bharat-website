@@ -83,6 +83,7 @@ export interface GapSectionData {
 export interface PathwaysIntroData {
   kicker?: string
   heading?: string
+  subtext?: string
 }
 
 export interface PathwayData {

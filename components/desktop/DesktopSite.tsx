@@ -84,6 +84,7 @@ interface GapSectionData {
 interface PathwaysIntroData {
   kicker?: string
   heading?: string
+  subtext?: string
 }
 
 interface PathwayData {
@@ -873,7 +874,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 {pathwaysIntro?.heading ?? 'Capability across the whole ecosystem'}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '380px', margin: 0 }}>
-                WeThink Bharat is designed for everyone inside a school — students, educators, and institutions — each with their own pathway.
+                {pathwaysIntro?.subtext ?? 'We don\'t build students in isolation. We build the educators who guide them and the schools that hold it all together.'}
               </p>
             </div>
 

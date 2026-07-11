@@ -22,6 +22,7 @@ export const pathwaysIntro = defineType({
       title: 'Subtext',
       type: 'text',
       rows: 3,
+      description: 'Use || to mark where gold colour starts.',
     }),
   ],
 

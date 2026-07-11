@@ -93,7 +93,7 @@ export const visionSection = defineType({
       name: 'directorQuote',
       title: "Director's Quote",
       type: 'string',
-      description: 'Pull quote attributed to the director.',
+      description: 'Pull quote attributed to the director. Use || to mark where gold colour starts.',
     }),
 
     // ── Purpose / Vision / Mission ────────────────────────────────────────

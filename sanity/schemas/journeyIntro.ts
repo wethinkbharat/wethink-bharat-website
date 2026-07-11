@@ -17,11 +17,13 @@ export const journeyIntro = defineType({
       name: 'kicker',
       title: 'Kicker',
       type: 'string',
+      description: 'Use || to mark where gold colour starts. E.g. "From exposure to ||permanent proof"',
     }),
     defineField({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || to mark where gold colour starts. E.g. "Five stages. One ||transformation."',
     }),
   ],
 

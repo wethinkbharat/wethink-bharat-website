@@ -24,7 +24,7 @@ export const summit = defineType({
       title: 'Homepage Teaser',
       type: 'text',
       rows: 3,
-      description: 'Short paragraph shown in the Summit teaser card on the homepage.',
+      description: 'Short paragraph shown in the Summit teaser card on the homepage. Use || to mark where gold colour starts.',
     }),
     defineField({
       name: 'body',

@@ -36,6 +36,7 @@ export const domainsIntro = defineType({
       title: 'Sub-text',
       type: 'text',
       rows: 3,
+      description: 'Use || to mark where gold colour starts.',
     }),
   ],
 

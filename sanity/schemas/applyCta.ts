@@ -10,12 +10,14 @@ export const applyCta = defineType({
       name: 'heading',
       title: 'Heading',
       type: 'string',
+      description: 'Use || to mark where gold colour starts. E.g. "Your students are ready for a ||national stage."',
     }),
     defineField({
       name: 'body',
       title: 'Body',
       type: 'text',
       rows: 3,
+      description: 'Use || to mark where gold colour starts.',
     }),
     defineField({
       name: 'primaryCtaLabel',

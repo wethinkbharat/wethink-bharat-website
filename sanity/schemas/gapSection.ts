@@ -20,6 +20,7 @@ export const gapSection = defineType({
     defineField({
       name: 'intro',
       title: 'Intro',
+      description: 'Use || to mark where gold colour starts.',
       type: 'array',
       of: [
         {

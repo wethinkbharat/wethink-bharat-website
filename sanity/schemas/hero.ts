@@ -55,6 +55,7 @@ export const hero = defineType({
       title: 'Sub-copy',
       type: 'text',
       rows: 3,
+      description: 'Use || to mark where gold colour starts.',
     }),
 
     defineField({

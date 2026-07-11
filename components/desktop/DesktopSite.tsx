@@ -831,7 +831,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
               </h1>
 
               <p style={{ fontSize: 'clamp(16px,1.5vw,20px)', lineHeight: 1.7, color: TS, maxWidth: '560px', margin: '0 0 36px' }}>
-                {hero?.subcopy ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.'}
+                {goldSplit(hero?.subcopy ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.')}
               </p>
 
               <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap', marginBottom: '36px' }}>
@@ -887,7 +887,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 {goldSplit(pathwaysIntro?.heading ?? 'Capability across the whole ||ecosystem')}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '380px', margin: 0 }}>
-                {pathwaysIntro?.subtext ?? 'We don\'t build students in isolation. We build the educators who guide them and the schools that hold it all together.'}
+                {goldSplit(pathwaysIntro?.subtext ?? 'We don\'t build students in isolation. We build the educators who guide them and the schools that hold it all together.')}
               </p>
             </div>
 
@@ -955,7 +955,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   {goldSplit(gapSection?.heading ?? 'Educated unemployment begins with ||uninformed choices.')}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: 0 }}>
-                  {gapSection?.intro ?? "Millions of graduates enter the workforce unprepared — not because they aren't capable, but because they were never given the chance to explore what they were capable of."}
+                  {goldSplit(gapSection?.intro ?? "Millions of graduates enter the workforce unprepared — not because they aren't capable, but because they were never given the chance to explore what they were capable of.")}
                 </p>
               </div>
               <div>
@@ -1057,7 +1057,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   {goldSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.')}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
-                  {summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.'}
+                  {goldSplit(summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.')}
                 </p>
                 <SpringBtn
                   onClick={() => navigate('summit')}
@@ -1074,7 +1074,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <div style={{ fontSize: '90px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '18px', display: 'inline-block', animation: 'wtbBob 4s ease-in-out infinite' }}>{'\u201C'}</div>
             <blockquote style={{ margin: '0 auto', maxWidth: '820px' }}>
               <p style={{ fontSize: 'clamp(22px,3vw,38px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 36px', fontFamily: FF }}>
-                {visionSection?.directorQuote ?? 'Why do we wait until after graduation to give students real experience? By then, the choice is already made.'}
+                {goldSplit(visionSection?.directorQuote ?? 'Why do we wait until after graduation to give students real experience? By then, the choice is already made.')}
               </p>
             </blockquote>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '16px' }}>
@@ -1166,7 +1166,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
               <SectionLabel>{visionSection?.kicker ?? 'Our vision'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 48px', fontFamily: FF }}>
-                {visionSection?.heading ?? 'A Bharat where every student discovers their capability before they ever have to choose a path.'}
+                {goldSplit(visionSection?.heading ?? 'A Bharat where every student discovers their ||capability before they ever have to choose a path.')}
               </h2>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '20px' }}>
@@ -1189,10 +1189,10 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
               <SectionLabel>{beliefsIntro?.kicker ?? 'What we believe'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                {beliefsIntro?.heading ?? 'Six convictions that drive everything we build'}
+                {goldSplit(beliefsIntro?.heading ?? 'Six convictions that drive everything we build')}
               </h2>
               <p style={{ fontSize: 'clamp(15px,1.4vw,17px)', color: TS, lineHeight: 1.7, maxWidth: '560px', margin: '0 0 48px' }}>
-                {beliefsIntro?.intro ?? 'Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.'}
+                {goldSplit(beliefsIntro?.intro ?? 'Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.')}
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(360px,1fr))', gap: '0 56px' }}>
@@ -1256,7 +1256,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   {goldSplit(domainsIntro?.heading ?? 'Domains you ||experience, not just study.')}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
-                  {domainsIntro?.subtext ?? "Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end. Students don't learn about it — they do it."}
+                  {goldSplit(domainsIntro?.subtext ?? "Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end. Students don't learn about it — they do it.")}
                 </p>
                 <SpringBtn
                   onClick={onSchoolFormOpen}
@@ -1719,7 +1719,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             <HeroDecorRing speed="52s" size="clamp(160px,20vw,280px)" />
             <div style={{ position: 'relative', zIndex: 3, maxWidth: '1360px', margin: '0 auto', width: '100%' }}>
               <h1 style={{ fontSize: 'clamp(38px,6.4vw,88px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 24px', maxWidth: '800px', fontFamily: FF }}>
-                {journeyIntro?.heading ?? <>Five stages. One <span style={{ color: GOLD }}>transformation.</span></>}
+                {goldSplit(journeyIntro?.heading ?? 'Five stages. One ||transformation.')}
               </h1>
               <p style={{ fontSize: 'clamp(16px,1.5vw,19px)', lineHeight: 1.7, color: TS, maxWidth: '520px', margin: 0 }}>
                 Five structured experiences that carry a student from a first taste of a domain to permanent, citable proof.
@@ -1732,7 +1732,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap', marginBottom: '44px', maxWidth: '1360px', marginLeft: 'auto', marginRight: 'auto' }}>
               <h2 style={{ margin: 0, fontSize: 'clamp(28px,4vw,54px)', lineHeight: 1.04, fontWeight: 800, color: TP, letterSpacing: '-.02em', maxWidth: '620px', fontFamily: FF }}>
-                {journeyIntro?.kicker ?? <>From exposure to <span style={{ color: GOLD }}>permanent proof</span></>}
+                {goldSplit(journeyIntro?.kicker ?? 'From exposure to ||permanent proof')}
               </h2>
               <p style={{ margin: 0, fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '320px' }}>
                 Five structured experiences that carry a student from a first taste of a domain to a globally citable record of what they built.
@@ -1829,7 +1829,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 {'\u201C'}
               </span>
               <p style={{ margin: '0 0 30px', fontSize: 'clamp(22px,3vw,38px)', lineHeight: 1.3, fontWeight: 500, color: TP, letterSpacing: '-0.01em', fontFamily: FF }}>
-                {visionSection?.directorQuote ?? 'Why do we wait until after graduation to give students real experience? By then, the choice is already made.'}
+                {goldSplit(visionSection?.directorQuote ?? 'Why do we wait until after graduation to give students real experience? By then, the choice is already made.')}
               </p>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: '18px' }}>
                 <div style={{ width: '76px', height: '76px', borderRadius: '50%', overflow: 'hidden', border: '1px solid rgba(222,192,120,.3)', flexShrink: 0, background: S1, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '24px', color: GOLD }}>
@@ -1870,10 +1870,10 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <div style={{ position: 'relative', zIndex: 1, maxWidth: '700px', margin: '0 auto' }}>
             <SectionLabel>Get involved</SectionLabel>
             <h2 style={{ fontSize: 'clamp(32px,5vw,64px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-              {applyCta?.heading ?? 'Join the movement.'}
+              {goldSplit(applyCta?.heading ?? 'Join the movement.')}
             </h2>
             <p style={{ fontSize: 'clamp(15px,1.5vw,18px)', lineHeight: 1.7, color: TS, maxWidth: '560px', margin: '0 auto 44px' }}>
-              {applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.'}
+              {goldSplit(applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.')}
             </p>
             <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
               <SpringBtn
@@ -1917,10 +1917,10 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <div style={{ maxWidth: '560px' }}>
             <SectionLabel>Partner with us</SectionLabel>
             <h3 style={{ fontSize: 'clamp(22px,2.8vw,34px)', fontWeight: 800, color: TP, margin: '0 0 12px', fontFamily: FF }}>
-              {applyCta?.heading ?? 'Build the future of Young Bharat with us.'}
+              {goldSplit(applyCta?.heading ?? 'Build the future of Young Bharat with us.')}
             </h3>
             <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: 0 }}>
-              {applyCta?.body ?? 'Whether you are an industry leader, an educator, a media organisation, or a policymaker — there is a role for you in the WeThink ecosystem.'}
+              {goldSplit(applyCta?.body ?? 'Whether you are an industry leader, an educator, a media organisation, or a policymaker — there is a role for you in the WeThink ecosystem.')}
             </p>
           </div>
           <SpringBtn

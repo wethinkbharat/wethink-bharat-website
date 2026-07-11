@@ -490,7 +490,7 @@ export function MobileSite({
                   }
                 </h1>
                 <p style={{ fontSize: '15.5px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
-                  {hero?.subcopy ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.'}
+                  {goldSplit(hero?.subcopy ?? 'WeThink Bharat brings real industry into schools — through domain simulators, live projects, and a permanent digital footprint that belongs to every student forever.')}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '28px' }}>
                   <button
@@ -521,7 +521,7 @@ export function MobileSite({
                 {goldSplit(pathwaysIntro?.heading ?? 'Capability across the whole ||ecosystem')}
               </h2>
               <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
-                {pathwaysIntro?.subtext ?? "We don't build students in isolation. We build the educators who guide them and the schools that hold it all together."}
+                {goldSplit(pathwaysIntro?.subtext ?? "We don't build students in isolation. We build the educators who guide them and the schools that hold it all together.")}
               </p>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '18px' }}>
                 {activePathways.map(c => (
@@ -574,7 +574,7 @@ export function MobileSite({
                 {goldSplit(gapSection?.heading ?? 'Educated unemployment begins with ||uninformed choices.')}
               </h2>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: '0 0 26px', maxWidth: '440px' }}>
-                {gapSection?.intro ?? "India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for."}
+                {goldSplit(gapSection?.intro ?? "India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for.")}
               </p>
               <div>
                 {activeGapStats.map(s => (
@@ -647,7 +647,7 @@ export function MobileSite({
                     {goldSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.')}
                   </h2>
                   <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
-                    {summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.'}
+                    {goldSplit(summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.')}
                   </p>
                   <button
                     onClick={() => navigate('summit')}
@@ -664,7 +664,7 @@ export function MobileSite({
               <div style={{ fontSize: '72px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '16px', display: 'inline-block', animation: 'wtbBob 4s ease-in-out infinite' }}>"</div>
               <blockquote style={{ margin: '0 auto', maxWidth: '680px' }}>
                 <p style={{ fontSize: 'clamp(18px,4.5vw,30px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 30px', fontFamily: FF }}>
-                  {visionSection?.directorQuote ?? <>Why do we wait until <strong style={{ color: GOLD }}>after graduation</strong> to give students real experience? By then, the choice is already made.</>}
+                  {goldSplit(visionSection?.directorQuote ?? 'Why do we wait until ||after graduation to give students real experience? By then, the choice is already made.')}
                 </p>
               </blockquote>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '14px' }}>
@@ -762,10 +762,10 @@ export function MobileSite({
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
               <SectionLabel>What we believe</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-                {beliefsIntro?.heading ?? 'Six convictions that drive everything we build'}
+                {goldSplit(beliefsIntro?.heading ?? 'Six convictions that drive everything we build')}
               </h2>
               <p style={{ fontSize: 'clamp(14px,1.4vw,16px)', color: TS, lineHeight: 1.7, margin: '0 0 40px' }}>
-                {beliefsIntro?.intro ?? 'Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.'}
+                {goldSplit(beliefsIntro?.intro ?? 'Not values on a wall — design principles behind every simulator, every project brief, every partner conversation.')}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 {activeBeliefs.map(b => (
@@ -817,7 +817,7 @@ export function MobileSite({
                 {domainsIntro?.heading ?? <>Domains you <span style={{ color: GOLD }}>experience</span>, not just study.</>}
               </h2>
               <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
-                {domainsIntro?.subtext ?? 'Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end.'}
+                {goldSplit(domainsIntro?.subtext ?? 'Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end.')}
               </p>
               <button
                 onClick={onSchoolFormOpen}
@@ -910,7 +910,7 @@ export function MobileSite({
               <HeroPageBg imageUrl={headerImages?.summit} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
                 <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {summit?.heading ?? <>The national stage where student work meets{' '}<span style={{ color: GOLD }}>a nation watching.</span></>}
+                  {goldSplit(summit?.heading ?? 'The national stage where student work meets ||a nation watching.')}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
                   The WeThink Summit is where the journey culminates — live, nationally recognised, and permanently recorded.
@@ -1142,7 +1142,7 @@ export function MobileSite({
               <HeroPageBg imageUrl={headerImages?.journey} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
                 <h1 style={{ fontSize: 'clamp(30px,6vw,72px)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.02, color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {journeyIntro?.heading ?? <>Five stages. One <span style={{ color: GOLD }}>transformation.</span></>}
+                  {goldSplit(journeyIntro?.heading ?? 'Five stages. One ||transformation.')}
                 </h1>
                 <p style={{ fontSize: 'clamp(14px,1.5vw,17px)', lineHeight: 1.7, color: TS, margin: 0 }}>
                   The WeThink journey moves students from exposure to permanent proof — through five structured, connected stages that build on each other.
@@ -1332,13 +1332,10 @@ export function MobileSite({
               }}>APPLY</div>
               <div style={{ position: 'relative', zIndex: 1, width: '100%' }}>
                 <h2 style={{ fontSize: 'clamp(24px,6vw,44px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                  {applyCta?.heading
-                    ? applyCta.heading
-                    : <>Your students are ready for a <span style={{ color: GOLD }}>national stage.</span></>
-                  }
+                  {goldSplit(applyCta?.heading ?? 'Your students are ready for a ||national stage.')}
                 </h2>
                 <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 auto 32px', maxWidth: '480px' }}>
-                  {applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.'}
+                  {goldSplit(applyCta?.body ?? 'Season 1 nominations are open now. Bring WeThink Bharat to your school and give your students the experience that changes everything.')}
                 </p>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                   <button onClick={onSchoolFormOpen} style={{ background: GOLD, color: BG, padding: '16px 32px', borderRadius: '999px', fontSize: '15px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}>

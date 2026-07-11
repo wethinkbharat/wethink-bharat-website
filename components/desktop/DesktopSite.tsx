@@ -418,15 +418,17 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           const raw = el.dataset.count ?? '0'
           const isRange = raw.includes('–')
           if (isRange) { el.textContent = raw; obs.unobserve(el); return }
-          const target = parseFloat(raw)
-          if (isNaN(target)) { el.textContent = raw; obs.unobserve(el); return }
-          const suffix = raw.replace(/[\d.]/g, '')
+          const numMatch = raw.match(/^([^\d]*)(\d[\d.]*)(.*)$/)
+          if (!numMatch) { el.textContent = raw; obs.unobserve(el); return }
+          const prefix = numMatch[1]
+          const target = parseFloat(numMatch[2])
+          const suffix = numMatch[3]
           const start = performance.now()
           const dur = 900
           const step = (now: number) => {
             const progress = Math.min((now - start) / dur, 1)
             const eased = 1 - Math.pow(1 - progress, 3)
-            el.textContent = Math.round(eased * target) + suffix
+            el.textContent = prefix + Math.round(eased * target) + suffix
             if (progress < 1) requestAnimationFrame(step)
           }
           requestAnimationFrame(step)

@@ -348,16 +348,18 @@ export function MobileSite({
         const el = entry.target as HTMLElement
         const raw = el.dataset.count ?? '0'
         if (raw.includes('–')) return // range like "14–18"
-        const suffix = raw.replace(/[\d.]/g, '')
-        const num = parseFloat(raw)
-        if (isNaN(num)) return
+        const numMatch = raw.match(/^([^\d]*)(\d[\d.]*)(.*)$/)
+        if (!numMatch) return
+        const prefix = numMatch[1]
+        const num = parseFloat(numMatch[2])
+        const suffix = numMatch[3]
         obs.unobserve(el)
         const start = performance.now()
         const dur = 900
         const tick = (now: number) => {
           const t = Math.min((now - start) / dur, 1)
           const ease = 1 - Math.pow(1 - t, 3)
-          el.textContent = Math.round(ease * num) + suffix
+          el.textContent = prefix + Math.round(ease * num) + suffix
           if (t < 1) requestAnimationFrame(tick)
         }
         requestAnimationFrame(tick)

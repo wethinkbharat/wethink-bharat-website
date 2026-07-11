@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import { MobilePageClient } from '@/components/mobile/MobilePageClient'
 import {
   getAdvisoryMembers,

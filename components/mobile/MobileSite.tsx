@@ -555,10 +555,9 @@ export function MobileSite({
 
             {/* IMPACT STATS */}
             <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-              <SectionLabel>The gap we close</SectionLabel>
+              <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                Educated unemployment begins with{' '}
-                <span style={{ color: GOLD }}>uninformed choices.</span>
+                {gapSection?.heading ?? <>Educated unemployment begins with{' '}<span style={{ color: GOLD }}>uninformed choices.</span></>}
               </h2>
               <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: '0 0 26px', maxWidth: '440px' }}>
                 India's students are bright and hardworking. But the system never gives them a chance to experience the world they are being prepared for.

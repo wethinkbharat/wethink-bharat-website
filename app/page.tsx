@@ -1,3 +1,5 @@
+export const revalidate = 60
+
 import { DesktopPageClient } from '@/components/desktop/DesktopPageClient'
 import {
   getAdvisoryMembers,

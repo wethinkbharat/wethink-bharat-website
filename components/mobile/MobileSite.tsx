@@ -31,16 +31,22 @@ const GOLD = '#DEC078'
 const TP = '#F5EEE2'
 const TS = '#E0CEBD'
 const BORDER = '1px solid rgba(222,192,120,.14)'
+const CREAM = '#F5EEE2'
+const LACCENT = '#8C3623'
+const LT = '#3B1407'
+const LTS = '#6B3520'
 
-function goldSplit(text: string): React.ReactNode {
+function accentSplit(text: string, variant: 'dark' | 'light' = 'dark'): React.ReactNode {
+  const accent = variant === 'light' ? LACCENT : GOLD
   const first = text.indexOf('||')
   if (first < 0) return text
   const second = text.indexOf('||', first + 2)
   if (second < 0) {
-    return <>{text.slice(0, first)}<span style={{ color: GOLD }}>{text.slice(first + 2)}</span></>
+    return <>{text.slice(0, first)}<span style={{ color: accent }}>{text.slice(first + 2)}</span></>
   }
-  return <>{text.slice(0, first)}<span style={{ color: GOLD }}>{text.slice(first + 2, second)}</span>{text.slice(second + 2)}</>
+  return <>{text.slice(0, first)}<span style={{ color: accent }}>{text.slice(first + 2, second)}</span>{text.slice(second + 2)}</>
 }
+function goldSplit(text: string): React.ReactNode { return accentSplit(text, 'dark') }
 
 /* ── keyframes ───────────────────────────────────────────────── */
 const KEYFRAMES = `
@@ -133,12 +139,16 @@ const DOMAINS = [
 ]
 
 /* ── helpers ─────────────────────────────────────────────────── */
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function SectionLabel({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
-    <p style={{ fontSize: '11.5px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.22em', margin: '0 0 14px' }}>
+    <p style={{ fontSize: '11.5px', fontWeight: 700, color: light ? LACCENT : GOLD, textTransform: 'uppercase', letterSpacing: '.22em', margin: '0 0 14px' }}>
       {children}
     </p>
   )
+}
+
+function GradientDivider({ from, to }: { from: string; to: string }) {
+  return <div aria-hidden="true" style={{ height: '160px', background: `linear-gradient(to bottom, ${from} 0%, ${from} 15%, ${to} 85%, ${to} 100%)`, pointerEvents: 'none' }} />
 }
 
 function HeroPageBg({ imageUrl }: { imageUrl?: string }) {
@@ -483,7 +493,6 @@ export function MobileSite({
               display: 'flex', alignItems: 'flex-end',
               overflow: 'hidden',
               padding: '0 clamp(24px,6vw,64px) 100px',
-              borderBottom: BORDER,
             }}>
               <HeroPageBg imageUrl={hero?.heroImageUrl} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -526,7 +535,7 @@ export function MobileSite({
             </section>
 
             {/* PATHWAYS */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
                 {goldSplit(pathwaysIntro?.heading ?? 'Capability across the whole ||ecosystem')}
               </h2>
@@ -555,7 +564,7 @@ export function MobileSite({
             </section>
 
             {/* PARTNER MARQUEE */}
-            <section style={{ padding: 'clamp(28px,4vw,44px) 0', background: BG, borderBottom: BORDER, overflow: 'hidden' }}>
+            <section style={{ padding: 'clamp(28px,4vw,44px) 0', background: BG, overflow: 'hidden' }}>
               <div style={{ display: 'flex', width: 'max-content', animation: 'wtbMarquee 30s linear infinite' }}>
                 {[...Array(2)].map((_, t) => (
                   <div key={t} style={{ display: 'flex', alignItems: 'center', gap: 'clamp(36px,5vw,64px)', paddingRight: 'clamp(36px,5vw,64px)' }}>
@@ -578,7 +587,7 @@ export function MobileSite({
             </section>
 
             {/* IMPACT STATS */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
               <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
                 {goldSplit(gapSection?.heading ?? 'Educated unemployment begins with ||uninformed choices.')}
@@ -605,7 +614,7 @@ export function MobileSite({
             </section>
 
             {/* DOMAIN TEASERS */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1 }}>
               <div style={{ marginBottom: '36px' }}>
                 <SectionLabel>Industry domains</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
@@ -641,27 +650,27 @@ export function MobileSite({
             </section>
 
             {/* SUMMIT TEASER */}
-            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', borderBottom: BORDER, background: S1 }}>
+            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', background: CREAM }}>
               <div style={{
-                border: '1px solid rgba(222,192,120,.45)', borderRadius: '20px',
+                border: '1px solid rgba(59,20,7,.18)', borderRadius: '20px',
                 padding: 'clamp(32px,6vw,60px)',
-                background: 'radial-gradient(120% 140% at 85% 0%,rgba(222,192,120,.22),rgba(58,36,8,.3) 40%,rgba(36,10,3,0) 72%),linear-gradient(135deg,#3a2408,#240a03)',
+                background: 'rgba(255,255,255,0.5)',
                 position: 'relative', overflow: 'hidden',
               }}>
-                <div aria-hidden="true" style={{ position: 'absolute', right: '-4%', bottom: '-20%', fontSize: 'clamp(80px,22vw,200px)', fontWeight: 800, color: 'rgba(222,192,120,.08)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>
+                <div aria-hidden="true" style={{ position: 'absolute', right: '-4%', bottom: '-20%', fontSize: 'clamp(80px,22vw,200px)', fontWeight: 800, color: 'rgba(59,20,7,.06)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>
                   SUMMIT
                 </div>
                 <div style={{ position: 'relative', zIndex: 1 }}>
-                  <SectionLabel>The WeThink Summit</SectionLabel>
-                  <h2 style={{ fontSize: 'clamp(22px,5vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                    {goldSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.')}
+                  <SectionLabel light>The WeThink Summit</SectionLabel>
+                  <h2 style={{ fontSize: 'clamp(22px,5vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 16px', fontFamily: FF }}>
+                    {accentSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.', 'light')}
                   </h2>
-                  <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
-                    {goldSplit(summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.')}
+                  <p style={{ fontSize: '14px', lineHeight: 1.7, color: LTS, margin: '0 0 28px' }}>
+                    {accentSplit(summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.', 'light')}
                   </p>
                   <button
                     onClick={() => navigate('summit')}
-                    style={{ display: 'inline-block', background: GOLD, color: BG, padding: '13px 26px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
+                    style={{ display: 'inline-block', background: LT, color: CREAM, padding: '13px 26px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
                   >
                     Discover the Summit ↗
                   </button>
@@ -670,7 +679,7 @@ export function MobileSite({
             </section>
 
             {/* DIRECTOR QUOTE */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER, textAlign: 'center' }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2, textAlign: 'center' }}>
               <div style={{ fontSize: '72px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '16px', display: 'inline-block', animation: 'wtbBob 4s ease-in-out infinite' }}>"</div>
               <blockquote style={{ margin: '0 auto', maxWidth: '680px' }}>
                 <p style={{ fontSize: 'clamp(18px,4.5vw,30px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 30px', fontFamily: FF }}>
@@ -702,7 +711,7 @@ export function MobileSite({
             <section style={{
               position: 'relative', minHeight: 'clamp(200px,30vh,320px)', display: 'flex',
               alignItems: 'center', overflow: 'hidden',
-              padding: '100px clamp(24px,6vw,64px) 48px', borderBottom: BORDER,
+              padding: '100px clamp(24px,6vw,64px) 48px',
             }}>
               <HeroPageBg imageUrl={headerImages?.vision} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -719,7 +728,7 @@ export function MobileSite({
             {/* Poetic interstitial */}
             <section data-reveal="" style={{
               position: 'relative', padding: 'clamp(64px,10vw,120px) clamp(24px,6vw,64px)',
-              background: S1, borderBottom: BORDER, overflow: 'hidden',
+              background: S1, overflow: 'hidden',
             }}>
               <div aria-hidden="true" style={{
                 position: 'absolute', left: '50%', top: 0, transform: 'translateX(-50%)',
@@ -749,10 +758,10 @@ export function MobileSite({
             </section>
 
             {/* Vision content */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
-              <SectionLabel>{visionSection?.kicker ?? 'Our vision'}</SectionLabel>
-              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 40px', fontFamily: FF }}>
-                {goldSplit(visionSection?.heading ?? 'A Bharat where every student discovers their ||capability before they ever have to choose a path.')}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
+              <SectionLabel light>{visionSection?.kicker ?? 'Our vision'}</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 40px', fontFamily: FF }}>
+                {accentSplit(visionSection?.heading ?? 'A Bharat where every student discovers their ||capability before they ever have to choose a path.', 'light')}
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {[
@@ -760,16 +769,16 @@ export function MobileSite({
                   { label: visionSection?.vision?.label ?? 'Vision', text: visionSection?.vision?.text ?? 'A generation that enters adulthood already knowing what it is capable of.' },
                   { label: visionSection?.mission?.label ?? 'Mission', text: visionSection?.mission?.text ?? 'Real briefs, real mentors, and permanent proof — inside every school.' },
                 ].map(card => (
-                  <div key={card.label} style={{ border: '1px solid rgba(222,192,120,.16)', background: S1, borderRadius: '16px', padding: '24px 22px' }}>
-                    <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 10px' }}>{card.label}</p>
-                    <p style={{ fontSize: '15px', lineHeight: 1.6, color: TP, margin: 0 }}>{card.text}</p>
+                  <div key={card.label} style={{ background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(59,20,7,.15)', borderRadius: '16px', padding: '24px 22px' }}>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: LACCENT, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 10px' }}>{card.label}</p>
+                    <p style={{ fontSize: '15px', lineHeight: 1.6, color: LT, margin: 0 }}>{card.text}</p>
                   </div>
                 ))}
               </div>
             </section>
 
             {/* Beliefs */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1 }}>
               <SectionLabel>What we believe</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
                 {goldSplit(beliefsIntro?.heading ?? 'Six convictions that drive everything we build')}
@@ -801,7 +810,7 @@ export function MobileSite({
             <section style={{
               position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
               alignItems: 'center', overflow: 'hidden',
-              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+              padding: '100px clamp(24px,6vw,64px) 52px',
             }}>
               <HeroPageBg imageUrl={headerImages?.domains} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -815,30 +824,30 @@ export function MobileSite({
             </section>
 
             {/* Feature image + intro */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-              <div style={{ borderRadius: '16px', minHeight: '220px', background: S2, border: '1px solid rgba(222,192,120,.14)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '36px' }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
+              <div style={{ borderRadius: '16px', minHeight: '220px', background: 'rgba(59,20,7,.08)', border: '1px solid rgba(59,20,7,.15)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '36px' }}>
                 {domainsIntro?.featureImageUrl
                   ? <img src={domainsIntro.featureImageUrl} alt="" aria-hidden="true" style={{ width: '100%', minHeight: '220px', objectFit: 'cover', pointerEvents: 'none' }} />
                   : <ImgPlaceholder height="220px" />
                 }
               </div>
-              <SectionLabel>Industry domains</SectionLabel>
-              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                {domainsIntro?.heading ?? <>Domains you <span style={{ color: GOLD }}>experience</span>, not just study.</>}
+              <SectionLabel light>Industry domains</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 16px', fontFamily: FF }}>
+                {accentSplit(domainsIntro?.heading ?? 'Domains you ||experience, not just study.', 'light')}
               </h2>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 24px' }}>
-                {goldSplit(domainsIntro?.subtext ?? 'Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end.')}
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: LTS, margin: '0 0 24px' }}>
+                {accentSplit(domainsIntro?.subtext ?? 'Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end.', 'light')}
               </p>
               <button
                 onClick={onSchoolFormOpen}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: GOLD, fontSize: '14px', fontWeight: 600, padding: 0, textDecoration: 'underline', fontFamily: FF }}
+                style={{ background: LT, color: CREAM, border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, padding: '10px 20px', borderRadius: '999px', fontFamily: FF }}
               >
                 Bring domains to my school ↗
               </button>
             </section>
 
             {/* Domains accordion */}
-            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,80px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,80px) clamp(24px,6vw,64px)', background: S1 }}>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {activeDomains.map((domain, i) => {
                   const isOpen = openAccordion === i
@@ -915,7 +924,7 @@ export function MobileSite({
             <section style={{
               position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
               alignItems: 'center', overflow: 'hidden',
-              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+              padding: '100px clamp(24px,6vw,64px) 52px',
             }}>
               <HeroPageBg imageUrl={headerImages?.summit} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -929,7 +938,7 @@ export function MobileSite({
             </section>
 
             {/* What is the Summit */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
               <SectionLabel>What is the WeThink Summit</SectionLabel>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
                 {goldSplit(summit?.sectionHeading ?? 'Not a competition. A ||culmination.')}
@@ -985,13 +994,13 @@ export function MobileSite({
             </section>
 
             {/* Get involved */}
-            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-              <SectionLabel>Get involved</SectionLabel>
-              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 14px', fontFamily: FF }}>
-                {goldSplit(summit?.getInvolvedHeading ?? 'Three ways to be part of the Summit')}
+            <section data-reveal="" style={{ padding: 'clamp(40px,6vw,64px) clamp(24px,6vw,64px)', background: CREAM }}>
+              <SectionLabel light>Get involved</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 14px', fontFamily: FF }}>
+                {accentSplit(summit?.getInvolvedHeading ?? 'Three ways to be part of the Summit', 'light')}
               </h2>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 36px' }}>
-                {goldSplit(summit?.getInvolvedSubtext ?? "Whether you lead a school, run a company, or simply care about what India's next generation can do — there is a place for you at the WeThink Summit.")}
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: LTS, margin: '0 0 36px' }}>
+                {accentSplit(summit?.getInvolvedSubtext ?? "Whether you lead a school, run a company, or simply care about what India's next generation can do — there is a place for you at the WeThink Summit.", 'light')}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 {(summit?.getInvolvedCards?.length ? summit.getInvolvedCards : [
@@ -1000,19 +1009,19 @@ export function MobileSite({
                   { audience: 'For media & observers', title: 'Attend and amplify', description: "Media professionals, observers, and supporters can attend the Summit as audience members and help tell the story of what India's students are capable of.", ctaLabel: 'Register interest ↗' },
                 ]).map((card, i) => (
                   <div key={card.audience} style={{
-                    border: i === 0 ? '1px solid rgba(222,192,120,.45)' : '1px solid rgba(222,192,120,.16)',
+                    border: i === 0 ? '1px solid rgba(59,20,7,.3)' : '1px solid rgba(59,20,7,.15)',
                     borderRadius: '16px', padding: '24px 22px',
-                    background: i === 0 ? 'rgba(222,192,120,.04)' : S2,
+                    background: i === 0 ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.6)',
                   }}>
-                    <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{card.audience}</p>
-                    <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>{card.title}</h3>
-                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: TS, margin: '0 0 18px' }}>{card.description}</p>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: LACCENT, textTransform: 'uppercase', letterSpacing: '.14em', margin: '0 0 6px' }}>{card.audience}</p>
+                    <h3 style={{ fontSize: '18px', fontWeight: 800, color: LT, margin: '0 0 8px', fontFamily: FF }}>{card.title}</h3>
+                    <p style={{ fontSize: '13px', lineHeight: 1.6, color: LTS, margin: '0 0 18px' }}>{card.description}</p>
                     <button
                       onClick={i === 0 ? onSchoolFormOpen : onPartnerFormOpen}
                       style={{
-                        background: i === 0 ? GOLD : 'rgba(222,192,120,.1)', color: i === 0 ? BG : GOLD,
-                        border: i === 0 ? 'none' : '1px solid rgba(222,192,120,.3)',
-                        borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: FF,
+                        background: 'none', color: LT,
+                        border: 'none', borderBottom: `1px solid ${LACCENT}`,
+                        borderRadius: 0, padding: 0, paddingBottom: '2px', fontSize: '13px', fontWeight: 700, cursor: 'pointer', fontFamily: FF,
                       }}
                     >
                       {card.ctaLabel}
@@ -1023,7 +1032,7 @@ export function MobileSite({
             </section>
 
             {/* Discover list */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S2 }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 8px', fontFamily: FF }}>
                 Everything to <span style={{ color: GOLD }}>discover</span>
               </h2>
@@ -1067,7 +1076,7 @@ export function MobileSite({
             <section style={{
               position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
               alignItems: 'center', overflow: 'hidden',
-              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+              padding: '100px clamp(24px,6vw,64px) 52px',
             }}>
               <HeroPageBg imageUrl={headerImages?.ecosystem} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -1081,7 +1090,7 @@ export function MobileSite({
             </section>
 
             {/* 2-col partner type grid */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 36px', fontFamily: FF }}>
                 {goldSplit(ecosystemIntro?.sectionHeading ?? 'Not just Collaborators. ||Changemakers.')}
               </h2>
@@ -1103,16 +1112,16 @@ export function MobileSite({
             </section>
 
             {/* Current partners */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
               <div style={{ marginBottom: '36px' }}>
-                <SectionLabel>Current partners</SectionLabel>
-                <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 6px', fontFamily: FF }}>
-                  {goldSplit(ecosystemIntro?.partnersHeading ?? 'Who we ||work with')}
+                <SectionLabel light>Current partners</SectionLabel>
+                <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 6px', fontFamily: FF }}>
+                  {accentSplit(ecosystemIntro?.partnersHeading ?? 'Who we ||work with', 'light')}
                 </h2>
-                <p style={{ fontSize: '14px', color: TS, margin: '0 0 20px' }}>{goldSplit(ecosystemIntro?.partnersSubtext ?? 'A growing network of Changemakers.')}</p>
+                <p style={{ fontSize: '14px', color: LTS, margin: '0 0 20px' }}>{accentSplit(ecosystemIntro?.partnersSubtext ?? 'A growing network of Changemakers.', 'light')}</p>
                 <button
                   onClick={onPartnerFormOpen}
-                  style={{ background: 'none', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '10px 20px', fontSize: '13px', fontWeight: 600, color: GOLD, cursor: 'pointer', fontFamily: FF }}
+                  style={{ background: 'none', border: 'none', borderRadius: 0, padding: 0, fontSize: '13px', fontWeight: 600, color: LT, cursor: 'pointer', fontFamily: FF, borderBottom: `1px solid ${LACCENT}`, paddingBottom: '2px' }}
                 >
                   Join the ecosystem →
                 </button>
@@ -1123,12 +1132,12 @@ export function MobileSite({
                   { _id: '2', type: 'Media Partner', name: 'Brut', categoryName: 'Media & Communication Domain Partner', description: 'The digital-native media organisation behind some of India\'s most impactful journalism brings its newsroom to WeThink — designing the Media & Communication domain and editorial mentorship program.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
                   { _id: '3', type: 'Design Partner', name: 'Canva', categoryName: 'Design & Innovation Domain Partner', description: 'The global design platform joins WeThink as the Design & Innovation domain partner — bringing professional design tools, briefs, and mentors directly into the school environment.', logoUrl: undefined, showInHomeMarquee: false, showInEcosystemGrid: true },
                 ] as CurrentPartnerData[]).map(p => (
-                  <div key={p._id} style={{ background: S2, border: '1px solid rgba(222,192,120,.16)', borderRadius: '14px', padding: '22px 20px' }}>
-                    {p.logoUrl && <img src={p.logoUrl} alt={p.name} style={{ height: '32px', objectFit: 'contain', objectPosition: 'left', marginBottom: '14px', display: 'block', pointerEvents: 'none' }} />}
-                    <span style={{ display: 'inline-block', background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.08em', marginBottom: '12px' }}>{p.type ?? p.categoryName}</span>
-                    <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 4px', fontFamily: FF }}>{p.name}</h3>
-                    <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 10px', fontWeight: 600 }}>{p.categoryName}</p>
-                    <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0 }}>{p.description}</p>
+                  <div key={p._id} style={{ background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(59,20,7,.15)', borderRadius: '14px', padding: '22px 20px' }}>
+                    {p.logoUrl && <img src={p.logoUrl} alt={p.name} style={{ height: '32px', objectFit: 'contain', objectPosition: 'left', marginBottom: '14px', display: 'block', pointerEvents: 'none', filter: 'none' }} />}
+                    <span style={{ display: 'inline-block', background: 'rgba(140,54,35,.1)', border: '1px solid rgba(140,54,35,.22)', borderRadius: '999px', padding: '4px 12px', fontSize: '11px', fontWeight: 700, color: LACCENT, letterSpacing: '.08em', marginBottom: '12px' }}>{p.type ?? p.categoryName}</span>
+                    <h3 style={{ fontSize: '18px', fontWeight: 800, color: LT, margin: '0 0 4px', fontFamily: FF }}>{p.name}</h3>
+                    <p style={{ fontSize: '11px', color: LACCENT, margin: '0 0 10px', fontWeight: 600 }}>{p.categoryName}</p>
+                    <p style={{ fontSize: '12px', lineHeight: 1.6, color: LTS, margin: 0 }}>{p.description}</p>
                   </div>
                 ))}
               </div>
@@ -1145,7 +1154,7 @@ export function MobileSite({
             <section style={{
               position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
               alignItems: 'center', overflow: 'hidden',
-              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+              padding: '100px clamp(24px,6vw,64px) 52px',
             }}>
               <HeroPageBg imageUrl={headerImages?.journey} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -1159,7 +1168,7 @@ export function MobileSite({
             </section>
 
             {/* Journey vertical card stack */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
               <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
                 From exposure to <span style={{ color: GOLD }}>permanent proof</span>
               </h2>
@@ -1203,7 +1212,7 @@ export function MobileSite({
             <section style={{
               position: 'relative', minHeight: 'clamp(280px,40vh,420px)', display: 'flex',
               alignItems: 'center', overflow: 'hidden',
-              padding: '100px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+              padding: '100px clamp(24px,6vw,64px) 52px',
             }}>
               <HeroPageBg imageUrl={headerImages?.advisory} />
               <div style={{ position: 'relative', zIndex: 3, width: '100%' }}>
@@ -1217,12 +1226,12 @@ export function MobileSite({
             </section>
 
             {/* Advisory flip grid */}
-            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
-              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 12px', fontFamily: FF }}>
-                {goldSplit(advisoryIntro?.sectionHeading ?? 'The people who keep the work ||honest.')}
+            <section data-reveal="" style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
+              <h2 style={{ fontSize: 'clamp(24px,5vw,40px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 12px', fontFamily: FF }}>
+                {accentSplit(advisoryIntro?.sectionHeading ?? 'The people who keep the work ||honest.', 'light')}
               </h2>
-              <p style={{ fontSize: '14px', lineHeight: 1.7, color: TS, margin: '0 0 40px' }}>
-                {goldSplit(advisoryIntro?.sectionSubtext ?? "Educators, institution builders, and industry leaders who bring decades of real-world experience to WeThink's strategic direction.")}
+              <p style={{ fontSize: '14px', lineHeight: 1.7, color: LTS, margin: '0 0 40px' }}>
+                {accentSplit(advisoryIntro?.sectionSubtext ?? "Educators, institution builders, and industry leaders who bring decades of real-world experience to WeThink's strategic direction.", 'light')}
               </p>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0,1fr))', gap: '14px' }}>
@@ -1250,27 +1259,27 @@ export function MobileSite({
                         <div style={{
                           position: 'absolute', inset: 0,
                           backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
-                          background: S2, borderRadius: '14px',
-                          border: '1px solid rgba(222,192,120,.18)', overflow: 'hidden',
+                          background: 'rgba(255,255,255,0.65)', borderRadius: '14px',
+                          border: '1px solid rgba(59,20,7,.14)', overflow: 'hidden',
                           display: 'flex', flexDirection: 'column',
                         }}>
-                          <div style={{ flex: 1, background: S1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
+                          <div style={{ flex: 1, background: 'rgba(59,20,7,.08)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden' }}>
                             {member.headshotUrl
                               ? <img src={member.headshotUrl} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top', position: 'absolute', inset: 0, pointerEvents: 'none' }} />
-                              : <span style={{ fontSize: '32px', color: 'rgba(222,192,120,.15)' }}>{member.name[0]}</span>
+                              : <span style={{ fontSize: '32px', color: 'rgba(59,20,7,.2)' }}>{member.name[0]}</span>
                             }
-                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(36,10,3,.5) 0%,rgba(36,10,3,0) 60%)' }} />
-                            <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.25)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 700, color: GOLD }}>
+                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(59,20,7,.35) 0%,rgba(59,20,7,0) 60%)' }} />
+                            <div style={{ position: 'absolute', top: '10px', left: '10px', background: 'rgba(255,255,255,.82)', border: '1px solid rgba(59,20,7,.2)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 700, color: LT }}>
                               {numLabel}
                             </div>
-                            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(222,192,120,.15)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 600, color: GOLD }}>
+                            <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(59,20,7,.7)', border: '1px solid rgba(59,20,7,.4)', borderRadius: '999px', padding: '3px 8px', fontSize: '10px', fontWeight: 600, color: CREAM }}>
                               Tap ↻
                             </div>
                           </div>
-                          <div style={{ padding: '13px 14px 15px', background: S2, borderTop: '1px solid rgba(222,192,120,.14)' }}>
-                            <p style={{ fontSize: '13px', fontWeight: 800, color: TP, margin: '0 0 2px', fontFamily: FF }}>{member.name}</p>
-                            <p style={{ fontSize: '11px', color: GOLD, margin: '0 0 2px' }}>{member.roleOrg}</p>
-                            <p style={{ fontSize: '10px', color: TS, margin: 0 }}>{member.categoryLabel}</p>
+                          <div style={{ padding: '13px 14px 15px', background: 'rgba(255,255,255,0.7)', borderTop: '1px solid rgba(59,20,7,.1)' }}>
+                            <p style={{ fontSize: '13px', fontWeight: 800, color: LT, margin: '0 0 2px', fontFamily: FF }}>{member.name}</p>
+                            <p style={{ fontSize: '11px', color: LACCENT, margin: '0 0 2px' }}>{member.roleOrg}</p>
+                            <p style={{ fontSize: '10px', color: LTS, margin: 0 }}>{member.categoryLabel}</p>
                           </div>
                         </div>
                         {/* Back */}
@@ -1278,13 +1287,13 @@ export function MobileSite({
                           position: 'absolute', inset: 0,
                           backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden',
                           transform: 'rotateY(180deg)',
-                          background: 'linear-gradient(165deg,#3B1407,#2A0E05)',
-                          border: '1px solid rgba(222,192,120,.34)', borderRadius: '14px',
+                          background: 'linear-gradient(165deg,#F5EEE2,#E0CEBD)',
+                          border: '1px solid rgba(59,20,7,.18)', borderRadius: '14px',
                           padding: '18px 16px', display: 'flex', flexDirection: 'column', gap: '10px',
                         }}>
-                          <div style={{ fontFamily: 'Georgia,serif', fontSize: '52px', color: '#8C3623', lineHeight: 0.8 }}>"</div>
-                          <p style={{ fontSize: '10px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.12em', margin: 0 }}>{member.name}</p>
-                          <p style={{ fontSize: '12px', lineHeight: 1.6, color: TS, margin: 0, flex: 1 }}>{member.bio}</p>
+                          <div style={{ fontFamily: 'Georgia,serif', fontSize: '52px', color: LACCENT, lineHeight: 0.8 }}>"</div>
+                          <p style={{ fontSize: '10px', fontWeight: 700, color: LACCENT, textTransform: 'uppercase', letterSpacing: '.12em', margin: 0 }}>{member.name}</p>
+                          <p style={{ fontSize: '12px', lineHeight: 1.6, color: LTS, margin: 0, flex: 1 }}>{member.bio}</p>
                         </div>
                       </div>
                     </div>
@@ -1300,19 +1309,19 @@ export function MobileSite({
                     key={seat._id ?? `tba-${idx}`}
                     style={{
                       height: '380px', borderRadius: '14px',
-                      border: '1px dashed rgba(222,192,120,.2)',
-                      background: 'rgba(42,14,5,.4)',
+                      border: '1px dashed rgba(59,20,7,.22)',
+                      background: 'rgba(255,255,255,0.45)',
                       display: 'flex', flexDirection: 'column',
                       alignItems: 'center', justifyContent: 'center', gap: '10px',
                       padding: '16px',
                     }}
                   >
-                    <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(222,192,120,.07)', border: '1px dashed rgba(222,192,120,.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 800, color: 'rgba(222,192,120,.3)' }}>
+                    <div style={{ width: '52px', height: '52px', borderRadius: '50%', background: 'rgba(140,54,35,.08)', border: '1px dashed rgba(59,20,7,.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '18px', fontWeight: 800, color: LACCENT }}>
                       {seat.initial ?? seat.name?.[0] ?? '?'}
                     </div>
-                    <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(245,238,226,.35)', margin: 0, textAlign: 'center' }}>Advisory seat</p>
-                    <p style={{ fontSize: '11px', color: 'rgba(222,192,120,.35)', margin: 0, textAlign: 'center' }}>{seat.categoryLabel}</p>
-                    <p style={{ fontSize: '10px', color: 'rgba(224,206,189,.3)', margin: 0, textAlign: 'center' }}>Announcing · Season 1</p>
+                    <p style={{ fontSize: '12px', fontWeight: 700, color: LT, margin: 0, textAlign: 'center' }}>Advisory seat</p>
+                    <p style={{ fontSize: '11px', color: LACCENT, margin: 0, textAlign: 'center' }}>{seat.categoryLabel}</p>
+                    <p style={{ fontSize: '10px', color: LTS, margin: 0, textAlign: 'center' }}>Announcing · Season 1</p>
                   </div>
                 ))}
               </div>

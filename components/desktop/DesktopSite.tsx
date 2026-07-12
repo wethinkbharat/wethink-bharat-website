@@ -235,16 +235,22 @@ const GOLD = '#DEC078'
 const TP = '#F5EEE2'
 const TS = '#E0CEBD'
 const BORDER = '1px solid rgba(222,192,120,.14)'
+const CREAM = '#F5EEE2'
+const LACCENT = '#8C3623'
+const LT = '#3B1407'
+const LTS = '#6B3520'
 
-function goldSplit(text: string): React.ReactNode {
+function accentSplit(text: string, variant: 'dark' | 'light' = 'dark'): React.ReactNode {
+  const accent = variant === 'light' ? LACCENT : GOLD
   const first = text.indexOf('||')
   if (first < 0) return text
   const second = text.indexOf('||', first + 2)
   if (second < 0) {
-    return <>{text.slice(0, first)}<span style={{ color: GOLD }}>{text.slice(first + 2)}</span></>
+    return <>{text.slice(0, first)}<span style={{ color: accent }}>{text.slice(first + 2)}</span></>
   }
-  return <>{text.slice(0, first)}<span style={{ color: GOLD }}>{text.slice(first + 2, second)}</span>{text.slice(second + 2)}</>
+  return <>{text.slice(0, first)}<span style={{ color: accent }}>{text.slice(first + 2, second)}</span>{text.slice(second + 2)}</>
 }
+function goldSplit(text: string): React.ReactNode { return accentSplit(text, 'dark') }
 
 /* ─────────────────────────────────────────────────────────
    KEYFRAME CSS INJECTION
@@ -277,12 +283,16 @@ const JOURNEY_STAGES = [
 /* ─────────────────────────────────────────────────────────
    HELPERS
 ───────────────────────────────────────────────────────── */
-function SectionLabel({ children }: { children: React.ReactNode }) {
+function SectionLabel({ children, light }: { children: React.ReactNode; light?: boolean }) {
   return (
-    <p style={{ fontSize: '11.5px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.22em', margin: '0 0 14px' }}>
+    <p style={{ fontSize: '11.5px', fontWeight: 700, color: light ? LACCENT : GOLD, textTransform: 'uppercase', letterSpacing: '.22em', margin: '0 0 14px' }}>
       {children}
     </p>
   )
+}
+
+function GradientDivider({ from, to }: { from: string; to: string }) {
+  return <div aria-hidden="true" style={{ height: '160px', background: `linear-gradient(to bottom, ${from} 0%, ${from} 15%, ${to} 85%, ${to} 100%)`, pointerEvents: 'none' }} />
 }
 
 function HeroDecorRing({ speed = '60s', size = 'clamp(180px,24vw,320px)' }: { speed?: string; size?: string }) {
@@ -837,7 +847,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           {/* CINEMATIC HERO */}
           <section style={{
             position: 'relative', minHeight: '100vh', display: 'flex', alignItems: 'center',
-            overflow: 'hidden', padding: '140px clamp(24px,6vw,64px) 90px', borderBottom: BORDER,
+            overflow: 'hidden', padding: '140px clamp(24px,6vw,64px) 90px',
           }}>
             <PageHeroBg imageUrl={hero?.heroImageUrl} />
             <div style={{ position: 'absolute', right: '-160px', top: '6%', width: '560px', height: '560px', border: '1px solid rgba(222,192,120,.12)', borderRadius: '50%', zIndex: 1, pointerEvents: 'none' }} />
@@ -910,7 +920,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* PATHWAYS BAND */}
-          <section id="pathways" data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+          <section id="pathways" data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '32px', flexWrap: 'wrap', marginBottom: '40px' }}>
               <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: 0, fontFamily: FF }}>
                 {goldSplit(pathwaysIntro?.heading ?? 'Capability across the whole ||ecosystem')}
@@ -956,7 +966,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             const homeMarqueePartners = partnerCards.filter((p) => p.showInHomeMarquee)
             if (homeMarqueePartners.length === 0) return null
             return (
-              <section style={{ padding: 'clamp(28px,4vw,44px) 0', background: BG, borderBottom: BORDER, overflow: 'hidden' }}>
+              <section style={{ padding: 'clamp(28px,4vw,44px) 0', background: BG, overflow: 'hidden' }}>
                 <div style={{ display: 'flex', width: 'max-content', animation: 'wtbMarquee 30s linear infinite' }}>
                   {[...Array(2)].map((_, t) => (
                     <div key={t} style={{ display: 'flex', alignItems: 'center', gap: '48px', paddingRight: '48px' }}>
@@ -976,7 +986,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           })()}
 
           {/* IMPACT STATS */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(320px,1fr))', gap: 'clamp(32px,5vw,80px)', alignItems: 'center' }}>
               <div>
                 <SectionLabel>{gapSection?.kicker ?? 'The gap we close'}</SectionLabel>
@@ -1011,7 +1021,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* DOMAINS TEASER */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1 }}>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap', marginBottom: '36px' }}>
               <div>
                 <SectionLabel>Industry domains</SectionLabel>
@@ -1070,27 +1080,27 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* SUMMIT TEASER */}
-          <section data-reveal style={{ padding: 'clamp(48px,6vw,80px) clamp(24px,6vw,64px)', borderBottom: BORDER, background: S1 }}>
+          <section data-reveal style={{ padding: 'clamp(48px,6vw,80px) clamp(24px,6vw,64px)', background: CREAM }}>
             <div style={{
-              border: '1px solid rgba(222,192,120,.45)', borderRadius: '24px',
+              border: '1px solid rgba(59,20,7,.18)', borderRadius: '24px',
               padding: 'clamp(40px,6vw,76px)',
-              background: 'radial-gradient(120% 140% at 85% 0%,rgba(222,192,120,.22),rgba(58,36,8,.3) 40%,rgba(36,10,3,0) 72%),linear-gradient(135deg,#3a2408,#240a03)',
+              background: 'rgba(255,255,255,0.5)',
               position: 'relative', overflow: 'hidden',
             }}>
-              <div aria-hidden="true" style={{ position: 'absolute', right: '-2%', bottom: '-24%', fontSize: 'clamp(140px,24vw,340px)', fontWeight: 800, color: 'rgba(222,192,120,.08)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>
+              <div aria-hidden="true" style={{ position: 'absolute', right: '-2%', bottom: '-24%', fontSize: 'clamp(140px,24vw,340px)', fontWeight: 800, color: 'rgba(59,20,7,.06)', lineHeight: 1, pointerEvents: 'none', userSelect: 'none' }}>
                 SUMMIT
               </div>
               <div style={{ position: 'relative', zIndex: 1, maxWidth: '600px' }}>
-                <SectionLabel>The WeThink Summit</SectionLabel>
-                <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {goldSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.')}
+                <SectionLabel light>The WeThink Summit</SectionLabel>
+                <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 20px', fontFamily: FF }}>
+                  {accentSplit(summit?.heading ?? 'Where a school project becomes a ||national moment.', 'light')}
                 </h2>
-                <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 32px' }}>
-                  {goldSplit(summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.')}
+                <p style={{ fontSize: '15px', lineHeight: 1.7, color: LTS, margin: '0 0 32px' }}>
+                  {accentSplit(summit?.homepageTeaser ?? 'Four times a year, the best student work from across India comes to a single stage — judged by industry, witnessed by a national audience, and permanently recorded as student achievement.', 'light')}
                 </p>
                 <SpringBtn
                   onClick={() => navigate('summit')}
-                  style={{ background: GOLD, color: BG, padding: '14px 28px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
+                  style={{ background: LT, color: CREAM, padding: '14px 28px', borderRadius: '999px', fontSize: '14px', fontWeight: 700, border: 'none', cursor: 'pointer', fontFamily: FF }}
                 >
                   Discover the Summit ↗
                 </SpringBtn>
@@ -1099,7 +1109,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* TESTIMONIAL */}
-          <section data-reveal style={{ padding: 'clamp(72px,10vw,150px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER, textAlign: 'center' }}>
+          <section data-reveal style={{ padding: 'clamp(72px,10vw,150px) clamp(24px,6vw,64px)', background: S2, textAlign: 'center' }}>
             <div style={{ fontSize: '90px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '18px', display: 'inline-block', animation: 'wtbBob 4s ease-in-out infinite' }}>{'\u201C'}</div>
             <blockquote style={{ margin: '0 auto', maxWidth: '820px' }}>
               <p style={{ fontSize: 'clamp(22px,3vw,38px)', fontWeight: 500, color: TP, lineHeight: 1.4, margin: '0 0 36px', fontFamily: FF }}>
@@ -1131,7 +1141,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section style={{
             position: 'relative', minHeight: 'clamp(240px,30vh,360px)', display: 'flex',
             alignItems: 'center', overflow: 'hidden',
-            padding: '104px clamp(24px,6vw,64px) 52px', borderBottom: BORDER,
+            padding: '104px clamp(24px,6vw,64px) 52px',
           }}>
             <PageHeroBg imageUrl={headerImages?.vision} />
             <HeroDecorRing />
@@ -1148,7 +1158,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           {/* Poetic Interstitial */}
           <section data-reveal style={{
             position: 'relative', padding: 'clamp(80px,13vw,180px) clamp(24px,6vw,64px)',
-            background: S1, borderBottom: BORDER, overflow: 'hidden', textAlign: 'center',
+            background: S1, overflow: 'hidden', textAlign: 'center',
           }}>
             <div aria-hidden="true" style={{
               position: 'absolute', left: '50%', top: 0,
@@ -1191,11 +1201,11 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Vision / Purpose / Mission cards */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
             <div style={{ maxWidth: '1160px', margin: '0 auto' }}>
-              <SectionLabel>{visionSection?.kicker ?? 'Our vision'}</SectionLabel>
-              <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 48px', fontFamily: FF }}>
-                {goldSplit(visionSection?.heading ?? 'A Bharat where every student discovers their ||capability before they ever have to choose a path.')}
+              <SectionLabel light>{visionSection?.kicker ?? 'Our vision'}</SectionLabel>
+              <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 48px', fontFamily: FF }}>
+                {accentSplit(visionSection?.heading ?? 'A Bharat where every student discovers their ||capability before they ever have to choose a path.', 'light')}
               </h2>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '20px' }}>
@@ -1204,9 +1214,9 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                   { label: visionSection?.vision?.label ?? 'Vision', text: visionSection?.vision?.text ?? 'A generation that enters adulthood already knowing what it is capable of.' },
                   { label: visionSection?.mission?.label ?? 'Mission', text: visionSection?.mission?.text ?? 'Real briefs, real mentors, and permanent proof — inside every school.' },
                 ].map((card) => (
-                  <div key={card.label} style={{ border: '1px solid rgba(222,192,120,.16)', background: S1, borderRadius: '16px', padding: '28px 26px' }}>
-                    <p style={{ fontSize: '11px', fontWeight: 700, color: GOLD, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 12px' }}>{card.label}</p>
-                    <p style={{ fontSize: '16px', lineHeight: 1.6, color: TP, margin: 0 }}>{card.text}</p>
+                  <div key={card.label} style={{ background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(59,20,7,.15)', borderRadius: '16px', padding: '28px 26px' }}>
+                    <p style={{ fontSize: '11px', fontWeight: 700, color: LACCENT, textTransform: 'uppercase', letterSpacing: '.18em', margin: '0 0 12px' }}>{card.label}</p>
+                    <p style={{ fontSize: '16px', lineHeight: 1.6, color: LT, margin: 0 }}>{card.text}</p>
                   </div>
                 ))}
               </div>
@@ -1214,7 +1224,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* What We Believe */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1 }}>
             <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
               <SectionLabel>{beliefsIntro?.kicker ?? 'What we believe'}</SectionLabel>
               <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
@@ -1256,7 +1266,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section style={{
             position: 'relative', minHeight: 'clamp(400px,50vh,560px)', display: 'flex',
             alignItems: 'center', overflow: 'hidden',
-            padding: '128px clamp(24px,6vw,64px) 68px', borderBottom: BORDER,
+            padding: '128px clamp(24px,6vw,64px) 68px',
           }}>
             <PageHeroBg imageUrl={headerImages?.domains} />
             <HeroDecorRing />
@@ -1271,25 +1281,25 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Feature overview */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '48px', alignItems: 'center' }}>
-              <div style={{ borderRadius: '20px', minHeight: 'clamp(300px,34vw,440px)', background: S2, border: '1px solid rgba(222,192,120,.14)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+              <div style={{ borderRadius: '20px', minHeight: 'clamp(300px,34vw,440px)', background: 'rgba(59,20,7,.08)', border: '1px solid rgba(59,20,7,.15)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                 {domainsIntro?.featureImageUrl
                   ? <img src={domainsIntro.featureImageUrl} alt="" aria-hidden="true" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
                   : <span style={{ fontSize: '64px', color: 'rgba(222,192,120,.15)' }}>◈</span>
                 }
               </div>
               <div>
-                <SectionLabel>Industry domains</SectionLabel>
-                <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 20px', fontFamily: FF }}>
-                  {goldSplit(domainsIntro?.heading ?? 'Domains you ||experience, not just study.')}
+                <SectionLabel light>Industry domains</SectionLabel>
+                <h2 style={{ fontSize: 'clamp(26px,3.6vw,46px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 20px', fontFamily: FF }}>
+                  {accentSplit(domainsIntro?.heading ?? 'Domains you ||experience, not just study.', 'light')}
                 </h2>
-                <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, margin: '0 0 28px' }}>
-                  {goldSplit(domainsIntro?.subtext ?? "Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end. Students don't learn about it — they do it.")}
+                <p style={{ fontSize: '15px', lineHeight: 1.7, color: LTS, margin: '0 0 28px' }}>
+                  {accentSplit(domainsIntro?.subtext ?? "Each WeThink domain is a complete world: a structured simulator, a live industry brief, an expert mentor network, and a verified credential at the end. Students don't learn about it — they do it.", 'light')}
                 </p>
                 <SpringBtn
                   onClick={onSchoolFormOpen}
-                  style={{ background: GOLD, color: BG, border: 'none', borderRadius: '999px', padding: '12px 24px', fontSize: '14px', fontWeight: 700, cursor: 'pointer', fontFamily: FF }}
+                  style={{ background: LT, color: CREAM, border: 'none', borderRadius: '999px', padding: '12px 24px', fontSize: '14px', fontWeight: 700, cursor: 'pointer', fontFamily: FF }}
                 >
                   Bring domains to my school ↗
                 </SpringBtn>
@@ -1298,7 +1308,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Domains Detail */}
-          <section data-reveal style={{ padding: 'clamp(48px,7vw,96px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(48px,7vw,96px) clamp(24px,6vw,64px)', background: S1 }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(48px,7vw,88px)' }}>
 
               {(domains && domains.length > 0 ? domains : [
@@ -1388,7 +1398,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section style={{
             position: 'relative', minHeight: 'clamp(400px,50vh,560px)', display: 'flex',
             alignItems: 'center', overflow: 'hidden',
-            padding: '128px clamp(24px,6vw,64px) 68px', borderBottom: BORDER,
+            padding: '128px clamp(24px,6vw,64px) 68px',
           }}>
             <PageHeroBg imageUrl={headerImages?.summit} />
             <HeroDecorRing speed="50s" />
@@ -1403,7 +1413,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* What is the Summit */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(300px,1fr))', gap: '56px' }}>
               <div>
                 <SectionLabel>What is the WeThink Summit</SectionLabel>
@@ -1469,16 +1479,16 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Get Involved */}
-          <section data-reveal style={{ padding: 'clamp(48px,6vw,84px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(48px,6vw,84px) clamp(24px,6vw,64px)', background: CREAM }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '32px', flexWrap: 'wrap', marginBottom: '40px' }}>
               <div>
-                <SectionLabel>Get involved</SectionLabel>
-                <h2 style={{ fontSize: 'clamp(24px,3vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: 0, fontFamily: FF }}>
-                  {goldSplit(summit?.getInvolvedHeading ?? 'Three ways to be part of the Summit')}
+                <SectionLabel light>Get involved</SectionLabel>
+                <h2 style={{ fontSize: 'clamp(24px,3vw,38px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: 0, fontFamily: FF }}>
+                  {accentSplit(summit?.getInvolvedHeading ?? 'Three ways to be part of the Summit', 'light')}
                 </h2>
               </div>
-              <p style={{ fontSize: '14px', lineHeight: 1.6, color: TS, maxWidth: '320px', margin: 0 }}>
-                {goldSplit(summit?.getInvolvedSubtext ?? "Whether you lead a school, an industry, or want to witness what India's students are building.")}
+              <p style={{ fontSize: '14px', lineHeight: 1.6, color: LTS, maxWidth: '320px', margin: 0 }}>
+                {accentSplit(summit?.getInvolvedSubtext ?? "Whether you lead a school, an industry, or want to witness what India's students are building.", 'light')}
               </p>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '16px' }}>
@@ -1487,11 +1497,11 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 { audience: 'For industry', title: 'Join as a jury member', description: "Industry leaders are invited to join domain juries and recognise India's most motivated student work on a national stage.", ctaLabel: 'Express interest ↗', ctaLink: undefined },
                 { audience: 'For media & observers', title: 'Attend and amplify', description: "Journalists, educators, and partner organisations are welcome to attend and share the story of what India's students are capable of.", ctaLabel: 'Request an invitation ↗', ctaLink: undefined },
               ] as GetInvolvedCardData[]).map((card, i) => (
-                <div key={card.audience} style={{ border: i === 0 ? '1px solid rgba(222,192,120,.35)' : '1px solid rgba(222,192,120,.16)', background: i === 0 ? 'rgba(222,192,120,.05)' : S2, borderRadius: '14px', padding: '22px' }}>
-                  <p style={{ fontSize: '10.5px', letterSpacing: '.14em', textTransform: 'uppercase', color: GOLD, fontWeight: 600, margin: '0 0 8px' }}>{card.audience}</p>
-                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: TP, margin: '0 0 8px', fontFamily: FF }}>{card.title}</h3>
-                  <p style={{ fontSize: '13px', lineHeight: 1.55, color: TS, margin: '0 0 16px' }}>{card.description}</p>
-                  <SpringBtn onClick={i === 0 ? onSchoolFormOpen : onPartnerFormOpen} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: TP, fontFamily: FF, padding: 0, borderBottom: `1.5px solid ${GOLD}`, paddingBottom: '2px' }}>
+                <div key={card.audience} style={{ border: i === 0 ? '1px solid rgba(59,20,7,.3)' : '1px solid rgba(59,20,7,.15)', background: i === 0 ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.6)', borderRadius: '14px', padding: '22px' }}>
+                  <p style={{ fontSize: '10.5px', letterSpacing: '.14em', textTransform: 'uppercase', color: LACCENT, fontWeight: 600, margin: '0 0 8px' }}>{card.audience}</p>
+                  <h3 style={{ fontSize: '18px', fontWeight: 800, color: LT, margin: '0 0 8px', fontFamily: FF }}>{card.title}</h3>
+                  <p style={{ fontSize: '13px', lineHeight: 1.55, color: LTS, margin: '0 0 16px' }}>{card.description}</p>
+                  <SpringBtn onClick={i === 0 ? onSchoolFormOpen : onPartnerFormOpen} style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '14px', fontWeight: 600, color: LT, fontFamily: FF, padding: 0, borderBottom: `1.5px solid ${LACCENT}`, paddingBottom: '2px' }}>
                     {card.ctaLabel}
                   </SpringBtn>
                 </div>
@@ -1510,7 +1520,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section style={{
             position: 'relative', minHeight: 'clamp(400px,50vh,560px)', display: 'flex',
             alignItems: 'center', overflow: 'hidden',
-            padding: '128px clamp(24px,6vw,64px) 68px', borderBottom: BORDER,
+            padding: '128px clamp(24px,6vw,64px) 68px',
           }}>
             <PageHeroBg imageUrl={headerImages?.ecosystem} />
             <HeroDecorRing speed="45s" size="clamp(160px,20vw,280px)" />
@@ -1525,7 +1535,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Ecosystem partner-type grid */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)' }}>
             <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap', marginBottom: '44px' }}>
                 <h2 style={{ fontSize: 'clamp(28px,4vw,54px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: 0, fontFamily: FF }}>
@@ -1551,35 +1561,35 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Changemakers / Current Partners */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
             <div style={{ maxWidth: '1320px', margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '32px', flexWrap: 'wrap', marginBottom: '40px' }}>
                 <div style={{ maxWidth: '600px' }}>
-                  <SectionLabel>Current partners</SectionLabel>
-                  <h2 style={{ fontSize: 'clamp(28px,4vw,52px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: '0 0 16px', fontFamily: FF }}>
-                    {goldSplit(ecosystemIntro?.partnersHeading ?? 'Who we ||work with')}
+                  <SectionLabel light>Current partners</SectionLabel>
+                  <h2 style={{ fontSize: 'clamp(28px,4vw,52px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: '0 0 16px', fontFamily: FF }}>
+                    {accentSplit(ecosystemIntro?.partnersHeading ?? 'Who we ||work with', 'light')}
                   </h2>
-                  <p style={{ fontSize: '16px', lineHeight: 1.7, color: TS, margin: 0 }}>{goldSplit(ecosystemIntro?.partnersSubtext ?? 'A growing network of Changemakers.')}</p>
+                  <p style={{ fontSize: '16px', lineHeight: 1.7, color: LTS, margin: 0 }}>{accentSplit(ecosystemIntro?.partnersSubtext ?? 'A growing network of Changemakers.', 'light')}</p>
                 </div>
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontSize: '12.5px', color: TS, marginTop: '2px' }}>Early partner slots are open</div>
-                  <SpringBtn onClick={onPartnerFormOpen} style={{ display: 'inline-block', marginTop: '10px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '15px', fontWeight: 600, color: TP, fontFamily: FF, borderBottom: `1.5px solid ${GOLD}`, paddingBottom: '3px' }}>
+                  <div style={{ fontSize: '12.5px', color: LTS, marginTop: '2px' }}>Early partner slots are open</div>
+                  <SpringBtn onClick={onPartnerFormOpen} style={{ display: 'inline-block', marginTop: '10px', background: 'none', border: 'none', cursor: 'pointer', fontSize: '15px', fontWeight: 600, color: LT, fontFamily: FF, borderBottom: `1.5px solid ${LACCENT}`, paddingBottom: '3px' }}>
                     Join the ecosystem →
                   </SpringBtn>
                 </div>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(258px,1fr))', gap: '18px' }}>
                 {partnerCards.filter((p) => p.showInEcosystemGrid).map((p) => (
-                  <div key={p._id} style={{ border: '1px solid rgba(222,192,120,.18)', background: S2, borderRadius: '16px', padding: '26px 24px' }}>
+                  <div key={p._id} style={{ background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(59,20,7,.15)', borderRadius: '16px', padding: '26px 24px' }}>
                     {p.type && (
-                      <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 600, color: GOLD, background: 'rgba(222,192,120,.1)', border: '1px solid rgba(222,192,120,.22)', borderRadius: '999px', padding: '5px 12px', marginBottom: '18px' }}>{p.type}</span>
+                      <span style={{ display: 'inline-block', fontSize: '11px', fontWeight: 600, color: LACCENT, background: 'rgba(140,54,35,.1)', border: '1px solid rgba(140,54,35,.22)', borderRadius: '999px', padding: '5px 12px', marginBottom: '18px' }}>{p.type}</span>
                     )}
                     {p.logoUrl
-                      ? <img src={p.logoUrl} alt={p.name} style={{ height: '36px', objectFit: 'contain', marginBottom: '12px', display: 'block', filter: 'brightness(0) invert(1) sepia(1) saturate(0.5) hue-rotate(320deg)' }} />
-                      : <h3 style={{ fontSize: '24px', fontWeight: 800, color: TP, letterSpacing: '-0.01em', margin: 0, fontFamily: FF }}>{p.name}</h3>
+                      ? <img src={p.logoUrl} alt={p.name} style={{ height: '36px', objectFit: 'contain', marginBottom: '12px', display: 'block', filter: 'none' }} />
+                      : <h3 style={{ fontSize: '24px', fontWeight: 800, color: LT, letterSpacing: '-0.01em', margin: 0, fontFamily: FF }}>{p.name}</h3>
                     }
-                    {p.categoryName && <div style={{ marginTop: '4px', fontSize: '13px', color: GOLD }}>{p.categoryName}</div>}
-                    {p.description && <p style={{ fontSize: '13.5px', lineHeight: 1.6, color: TS, margin: '14px 0 0' }}>{p.description}</p>}
+                    {p.categoryName && <div style={{ marginTop: '4px', fontSize: '13px', color: LACCENT }}>{p.categoryName}</div>}
+                    {p.description && <p style={{ fontSize: '13.5px', lineHeight: 1.6, color: LTS, margin: '14px 0 0' }}>{p.description}</p>}
                   </div>
                 ))}
               </div>
@@ -1598,7 +1608,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section style={{
             position: 'relative', minHeight: 'clamp(400px,50vh,560px)', display: 'flex',
             alignItems: 'center', overflow: 'hidden',
-            padding: '128px clamp(24px,6vw,64px) 68px', borderBottom: BORDER,
+            padding: '128px clamp(24px,6vw,64px) 68px',
           }}>
             <PageHeroBg imageUrl={headerImages?.advisory} />
             <HeroDecorRing speed="48s" size="clamp(160px,20vw,280px)" />
@@ -1613,14 +1623,14 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Advisory flip grid */}
-          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: S1, borderBottom: BORDER }}>
+          <section data-reveal style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px)', background: CREAM }}>
             <div style={{ maxWidth: '1240px', margin: '0 auto' }}>
               <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap', marginBottom: '44px' }}>
-                <h2 style={{ fontSize: 'clamp(28px,4vw,54px)', fontWeight: 800, letterSpacing: '-0.02em', color: TP, margin: 0, fontFamily: FF }}>
-                  {goldSplit(advisoryIntro?.sectionHeading ?? 'The people who keep the work ||honest.')}
+                <h2 style={{ fontSize: 'clamp(28px,4vw,54px)', fontWeight: 800, letterSpacing: '-0.02em', color: LT, margin: 0, fontFamily: FF }}>
+                  {accentSplit(advisoryIntro?.sectionHeading ?? 'The people who keep the work ||honest.', 'light')}
                 </h2>
-                <p style={{ fontSize: '15px', lineHeight: 1.7, color: TS, maxWidth: '360px', margin: 0 }}>
-                  {goldSplit(advisoryIntro?.sectionSubtext ?? "Industry leaders, educators, and founders who shape our standards, guide the domains, and sit on Summit juries. The full board is announced ahead of Season 1.")}
+                <p style={{ fontSize: '15px', lineHeight: 1.7, color: LTS, maxWidth: '360px', margin: 0 }}>
+                  {accentSplit(advisoryIntro?.sectionSubtext ?? "Industry leaders, educators, and founders who shape our standards, guide the domains, and sit on Summit juries. The full board is announced ahead of Season 1.", 'light')}
                 </p>
               </div>
 
@@ -1637,38 +1647,38 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                     <div className="flip-card-inner">
                       {/* Front */}
                       <div className="flip-card-front" style={{
-                        background: S2, borderRadius: '16px',
-                        border: '1px solid rgba(222,192,120,.18)', overflow: 'hidden',
+                        background: 'rgba(255,255,255,0.65)', borderRadius: '16px',
+                        border: '1px solid rgba(59,20,7,.14)', overflow: 'hidden',
                         display: 'flex', flexDirection: 'column',
                       }}>
-                        <div style={{ flex: 1, background: S1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <div style={{ flex: 1, background: 'rgba(59,20,7,.08)', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                           {member.headshotUrl
                             ? <img src={member.headshotUrl} alt={member.name} style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', inset: 0 }} />
-                            : <span style={{ fontSize: '40px', color: 'rgba(222,192,120,.15)' }}>{member.initial}</span>
+                            : <span style={{ fontSize: '40px', color: 'rgba(59,20,7,.2)' }}>{member.initial}</span>
                           }
-                          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(20,7,2,.5),transparent 40%)', pointerEvents: 'none' }} />
-                          <div style={{ position: 'absolute', top: '12px', left: '12px', background: 'rgba(36,10,3,.72)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '4px 10px', fontSize: '11px', fontWeight: 700, color: GOLD, zIndex: 2 }}>
+                          <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top,rgba(59,20,7,.35),transparent 40%)', pointerEvents: 'none' }} />
+                          <div style={{ position: 'absolute', top: '12px', left: '12px', background: 'rgba(255,255,255,.82)', border: '1px solid rgba(59,20,7,.2)', borderRadius: '999px', padding: '4px 10px', fontSize: '11px', fontWeight: 700, color: LT, zIndex: 2 }}>
                             {String(member.number).padStart(2, '0')}
                           </div>
-                          <div style={{ position: 'absolute', bottom: '12px', right: '12px', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '10.5px', fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: GOLD, background: 'rgba(36,10,3,.7)', border: '1px solid rgba(222,192,120,.28)', borderRadius: '999px', padding: '5px 10px', zIndex: 2 }}>
+                          <div style={{ position: 'absolute', bottom: '12px', right: '12px', display: 'inline-flex', alignItems: 'center', gap: '6px', fontSize: '10.5px', fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase', color: CREAM, background: 'rgba(59,20,7,.7)', border: '1px solid rgba(59,20,7,.4)', borderRadius: '999px', padding: '5px 10px', zIndex: 2 }}>
                             Read bio ↻
                           </div>
                         </div>
-                        <div style={{ padding: '15px 16px 17px', background: S2, borderTop: '1px solid rgba(222,192,120,.14)' }}>
-                          <div style={{ fontSize: '16px', fontWeight: 800, color: TP, letterSpacing: '-0.01em', lineHeight: 1.15 }}>{member.name}</div>
-                          <div style={{ marginTop: '6px', fontSize: '11.5px', fontWeight: 600, lineHeight: 1.4, color: GOLD }}>{member.titleLine}</div>
+                        <div style={{ padding: '15px 16px 17px', background: 'rgba(255,255,255,0.7)', borderTop: '1px solid rgba(59,20,7,.1)' }}>
+                          <div style={{ fontSize: '16px', fontWeight: 800, color: LT, letterSpacing: '-0.01em', lineHeight: 1.15 }}>{member.name}</div>
+                          <div style={{ marginTop: '6px', fontSize: '11.5px', fontWeight: 600, lineHeight: 1.4, color: LACCENT }}>{member.titleLine}</div>
                         </div>
                       </div>
 
                       {/* Back */}
                       <div className="flip-card-back" style={{
-                        background: 'linear-gradient(165deg,#3B1407,#2A0E05)',
-                        border: '1px solid rgba(222,192,120,.34)', borderRadius: '16px',
+                        background: 'linear-gradient(165deg,#F5EEE2,#E0CEBD)',
+                        border: '1px solid rgba(59,20,7,.18)', borderRadius: '16px',
                         padding: '22px 20px', display: 'flex', flexDirection: 'column',
                       }}>
-                        <span style={{ fontFamily: 'Georgia,serif', fontSize: '64px', lineHeight: 0.7, color: '#8C3623', height: '34px' }}>{'\u201C'}</span>
-                        <div style={{ marginTop: '8px', fontSize: '11px', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: GOLD }}>{member.name}</div>
-                        <p style={{ margin: '10px 0 0', fontSize: '13px', lineHeight: 1.6, color: TS, overflow: 'auto', flex: 1 }}>{member.bio}</p>
+                        <span style={{ fontFamily: 'Georgia,serif', fontSize: '64px', lineHeight: 0.7, color: LACCENT, height: '34px' }}>{'\u201C'}</span>
+                        <div style={{ marginTop: '8px', fontSize: '11px', fontWeight: 700, letterSpacing: '.12em', textTransform: 'uppercase', color: LACCENT }}>{member.name}</div>
+                        <p style={{ margin: '10px 0 0', fontSize: '13px', lineHeight: 1.6, color: LTS, overflow: 'auto', flex: 1 }}>{member.bio}</p>
                       </div>
                     </div>
                   </div>
@@ -1690,34 +1700,34 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                         {/* Front */}
                         <div className="flip-card-front" style={{
                           borderRadius: '16px',
-                          border: '1px dashed rgba(222,192,120,.28)',
-                          background: 'linear-gradient(160deg,#340F05,#2A0E05)',
+                          border: '1px dashed rgba(59,20,7,.22)',
+                          background: 'rgba(255,255,255,0.45)',
                           display: 'flex', flexDirection: 'column',
                           alignItems: 'center', justifyContent: 'center',
                           textAlign: 'center', padding: '24px', position: 'relative',
                         }}>
-                          <span style={{ position: 'absolute', top: '12px', left: '12px', fontSize: '11px', fontWeight: 700, color: GOLD, background: 'rgba(36,10,3,.72)', border: '1px solid rgba(222,192,120,.3)', borderRadius: '999px', padding: '4px 10px' }}>
+                          <span style={{ position: 'absolute', top: '12px', left: '12px', fontSize: '11px', fontWeight: 700, color: LACCENT, background: 'rgba(140,54,35,.1)', border: '1px solid rgba(140,54,35,.25)', borderRadius: '999px', padding: '4px 10px' }}>
                             {String(flipIdx + 1).padStart(2, '0')}
                           </span>
-                          <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: '1px solid rgba(222,192,120,.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: GOLD, fontSize: '24px', fontWeight: 800, marginBottom: '18px', background: 'rgba(222,192,120,.06)' }}>
+                          <div style={{ width: '64px', height: '64px', borderRadius: '50%', border: '1px solid rgba(59,20,7,.25)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: LACCENT, fontSize: '24px', fontWeight: 800, marginBottom: '18px', background: 'rgba(140,54,35,.08)' }}>
                             {seat.letter}
                           </div>
-                          <div style={{ fontSize: '15px', fontWeight: 800, color: TP, letterSpacing: '-0.01em' }}>Advisory seat</div>
-                          <div style={{ marginTop: '6px', fontSize: '12px', fontWeight: 600, color: GOLD }}>{seat.category}</div>
-                          <div style={{ marginTop: '14px', fontSize: '11px', letterSpacing: '.14em', textTransform: 'uppercase', color: 'rgba(224,206,189,.75)' }}>Announcing · Season 1</div>
+                          <div style={{ fontSize: '15px', fontWeight: 800, color: LT, letterSpacing: '-0.01em' }}>Advisory seat</div>
+                          <div style={{ marginTop: '6px', fontSize: '12px', fontWeight: 600, color: LACCENT }}>{seat.category}</div>
+                          <div style={{ marginTop: '14px', fontSize: '11px', letterSpacing: '.14em', textTransform: 'uppercase', color: LTS }}>Announcing · Season 1</div>
                         </div>
                         {/* Back */}
                         <div className="flip-card-back" style={{
-                          background: 'linear-gradient(165deg,#3B1407,#2A0E05)',
-                          border: '1px solid rgba(222,192,120,.34)', borderRadius: '16px',
+                          background: 'linear-gradient(165deg,#F5EEE2,#E0CEBD)',
+                          border: '1px solid rgba(59,20,7,.18)', borderRadius: '16px',
                           padding: '22px 20px', display: 'flex', flexDirection: 'column',
                           alignItems: 'center', justifyContent: 'center', textAlign: 'center',
                         }}>
-                          <div style={{ width: '56px', height: '56px', borderRadius: '50%', border: '1px dashed rgba(222,192,120,.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(222,192,120,.4)', fontSize: '22px', fontWeight: 800, marginBottom: '20px' }}>
+                          <div style={{ width: '56px', height: '56px', borderRadius: '50%', border: '1px dashed rgba(59,20,7,.3)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(59,20,7,.3)', fontSize: '22px', fontWeight: 800, marginBottom: '20px' }}>
                             ?
                           </div>
-                          <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: GOLD, marginBottom: '10px' }}>{seat.category}</div>
-                          <p style={{ fontSize: '13px', lineHeight: 1.65, color: TS, margin: 0 }}>
+                          <div style={{ fontSize: '11px', fontWeight: 700, letterSpacing: '.14em', textTransform: 'uppercase', color: LACCENT, marginBottom: '10px' }}>{seat.category}</div>
+                          <p style={{ fontSize: '13px', lineHeight: 1.65, color: LTS, margin: 0 }}>
                             We&apos;re finalising this seat. The advisor for this domain will be announced ahead of Season 1.
                           </p>
                         </div>
@@ -1740,7 +1750,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           <section style={{
             position: 'relative', minHeight: 'clamp(400px,50vh,560px)', display: 'flex',
             alignItems: 'center', overflow: 'hidden',
-            padding: '128px clamp(24px,6vw,64px) 68px', borderBottom: BORDER,
+            padding: '128px clamp(24px,6vw,64px) 68px',
           }}>
             <PageHeroBg imageUrl={headerImages?.journey} />
             <HeroDecorRing speed="52s" size="clamp(160px,20vw,280px)" />
@@ -1755,7 +1765,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Journey Orbit */}
-          <section style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px) clamp(48px,6vw,80px)', borderBottom: BORDER }}>
+          <section style={{ padding: 'clamp(64px,9vw,120px) clamp(24px,6vw,64px) clamp(48px,6vw,80px)' }}>
             {/* Header */}
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '24px', flexWrap: 'wrap', marginBottom: '44px', maxWidth: '1360px', marginLeft: 'auto', marginRight: 'auto' }}>
               <h2 style={{ margin: 0, fontSize: 'clamp(28px,4vw,54px)', lineHeight: 1.04, fontWeight: 800, color: TP, letterSpacing: '-.02em', maxWidth: '620px', fontFamily: FF }}>
@@ -1850,7 +1860,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Testimonial quote */}
-          <section data-reveal style={{ padding: 'clamp(72px,10vw,150px) clamp(24px,6vw,64px)', background: S2, borderBottom: BORDER, textAlign: 'center' }}>
+          <section data-reveal style={{ padding: 'clamp(72px,10vw,150px) clamp(24px,6vw,64px)', background: S2, textAlign: 'center' }}>
             <div style={{ maxWidth: '980px', margin: '0 auto' }}>
               <span aria-hidden="true" style={{ display: 'block', fontSize: '90px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '18px' }}>
                 {'\u201C'}

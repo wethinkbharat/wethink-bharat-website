@@ -235,6 +235,7 @@ export interface JourneyIntro {
   heading?: string
   heroSubtext?: string
   sectionSubtext?: string
+  showDirectorQuote?: boolean
 }
 
 export interface JourneyStage {

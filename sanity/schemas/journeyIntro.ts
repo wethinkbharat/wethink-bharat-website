@@ -39,6 +39,13 @@ export const journeyIntro = defineType({
       rows: 2,
       description: 'Smaller text beside the Section Heading above the orbit diagram. Use || for gold.',
     }),
+    defineField({
+      name: 'showDirectorQuote',
+      title: 'Show Director Quote',
+      type: 'boolean',
+      description: 'Toggle the director quote block below the orbit diagram. Off by default.',
+      initialValue: false,
+    }),
   ],
 
   preview: {

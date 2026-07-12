@@ -251,6 +251,7 @@ export default async function DesktopPage() {
     heading: journeyIntro.heading,
     heroSubtext: journeyIntro.heroSubtext,
     sectionSubtext: journeyIntro.sectionSubtext,
+    showDirectorQuote: journeyIntro.showDirectorQuote ?? false,
   } : null
 
   const processedEcosystemIntro = ecosystemIntro ? {

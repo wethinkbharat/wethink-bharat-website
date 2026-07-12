@@ -158,6 +158,7 @@ interface JourneyIntroData {
   heading?: string
   heroSubtext?: string
   sectionSubtext?: string
+  showDirectorQuote?: boolean
 }
 
 interface EcosystemIntroData {
@@ -1860,7 +1861,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
           </section>
 
           {/* Testimonial quote */}
-          <section data-reveal style={{ padding: 'clamp(72px,10vw,150px) clamp(24px,6vw,64px)', background: S2, textAlign: 'center' }}>
+          {journeyIntro?.showDirectorQuote && <section data-reveal style={{ padding: 'clamp(72px,10vw,150px) clamp(24px,6vw,64px)', background: S2, textAlign: 'center' }}>
             <div style={{ maxWidth: '980px', margin: '0 auto' }}>
               <span aria-hidden="true" style={{ display: 'block', fontSize: '90px', lineHeight: 0.5, color: '#8C3623', fontWeight: 800, marginBottom: '18px' }}>
                 {'\u201C'}
@@ -1881,7 +1882,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 </div>
               </div>
             </div>
-          </section>
+          </section>}
         </>
       )}
 

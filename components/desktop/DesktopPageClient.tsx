@@ -157,6 +157,7 @@ export interface JourneyIntroData {
   heading?: string
   heroSubtext?: string
   sectionSubtext?: string
+  showDirectorQuote?: boolean
 }
 
 export interface ApplyCtaData {

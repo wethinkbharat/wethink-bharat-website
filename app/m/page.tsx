@@ -241,6 +241,7 @@ export default async function MobilePage() {
     heading: journeyIntro.heading,
     heroSubtext: journeyIntro.heroSubtext,
     sectionSubtext: journeyIntro.sectionSubtext,
+    showDirectorQuote: journeyIntro.showDirectorQuote ?? false,
   } : null
 
   const processedEcosystemIntro = ecosystemIntro ? {

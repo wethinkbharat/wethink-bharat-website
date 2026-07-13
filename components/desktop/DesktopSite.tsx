@@ -1446,34 +1446,30 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
                 <SectionLabel>Domain tracks — Season 1</SectionLabel>
                 <h2 style={{ fontSize: 'clamp(26px,3.4vw,44px)', fontWeight: 800, color: TP, margin: '0 0 24px', fontFamily: FF }}>What students compete in</h2>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                  {[
-                    { n: '01', title: 'Entrepreneurship', partner: 'NASSCOM 10,000 Startups', active: true },
-                    { n: '02', title: 'Media & Communication', partner: 'Brut', active: true },
-                    { n: '03', title: 'Design & Innovation', partner: 'Canva', active: true },
-                    { n: '04', title: 'Technology & AI', partner: 'Google for Education', active: false },
-                    { n: '05', title: 'Social entrepreneurship', partner: '', active: false },
-                    { n: '06', title: 'Finance & economics', partner: '', active: false },
-                  ].map((row) => (
-                    <div key={row.n} style={{
-                      border: row.active ? '1px solid rgba(222,192,120,.4)' : '1px solid rgba(222,192,120,.14)',
-                      background: row.active ? 'rgba(222,192,120,.06)' : 'transparent',
-                      boxShadow: row.active ? 'inset 4px 0 0 #DEC078' : 'none',
-                      borderRadius: '14px', padding: '20px 22px 20px 26px',
-                      opacity: row.active ? 1 : 0.55,
-                      display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px',
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <span style={{ fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.1em' }}>{row.n}</span>
-                        <div>
-                          <div style={{ fontSize: '16px', fontWeight: 800, color: TP }}>{row.title}</div>
-                          {row.partner && <div style={{ fontSize: '12.5px', color: TS, marginTop: '2px' }}>{row.partner}</div>}
+                  {(domains && domains.length > 0 ? domains : []).map((row) => {
+                    const active = row.status === 'live'
+                    return (
+                      <div key={row.number} style={{
+                        border: active ? '1px solid rgba(222,192,120,.4)' : '1px solid rgba(222,192,120,.14)',
+                        background: active ? 'rgba(222,192,120,.06)' : 'transparent',
+                        boxShadow: active ? 'inset 4px 0 0 #DEC078' : 'none',
+                        borderRadius: '14px', padding: '20px 22px 20px 26px',
+                        opacity: active ? 1 : 0.55,
+                        display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px',
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                          <span style={{ fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.1em' }}>{String(row.number).padStart(2, '0')}</span>
+                          <div>
+                            <div style={{ fontSize: '16px', fontWeight: 800, color: TP }}>{row.name}</div>
+                            {row.partnerName && <div style={{ fontSize: '12.5px', color: TS, marginTop: '2px' }}>{row.partnerName}</div>}
+                          </div>
                         </div>
+                        <span style={{ fontSize: '11px', fontWeight: 600, color: active ? GOLD : TS, background: active ? 'rgba(222,192,120,.14)' : 'rgba(224,206,189,.1)', borderRadius: '999px', padding: '4px 11px', flexShrink: 0 }}>
+                          {active ? 'Season 1' : 'Phase 2'}
+                        </span>
                       </div>
-                      <span style={{ fontSize: '11px', fontWeight: 600, color: row.active ? GOLD : TS, background: row.active ? 'rgba(222,192,120,.14)' : 'rgba(224,206,189,.1)', borderRadius: '999px', padding: '4px 11px', flexShrink: 0 }}>
-                        {row.active ? 'Season 1' : 'Phase 2'}
-                      </span>
-                    </div>
-                  ))}
+                    )
+                  })}
                 </div>
               </div>
             </div>

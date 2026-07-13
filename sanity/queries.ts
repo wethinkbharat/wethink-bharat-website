@@ -96,7 +96,7 @@ export async function getAdvisoryIntro(): Promise<AdvisoryIntro | null> {
 }
 
 export async function getAdvisoryMembers(): Promise<AdvisoryMember[]> {
-  return c().fetch(`*[_type == "advisoryMember"] | order(orderRank asc)`)
+  return c().fetch(`*[_type == "advisoryMember"] | order(number asc)`)
 }
 
 export async function getApplyCta(): Promise<ApplyCta | null> {

@@ -1043,7 +1043,7 @@ export function DesktopSite({ onSchoolFormOpen, onPartnerFormOpen, logoUrl, hero
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '18px' }}>
-              {(domains && domains.length > 0 ? domains.map((d) => ({
+              {(domains && domains.length > 0 ? domains.filter((d) => d.status === 'live').map((d) => ({
                 num: String(d.number).padStart(2, '0'),
                 label: d.name,
                 partner: d.partnerName,

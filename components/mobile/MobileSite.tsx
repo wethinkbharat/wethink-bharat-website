@@ -252,7 +252,7 @@ export function MobileSite({
     : JOURNEY_CARDS
 
   const activeDomains = (domainsProp && domainsProp.length > 0)
-    ? domainsProp.map((d) => ({
+    ? domainsProp.filter((d) => d.status === 'live').map((d) => ({
         num: String(d.number).padStart(2, '0'),
         title: d.name,
         partner: [d.simulatorName, d.partnerName].filter(Boolean).join(' · '),
@@ -967,29 +967,27 @@ export function MobileSite({
               <SectionLabel>Domain tracks — Season 1</SectionLabel>
               <h3 style={{ fontSize: 'clamp(18px,4vw,24px)', fontWeight: 800, color: TP, margin: '0 0 18px', fontFamily: FF }}>What students compete in</h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                {[
-                  { n: '01', title: 'Startup Studio — Entrepreneurship', partner: 'NASSCOM 10,000 Startups', active: true },
-                  { n: '02', title: 'The Newsroom — Media & Communication', partner: 'Brut', active: true },
-                  { n: '03', title: 'Design Lab — Design & Innovation', partner: 'Canva', active: true },
-                  { n: '04', title: 'Finance & Investment Track', partner: 'Phase 2', active: false },
-                  { n: '05', title: 'Public Policy Track', partner: 'Phase 2', active: false },
-                  { n: '06', title: 'Sports & Wellness Track', partner: 'Phase 2', active: false },
-                ].map(row => (
-                  <div key={row.n} style={{
-                    border: row.active ? '1px solid rgba(222,192,120,.4)' : '1px solid rgba(222,192,120,.12)',
-                    background: row.active ? 'rgba(222,192,120,.06)' : 'transparent',
-                    boxShadow: row.active ? 'inset 4px 0 0 #DEC078' : 'none',
-                    borderRadius: '12px', padding: '16px 18px 16px 22px', opacity: row.active ? 1 : 0.55,
+                {(domainsProp && domainsProp.length > 0 ? domainsProp : []).map((d) => {
+                  const active = d.status === 'live'
+                  return (
+                  <div key={d.number} style={{
+                    border: active ? '1px solid rgba(222,192,120,.4)' : '1px solid rgba(222,192,120,.12)',
+                    background: active ? 'rgba(222,192,120,.06)' : 'transparent',
+                    boxShadow: active ? 'inset 4px 0 0 #DEC078' : 'none',
+                    borderRadius: '12px', padding: '16px 18px 16px 22px', opacity: active ? 1 : 0.55,
                   }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
                       <div>
-                        <span style={{ fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.1em', marginRight: '10px' }}>{row.n}</span>
-                        <span style={{ fontSize: '14px', fontWeight: 700, color: TP }}>{row.title}</span>
+                        <span style={{ fontSize: '11px', fontWeight: 700, color: GOLD, letterSpacing: '.1em', marginRight: '10px' }}>{String(d.number).padStart(2, '0')}</span>
+                        <span style={{ fontSize: '14px', fontWeight: 700, color: TP }}>{d.name}</span>
                       </div>
-                      <span style={{ fontSize: '11px', color: TS }}>{row.partner}</span>
+                      <span style={{ fontSize: '11px', color: active ? GOLD : TS, background: active ? 'rgba(222,192,120,.14)' : 'rgba(224,206,189,.1)', borderRadius: '999px', padding: '3px 10px' }}>
+                        {active ? (d.partnerName || 'Season 1') : 'Phase 2'}
+                      </span>
                     </div>
                   </div>
-                ))}
+                  )
+                })}
               </div>
             </section>
 

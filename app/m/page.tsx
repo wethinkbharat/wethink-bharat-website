@@ -37,10 +37,12 @@ type HeadlineSpan = { text: string; gold: boolean }
 function blocksToSpans(blocks: unknown[]): HeadlineSpan[] {
   if (!Array.isArray(blocks)) return []
   const result: HeadlineSpan[] = []
-  for (const block of blocks as { _type?: string; children?: { text?: string; marks?: string[] }[] }[]) {
+  for (const block of blocks as { _type?: string; markDefs?: { _key: string; _type: string }[]; children?: { text?: string; marks?: string[] }[] }[]) {
     if (block._type !== 'block') continue
+    const goldKeys = new Set((block.markDefs ?? []).filter((m) => m._type === 'gold').map((m) => m._key))
     for (const child of block.children ?? []) {
-      result.push({ text: child.text ?? '', gold: (child.marks ?? []).includes('gold') })
+      const isGold = (child.marks ?? []).some((m) => goldKeys.has(m))
+      result.push({ text: child.text ?? '', gold: isGold })
     }
   }
   return result

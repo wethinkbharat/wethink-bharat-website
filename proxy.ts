@@ -6,6 +6,10 @@ const MOBILE_UA = /android|iphone|ipod|blackberry|iemobile|opera mini/i
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl
 
+  // /training is a standalone responsive page — never device-redirect it.
+  // Keep this check first so it holds even if a device-redirect toggle is added below.
+  if (pathname === '/training' || pathname.startsWith('/training/')) return NextResponse.next()
+
   // Already on the mobile route — don't redirect again
   if (pathname.startsWith('/m')) return NextResponse.next()
 

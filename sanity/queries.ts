@@ -21,6 +21,7 @@ import type {
   ApplyCta,
   SchoolFormConfig,
   PartnerFormConfig,
+  TrainingPage,
 } from './types'
 
 function c() {
@@ -109,4 +110,8 @@ export async function getSchoolFormConfig(): Promise<SchoolFormConfig | null> {
 
 export async function getPartnerFormConfig(): Promise<PartnerFormConfig | null> {
   return c().fetch(`*[_type == "partnerFormConfig"][0]`)
+}
+
+export async function getTrainingPage(): Promise<TrainingPage | null> {
+  return c().fetch(`*[_type == "trainingPage" && _id == "trainingPage"][0]`)
 }

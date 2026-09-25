@@ -136,6 +136,12 @@ export const structure = (S: StructureBuilder) =>
         .icon(() => '📣')
         .child(S.document().schemaType('applyCta').documentId('applyCta')),
 
+      // ── Professional Development (/training) ─────────────────────────────
+      S.listItem()
+        .title('Professional Development')
+        .icon(() => '🧑‍🏫')
+        .child(S.document().schemaType('trainingPage').documentId('trainingPage')),
+
       S.divider(),
 
       // ── Form Configs ──────────────────────────────────────────────────────

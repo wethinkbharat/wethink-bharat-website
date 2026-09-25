@@ -53,7 +53,7 @@ function toSchoolEnquiry(data: TrainingFormInput): SchoolEnquiryInput {
   }
 }
 
-export function TrainingEnquiryForm() {
+export function TrainingEnquiryForm({ submitLabel = 'Get in touch' }: { submitLabel?: string }) {
   const [status, setStatus] = useState<'idle' | 'success'>('idle')
   const [submitError, setSubmitError] = useState<string | null>(null)
   const {
@@ -171,7 +171,7 @@ export function TrainingEnquiryForm() {
         disabled={isSubmitting}
         className="btn-gold mt-7 w-full justify-center disabled:opacity-70 sm:w-auto"
       >
-        {isSubmitting ? 'Sending...' : 'Get in touch'}
+        {isSubmitting ? 'Sending...' : submitLabel}
       </button>
     </form>
   )

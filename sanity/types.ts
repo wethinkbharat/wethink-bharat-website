@@ -410,3 +410,46 @@ export interface Enquiry {
   orgType?: string
   interestedIn?: string
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Professional Development Page (/training)
+// ─────────────────────────────────────────────────────────────────────────────
+
+export interface TrainingCoverTile {
+  _key: string
+  title?: string
+  description?: string
+  icon?: string
+}
+
+export interface TrainingApproachCard {
+  _key: string
+  title?: string
+  description?: string
+}
+
+export interface TrainingPage {
+  _id: 'trainingPage'
+  _type: 'trainingPage'
+  metaTitle?: string
+  metaDescription?: string
+  heroEyebrow?: string
+  heroHeadline?: string
+  heroSub?: string
+  heroPrimaryCtaLabel?: string
+  heroSecondaryCtaLabel?: string
+  heroImage?: SanityImage & { alt?: string }
+  gapHeading?: string
+  gapBody?: string
+  gapPullLine?: string
+  coverHeading?: string
+  coverTiles?: TrainingCoverTile[]
+  approachHeading?: string
+  approachCards?: TrainingApproachCard[]
+  formatsHeading?: string
+  formatsLines?: string[]
+  formatsDelivery?: string
+  ctaHeading?: string
+  ctaSub?: string
+  ctaButtonLabel?: string
+}

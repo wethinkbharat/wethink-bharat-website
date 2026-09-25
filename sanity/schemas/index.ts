@@ -20,6 +20,7 @@ import { applyCta } from './applyCta'
 import { schoolFormConfig } from './schoolFormConfig'
 import { partnerFormConfig } from './partnerFormConfig'
 import { enquiry } from './enquiry'
+import { trainingPage } from './trainingPage'
 
 export const schemaTypes = [
   // Singletons
@@ -37,6 +38,7 @@ export const schemaTypes = [
   summit,
   schoolFormConfig,
   partnerFormConfig,
+  trainingPage,
 
   // Ordered documents
   belief,
